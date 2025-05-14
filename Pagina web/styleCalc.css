@@ -1,0 +1,111 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+
+nav {
+  grid-column: 1 / -1; 
+  margin-bottom: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 1rem;
+  justify-content: center;
+}
+
+nav li {
+  padding: 0.5rem 1rem;
+  background: #e0e0e0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+nav li.active {
+  background: #003366;
+  color: white;
+}
+
+nav li:hover {
+  background: #d0d0d0;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto; 
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#igualar {
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  grid-row: 2;
+  grid-column: 1;
+
+}
+
+#formulario {
+  background-color: #f9f9f9;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  min-height: 30rem;
+  max-width: 30rem;
+}
+
+#resultados {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 34rem;
+  max-width: 30rem;
+}
+
+
+#graficoHipoteca, #graficoPrestamo {
+  grid-row: 3;       
+  grid-column: 1 / -1; 
+  width: 100%;
+  max-width: 600px;  
+  margin: 0 auto;   
+}
+
+aside {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-row: 2;
+  grid-column: 2;
+  height: fit-content;
+}
+
+@media (max-width: 768px) {
+  main {
+    grid-template-columns: 1fr; 
+  }
+  
+  
+  #graficoHipoteca, #graficoPrestamo {
+    min-height: 300px;
+    padding: 10px;
+  }
+}

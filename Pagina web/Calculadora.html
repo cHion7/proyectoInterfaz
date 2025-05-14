@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleCalc.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Encabezado -->
+    <header>
+        <section id="headerSection">
+            <h1>Calculadora de Impuestos</h1>
+        </section>
+        <section class="section-nav">
+            <a href="Inicio.html" class="nav-link textoNav">Calendario</a>
+            <a href="Calculadora.html" class="nav-link textoNav">Calculadora</a>
+            <a href="Ajustes.html" class="nav-link textoNav">Ajustes</a>
+            <a href="#" class="nav-link textoNav">Foto perfil (ver)</a>
+        </section>
+    </header>
+
+
+    <main>
+        <nav>
+            <ul id="tabs">
+                <li class="active" data-tab="renta">Calculadora hipoteca</li>
+                <li data-tab="iva">Calculadora prestamo</li>
+                <li data-tab="autonomos">Calculadora cripto</li>
+            </ul>
+        </nav>
+
+        <section id="igualar">
+            <h2 id="form-title">Formulario</h2>
+            <form id="formulario">
+                <!-- Aquí cambiaremos dinámicamente los campos -->
+            </form>
+        </section>
+        <aside>
+            <h2>Resultados</h2>
+            <div id="resultados">
+                <!-- Aquí se actualizarán los resultados -->
+            </div>
+        </aside>
+        <!-- Contenedor del gráfico de hipoteca -->
+        <section id="graficoHipoteca" style="display: none;">
+            <canvas id="graficoPie"></canvas>
+        </section>
+
+        <!-- Contenedor del gráfico de préstamo -->
+        <section id="graficoPrestamo" style="display: none;">
+            <canvas id="graficoBarra"></canvas>
+        </section>
+
+
+        <script src="../Pagina web/javaScript/calcCambio.js"></script>
+        <script src="../Pagina web/javaScript/pie.js"></script>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <section id="infoFooter">
+            <p>Para contactar a la empresa Peliculón S.L, puedes utilizar la siguiente información de contacto:</p>
+            <ul>
+                <li class="datoFooter">Teléfono: 123-456-7890</li>
+                <li class="datoFooter">Correo electrónico: info@sonchez.com</li>
+                <li class="datoFooter">Dirección: Calle Principal, 123, Ciudad Financiera</li>
+            </ul>
+        </section>
+        <h3 id="footerCopyrigth">&copy; ChinChonChun S.A - Todos los derechos reservados.</h3>
+    </footer>
+</body>
+
+</html>
