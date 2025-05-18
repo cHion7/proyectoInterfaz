@@ -73,6 +73,7 @@ const contenido = {
 };
 
 function mostrarGrafico(tabId) {
+
   const graficoHipoteca = document.getElementById('graficoHipoteca');
   const graficoPrestamo = document.getElementById('graficoPrestamo');
 
@@ -80,29 +81,7 @@ function mostrarGrafico(tabId) {
   graficoPrestamo.style.display = 'none';
 
   if (tabId === 'renta') {
-    if (!window.graficoPieCreado) {
-      const ctx = document.getElementById('graficoPie').getContext('2d');
-      new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: ['Capital', 'Intereses'],
-          datasets: [{
-            data: [75, 25],
-            backgroundColor: ['#4CAF50', '#FF5722']
-          }]
-        },
-        options: {
-          plugins: {
-            title: {
-              display: true,
-              text: 'Distribución de Hipoteca'
-            }
-          }
-        }
-      });
-      window.graficoPieCreado = true;
-    }
-    graficoHipoteca.style.display = 'block';
+    calcularPie();
 
   } else if (tabId === 'iva') {
     if (!window.graficoBarraCreado) {
@@ -130,6 +109,87 @@ function mostrarGrafico(tabId) {
     }
     graficoPrestamo.style.display = 'block';
   }
+}
+
+function calcularPie() {
+  const precio = parseFloat(document.getElementById('precio').value);
+  const ahorro = parseFloat(document.getElementById('ahorro').value);
+  const plazo = parseInt(document.getElementById('plazo').value);
+  const impuesto = parseFloat(document.getElementById('impuesto').value);
+
+  const gastos = precio * 0.10;
+  const hipoteca = (precio + gastos) - ahorro;
+  const interesAnual = impuesto / 100;
+  const interesMensual = interesAnual / 12;
+  const numeroCuotas = Math.floor(plazo * 12);
+
+  const pow = Math.pow(1 + interesMensual, numeroCuotas);
+  const cuotaMensualCalculada = hipoteca * ((interesMensual * pow) / (pow - 1));
+  const cuotaMensualSinInteres = hipoteca / numeroCuotas;
+  const cuotaMensualConImpuesto = cuotaMensualCalculada * (1 + impuesto / 100);
+
+  const totalPagado = cuotaMensualCalculada * numeroCuotas;
+  const interesesTotales = totalPagado - hipoteca;
+  const costeTotal = precio + gastos + interesesTotales;
+
+  const resultados = document.getElementById('resultados');
+  resultados.innerHTML = `
+    <p><strong>Cuota mensual:</strong> €${cuotaMensualCalculada.toFixed(2)}</p>
+    <p><strong>Cuota mensual sin interés:</strong> €${cuotaMensualSinInteres.toFixed(2)}</p>
+    <p><strong>Cuota mensual con impuesto:</strong> €${cuotaMensualConImpuesto.toFixed(2)}</p>
+    <p><strong>Importe hipoteca:</strong> €${hipoteca.toFixed(2)}</p>
+    <p><strong>Interés hipoteca:</strong> €${(interesesTotales / numeroCuotas).toFixed(2)}</p>
+    <p><strong>Precio del inmueble:</strong> €${precio.toFixed(2)}</p>
+    <p><strong>Impuestos y gastos:</strong> €${gastos.toFixed(2)}</p>
+    <p><strong>Ahorro aportado:</strong> €${ahorro.toFixed(2)}</p>
+    <p><strong>Coste total:</strong> €${costeTotal.toFixed(2)}</p>
+  `;
+
+  const graficoHipoteca = document.getElementById('graficoHipoteca');
+
+  if (!window.graficoPieCreado) {
+    const ctx = document.getElementById('graficoPie').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Ahorro aportado', 'Intereses', 'Precio del inmueble', 'Importe hipoteca'],
+        datasets: [{
+          data: [ahorro, interesesTotales, precio, hipoteca],
+          backgroundColor: ['#4CAF50', '#FF5722', '#2196F3', '#FFC107']
+        }]
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Distribución de Hipoteca'
+          }
+        }
+      }
+    });
+    window.graficoPieCreado = true;
+  }
+  graficoHipoteca.style.display = 'block';
+}
+
+
+
+function calcularBarra() {
+  const capital = parseFloat(document.getElementById('capital').value);
+  const plazoPrestamo = parseInt(document.getElementById('plazoPrestamo').value);
+  const tipoInteres = parseFloat(document.getElementById('tipoInteres').value);
+  const interesPost = parseFloat(document.getElementById('interesPost').value);
+  const anioCambio = parseInt(document.getElementById('anioCambio').value);
+  const cuotaMensual = (capital * tipoInteres / 100) / 12;
+  const totalIntereses = cuotaMensual * plazoPrestamo * 12 - capital;
+  const cuotaMensualConImpuesto = cuotaMensual * (1 + interesPost / 100);
+
+  resultados.innerHTML = `
+    <p><strong>Cuota mensual:</strong> €${cuotaMensual.toFixed(2)}</p>
+    <p><strong>Total intereses:</strong> €${totalIntereses.toFixed(2)}</p>
+    <p><strong>Cuota mensual con impuesto:</strong> €${cuotaMensualConImpuesto.toFixed(2)}</p>
+  `;
 }
 
 function cambiarContenido(tabId) {

@@ -14,18 +14,17 @@
     <section id="registroCuadro">
       <h1 class="titulo">InpoSmart</h1>
       <h2 class="subtitulo">Ingrese sus datos</h2>
-      <form>
-        <input class="line" type="text" placeholder="Nombre de usuario" required />
-        <input class="line" type="email" placeholder="Correo electrónico" required />
-        <input class="line" type="password" placeholder="Contraseña" required />
-        <input class="line" type="password" placeholder="Confirmar contraseña" required />
-        <button class="boton" type="submit">Iniciar sesion</button>
+      <form id="loginForm">
+        <input class="line" type="email" id="email" placeholder="Correo electrónico" required />
+        <input class="line" type="password" id="password" placeholder="Contraseña" required />
+        <button class="boton" type="submit">Iniciar sesión</button>
       </form>
       <p class="texto-abajo">
-        ¿No tienes cuenta? <a href="inicioSesion.html">Registrarse</a>
+        ¿No tienes cuenta? <a href="registro.html">Registrarse</a>
       </p>
     </section>
   </main>
+  <script type="module" src="../Pagina web/javaScript/login.js"></script>
 </body>
 
 </html>
