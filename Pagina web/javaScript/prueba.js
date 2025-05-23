@@ -1,72 +1,83 @@
-function calcularLinea() {
-  const capitalInicial = parseFloat(document.getElementById('capital').value);
-  const plazoPrestamo = parseInt(document.getElementById('plazoPrestamo').value);
-  const tipoInteres = parseFloat(document.getElementById('tipoInteres').value);
-  //falta meter el checkbox
-  // const checkbox = document.getElementById('checkbox').checked;
-  const interesPost = parseFloat(document.getElementById('interesPost').value);
-  const anioCambio = parseInt(document.getElementById('anioCambio').value);
+function genera_tabla(anos, interes, cuotamensual, capitalRestante, interesPost, anioCambio, cuotaMensualConImpuestoPost) {
+  // Obtener la referencia del elemento donde se insertará la tabla
+  const body = document.getElementsByTagName("creacionDeTabla")[0];
 
+  // Limpiar tablas anteriores
+  const tablasExistentes = document.querySelectorAll("table");
+  tablasExistentes.forEach(tabla => tabla.remove());
 
+  // Cabeceras de la tabla
+  const datosPrincipales = ["Años", "Interés", "Cuota sin interés", "Capital pendiente"];
 
-  const cuotaMensual = (capitalInicial * tipoInteres / 100) / 12;
-  const totalIntereses = cuotaMensual * plazoPrestamo * 12 - capitalInicial;
-  const cuotaMensualConImpuesto = cuotaMensual * (1 + interesPost / 100);
+  // Crear elementos de la tabla
+  const tabla = document.createElement("table");
+  const tblHead = document.createElement("thead");
+  const tblBody = document.createElement("tbody");
 
-  resultados.innerHTML = `
-    <p><strong>Cuota mensual:</strong> €${cuotaMensual.toFixed(2)}</p>
-    <p><strong>Total intereses:</strong> €${totalIntereses.toFixed(2)}</p>
-    <p><strong>Cuota mensual con impuesto:</strong> €${cuotaMensualConImpuesto.toFixed(2)}</p>
-  `;
-
-
-  const labels = Array.from({ length: plazoPrestamo }, (_, i) => `Año ${i + 1}`);
-
-  let capitalRestante = capitalInicial;
-  const listaDeLineasCapital = [];
-  for (let i = 1; i <= plazoPrestamo; i++) {
-    capitalRestante -= cuotaMensualConImpuesto * 12; // anual
-    listaDeLineasCapital.push(Math.max(capitalRestante, 0)); // Evitar negativos
-  }
-
-  let capitalRestanteSinInteres = capitalInicial;
-  const listaDeLineasCapitalSin = [];
-  for (let i = 1; i <= plazoPrestamo; i++) {
-    capitalRestanteSinInteres -= cuotaMensual * 12; // 
-    listaDeLineasCapitalSin.push(Math.max(capitalRestanteSinInteres, 0)); // Evitar negativos
-  }
-
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Capital restante con impuesto',
-        data: listaDeLineasCapital,
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      },
-      {
-        label: 'Capital restante sin impuesto',
-        data: listaDeLineasCapitalSin,
-        fill: false,
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.1
-      }
-      
-    ]
-  };
-
-  const ctx = document.getElementById('graficoBarra').getContext('2d');
-  chart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' },
-        title: { display: true, text: 'Evolución del Capital Restante' }
-      }
-    }
+  // Crear la fila de cabeceras
+  const hileraCabecera = document.createElement("tr");
+  datosPrincipales.forEach(dato => {
+    const celda = document.createElement("th");
+    const textoCelda = document.createTextNode(dato);
+    celda.appendChild(textoCelda);
+    hileraCabecera.appendChild(celda);
   });
+  tblHead.appendChild(hileraCabecera);
+
+  // Crear las filas de datos
+  for (let i = 0; i < anos; i++) {
+    const hilera = document.createElement("tr");
+
+    // Columna 1: Años
+    const celdaAnio = document.createElement("td");
+    const textoAnio = document.createTextNode(`Año ${i + 1}`);
+    celdaAnio.appendChild(textoAnio);
+    hilera.appendChild(celdaAnio);
+
+    // Columna 2: Interés
+    const celdaInteres = document.createElement("td");
+    const textoInteres = document.createTextNode(i < anioCambio ? interes.toFixed(2) : interesPost.toFixed(2));
+    celdaInteres.appendChild(textoInteres);
+    hilera.appendChild(celdaInteres);
+
+    // Columna 3: Cuota sin interés
+    const celdaCuota = document.createElement("td");
+    const textoCuota = document.createTextNode(cuotamensual.toFixed(2));
+    celdaCuota.appendChild(textoCuota);
+    hilera.appendChild(celdaCuota);
+
+    // Columna 4: Capital pendiente
+    const celdaCapital = document.createElement("td");
+    const textoCapital = document.createTextNode(capitalRestante.toFixed(2));
+    celdaCapital.appendChild(textoCapital);
+    hilera.appendChild(celdaCapital);
+
+    // Actualizar el capital restante
+    if (i < anioCambio) {
+      capitalRestante -= cuotamensual * 12;
+    } else {
+      capitalRestante -= cuotaMensualConImpuestoPost * 12;
+    }
+
+    // Agregar la fila al cuerpo de la tabla
+    tblBody.appendChild(hilera);
+  }
+
+  // Agregar cabecera y cuerpo a la tabla
+  tabla.appendChild(tblHead);
+  tabla.appendChild(tblBody);
+
+  // Agregar estilos básicos a la tabla
+  tabla.style.borderCollapse = "collapse";
+  tabla.style.width = "80%";
+  tabla.style.margin = "20px auto";
+  tabla.style.border = "1px solid #ddd";
+  tabla.querySelectorAll("th, td").forEach(cell => {
+    cell.style.border = "1px solid #ddd";
+    cell.style.padding = "8px";
+    cell.style.textAlign = "center";
+  });
+
+  // Agregar la tabla al cuerpo del documento
+  body.appendChild(tabla);
 }

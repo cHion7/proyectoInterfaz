@@ -81,11 +81,22 @@ form {
 
 
 #graficoHipoteca, #graficoPrestamo {
-  grid-row: 3;       
-  grid-column: 1 / -1; 
+  grid-row: 4;       
+  grid-column: 0 / -1; 
   width: 100%;
   max-width: 600px;  
   margin: 0 auto;   
+}
+
+#creacionDeTabla {
+    grid-row: 4;
+    grid-column: 3 / -1;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border: #1d4ed8 1px solid;
+    border-radius: 0.5rem;
+    margin-left: 13rem;
 }
 
 aside {

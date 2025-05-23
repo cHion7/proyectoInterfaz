@@ -171,9 +171,9 @@ function calcularLinea() {  //me falta usar el calculod de checkbox
 
   const cuotaMensual = (capitalInicial * tipoInteres / 100) / 12;
   const totalIntereses = cuotaMensual * plazoPrestamo * 12 - capitalInicial;
+  const totalPagar = cuotaMensual * plazoPrestamo * 12 + capitalInicial;
   const cuotaMensualConImpuesto = cuotaMensual * (1 + tipoInteres / 100);
   const cuotaMensualConImpuestoPost = cuotaMensual * (1 + interesPost / 100);
-
   resultados.innerHTML = `
     <p><strong>Cuota mensual:</strong> €${cuotaMensual.toFixed(2)}</p>
     <p><strong>Total intereses:</strong> €${totalIntereses.toFixed(2)}</p>
@@ -242,8 +242,81 @@ function calcularLinea() {  //me falta usar el calculod de checkbox
     }
   });
   if (graficoPrestamo) graficoPrestamo.style.display = 'flex';
+  if (checkbox) {
+    genera_tabla(plazoPrestamo, tipoInteres, cuotaMensual, totalPagar, interesPost, anioCambio, cuotaMensualConImpuestoPost);
+  } else {
+    genera_tabla(plazoPrestamo, tipoInteres, cuotaMensual, totalPagar, 0, 0, cuotaMensualConImpuestoPost);
+  }
+
 }
 
+function genera_tabla(anos, interes, cuotamensual, capitalRestante, interesPost, anioCambio, cuotaMensualConImpuestoPost) {
+  const body = document.getElementById("creacionDeTabla");
+  const tablasExistentes = document.querySelectorAll("table");
+  tablasExistentes.forEach(tabla => tabla.remove());
+
+  const datosPrincipales = ["Años", "Interés", "Cuota sin interés", "Capital pendiente"];
+
+  const tabla = document.createElement("table");
+  const tblHead = document.createElement("thead");
+  const tblBody = document.createElement("tbody");
+
+  const hileraCabecera = document.createElement("tr");
+  datosPrincipales.forEach(dato => {
+    const celda = document.createElement("th");
+    const textoCelda = document.createTextNode(dato);
+    celda.appendChild(textoCelda);
+    hileraCabecera.appendChild(celda);
+  });
+  tblHead.appendChild(hileraCabecera);
+
+  for (let i = 0; i < anos; i++) {
+    const hilera = document.createElement("tr");
+
+    const celdaAnio = document.createElement("td");
+    const textoAnio = document.createTextNode(`Año ${i + 1}`);
+    celdaAnio.appendChild(textoAnio);
+    hilera.appendChild(celdaAnio);
+
+    const celdaInteres = document.createElement("td");
+    const textoInteres = document.createTextNode(i < anioCambio ? interes.toFixed(2) : interesPost.toFixed(2));
+    celdaInteres.appendChild(textoInteres);
+    hilera.appendChild(celdaInteres);
+
+    const celdaCuota = document.createElement("td");
+    const textoCuota = document.createTextNode(cuotamensual.toFixed(2));
+    celdaCuota.appendChild(textoCuota);
+    hilera.appendChild(celdaCuota);
+
+    const celdaCapital = document.createElement("td");
+    const textoCapital = document.createTextNode(capitalRestante.toFixed(2));
+    celdaCapital.appendChild(textoCapital);
+    hilera.appendChild(celdaCapital);
+
+    if (i < anioCambio) {
+      capitalRestante -= cuotamensual * 12;
+    } else {
+      capitalRestante -= cuotaMensualConImpuestoPost * 12;
+    }
+
+    tblBody.appendChild(hilera);
+  }
+
+  tabla.appendChild(tblHead);
+  tabla.appendChild(tblBody);
+
+  tabla.style.borderCollapse = "collapse";
+  tabla.style.width = "80%";
+  tabla.style.margin = "20px auto";
+  tabla.style.border = "1px solid #ddd";
+  tabla.querySelectorAll("th, td").forEach(cell => {
+    cell.style.border = "1px solid #ddd";
+    cell.style.padding = "8px";
+    cell.style.textAlign = "center";
+  });
+
+  body.appendChild(tabla);
+}
 
 
 
@@ -324,42 +397,7 @@ function calcularCripto() {
   }
 }
 
-function genera_tabla() {
-  // Obtener la referencia del elemento body
-  var body = document.getElementsByTagName("body")[0];
 
-  // Crea un elemento <table> y un elemento <tbody>
-  var tabla = document.createElement("table");
-  var tblBody = document.createElement("tbody");
-
-  // Crea las celdas
-  for (var i = 0; i < 2; i++) {
-    // Crea las hileras de la tabla
-    var hilera = document.createElement("tr");
-
-    for (var j = 0; j < 2; j++) {
-      // Crea un elemento <td> y un nodo de texto, haz que el nodo de
-      // texto sea el contenido de <td>, ubica el elemento <td> al final
-      // de la hilera de la tabla
-      var celda = document.createElement("td");   //******* */ Años que quedan hacerlo en meses u años poder cambiar
-      var textoCelda = document.createTextNode(   //******* */interes 7% cuota que pagas, cuota sin interese y capital pendiente
-        "celda en la hilera " + i + ", columna " + j,
-      );
-      celda.appendChild(textoCelda);
-      hilera.appendChild(celda);
-    }
-
-    // agrega la hilera al final de la tabla (al final del elemento tblbody)
-    tblBody.appendChild(hilera);
-  }
-
-  // posiciona el <tbody> debajo del elemento <table>
-  tabla.appendChild(tblBody);
-  // appends <table> into <body>
-  body.appendChild(tabla);
-  // modifica el atributo "border" de la tabla y lo fija a "2";
-  tabla.setAttribute("border", "2");
-}
 
 
 
