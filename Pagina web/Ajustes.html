@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8"> <!-- Codificación de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive: adapta a móviles -->
+    <title>Mi Primera Página</title> <!-- Título que aparece en la pestaña del navegador -->
+    <link rel="stylesheet" href="../Pagina web/CSS file/style.css">
+    <link rel="stylesheet" href="../Pagina web/CSS file/Ajustes.css">
+</head>
+
+<body>
+
+    <!-- Encabezado principal de la web -->
+    <header>
+        <section id="headerSection">
+            <a id="logoLink" href="index.html">
+                <img id="logo" src="../IMG/logo.svg" alt="Logo de pixar">
+            </a>
+        </section>
+        <section class="section-nav">
+            <a href="Inicio.html" class="nav-link textoNav">Calendario</a>
+            <a href="Calculadora.html" class="nav-link textoNav">Calculadora</a>
+            <a href="Ajustes.html" class="nav-link textoNav">Ajsutes</a>
+        </section>
+        </section>
+    </header>
+
+
+
+    <main id="main">
+
+        <section id="ajustesCuadro">
+            <h2 id="ajustesTitulo">Ajustes de cuenta</h2>
+            <form>
+                <p>Nombre de usuario</p>
+                <input class="line" type="text" id="nombreUsuario" placeholder="Nombre de usuario" required />
+                <p>Correo electrónico </p>
+                <input class="line" type="text" id="correoElectronico" placeholder="Correo electrónico" required />
+                <p>Edad </p>
+                <input class="line" type="text" id="edad" placeholder="Edad" required />
+                <p>Tipo de perfil </p>
+                <input class="line" type="text" id="tipoPerfil" placeholder="Tipo de perfil" required />
+                <button class="boton" type="submit">Hacer cambios</button>
+                <a  class="boton" href="afinarPerfil.html">Perfilar</a>
+                <button id="cerrarSesion" class="boton" type="submit">Cerrar sesión</button>
+            </form>
+
+        </section>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <section id="infoFooter">
+            <p>Para contactar a la empresa Peliculón S.L, puedes utilizar la siguiente información de contacto:</p>
+            <ul>
+                <li class="datoFooter">Teléfono: 123-456-7890</li>
+                <li class="datoFooter">Correo electrónico: info@sonchez.com</li>
+                <li class="datoFooter">Dirección: Calle Principal, 123, Ciudad Financiera</li>
+            </ul>
+        </section>
+        <h3 id="footerCopyrigth">&copy; ChinChonChun S.A - Todos los derechos reservados.</h3>
+    </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8"> <!-- Codificación de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive: adapta a móviles -->
+    <title>Mi Primera Página</title> <!-- Título que aparece en la pestaña del navegador -->
+    <link rel="stylesheet" href="../Pagina web/CSS file/style.css">
+    <link rel="stylesheet" href="../Pagina web/CSS file/Afinar.css">
+</head>
+
+<body>
+
+    <!-- Encabezado principal de la web -->
+    <header>
+        <section id="headerSection">
+            <a id="logoLink" href="index.html">
+                <img id="logo" src="../IMG/logo.svg" alt="Logo de pixar">
+            </a>
+        </section>
+        <section class="section-nav">
+            <a href="Inicio.html" class="nav-link textoNav">Calendario</a>
+            <a href="Calculadora.html" class="nav-link textoNav">Calculadora</a>
+            <a href="Ajustes.html" class="nav-link textoNav">Ajsutes</a>
+        </section>
+        </section>
+    </header>
+
+
+
+    <main id="main">
+        <section id="ajustesCuadro" class="ajustes-cuadro primeraVista">
+            <h2 id="ajustesTitulo">Infroma de usuario</h2>
+            <form>
+                <p>¿Cual es tu situacion?</p>
+                <label for="encontrate">¿En que situacion estas?</label>
+                <select class="select" id="encontrate">
+                    <option value="Autonomo">Autónomo</option>
+                    <option value="Asalariado">Asalariado</option>
+                    <option value="Estudiante">Estudiante</option>
+                    <option value="Empresario" selected>Empresario</option>
+                    <option value="Jubilado">Jubilado</option>
+
+                </select>
+                <p>¿Cuál es tu ingreso bruto anual?</p>
+                <input class="line" type="text" id="ingresoBruto" placeholder="Ingreso en bruto" required />
+                <p>¿Cuál es tu edad?</p>
+                <input class="line" type="text" id="edad" placeholder="Ej: 24" required />
+                <p>¿Tienes personas a tu cargo (hijos, dependientes)? ¿Cuántos? </p>
+                <input class="line" type="text" id="personasACargo" placeholder="Número de personas" required />
+                <p>¿Tienes más de una vivienda en propiedad?</p>
+                <div id="radio-group">
+                    <input type="radio" id="viviendaSi" name="vivienda" value="si">
+                    <label for="viviendaSi">Sí</label>
+
+                    <input type="radio" id="viviendaNo" name="vivienda" value="no">
+                    <label for="viviendaNo">No</label>
+                </div>
+
+                <p class="miniFooter">                          1 de 2</p>
+
+            </form>
+
+        </section>
+
+
+        <!----------------------------------------------------------------------------------------------->
+
+        <section id="ajustesCuadroAutonomo" class="ajustes-cuadro">
+            <h2 id="ajustesTitulo">Infroma de usuario</h2>
+            <form>
+                <label for="datetime">¿Desde cuándo estás dado de alta como autónomo?</label>
+                <input type="datetime-local" name="datetime" id="datetime" />
+
+                <p>¿A qué actividad profesional te dedicas?</p>
+                <input class="line" type="number" id="actividadProfesional" placeholder="Actividad profesional"
+                    required />
+                <p> ¿Qué cantidad anual estimas en gastos deducibles?</p>
+                <input class="line" type="number" id="gastosDeducibles" placeholder="Gastos deducibles" required />
+                <p>¿Cuánto IVA has soportado en tus gastos?</p>
+                <input class="line" type="number" id="ivaSoportado" placeholder="IVA soportado" required />
+                <p>¿Cuánto IVA has repercutido en tus facturas?</p>
+                <input class="line" type="number" id="ivaRepercutido" placeholder="IVA repercutido" required />
+                <p>¿Utilizas vehículo para tu actividad profesional?</p>
+                <div id="radio-group">
+                    <input type="radio" id="vehiculoSi" name="vehiculo" value="si">
+                    <label for="vehiculoSi">Sí</label>
+
+                    <input type="radio" id="vehiculoNo" name="vehiculo" value="no">
+                    <label for="vehiculoNo">No</label>
+                </div>
+                <button class="boton" type="submit">Enviar cuestionario</button>
+
+            </form>
+
+        </section>
+
+
+        <!----------------------------------------------------------------------------------------------->
+
+
+
+        <section id="ajustesCuadroAsalariado" class="ajustes-cuadro">
+            <h2 id="ajustesTitulo">Información de Usuario - Asalariado</h2>
+            <form>
+                <p>¿Qué tipo de contrato tienes?</p>
+                <select class="select" id="tipoContrato">
+                    <option value="indefinido">Indefinido</option>
+                    <option value="temporal">Temporal</option>
+                    <option value="parcial">Jornada Parcial</option>
+                </select>
+
+                <p>¿Tienes el título de familia numerosa?</p>
+                <div id="radio-group">
+                    <input type="radio" id="familiaNumerosaSi" name="familiaNumerosa" value="si">
+                    <label for="familiaNumerosaSi">Sí</label>
+                    <input type="radio" id="familiaNumerosaNo" name="familiaNumerosa" value="no">
+                    <label for="familiaNumerosaNo">No</label>
+                </div>
+
+                <p>¿Qué edades tienen tus hijos?</p>
+                <input class="line" type="text" id="edadesHijos" placeholder="Ej: 4, 8, 16" required />
+
+                <p>¿Tienes gastos escolares o educativos?</p>
+                <input class="line" type="number" id="gastosEscolares" placeholder="Cantidad anual en euros" required />
+                <button class="boton" type="submit">Enviar cuestionario</button>
+            </form>
+        </section>
+
+
+
+        <!----------------------------------------------------------------------------------------------->
+
+
+
+
+        <section id="ajustesCuadroEstudiante" class="ajustes-cuadro">
+            <h2 id="ajustesTitulo">Información de Usuario - Estudiante</h2>
+            <form>
+                <p>¿Qué estudios realizas actualmente?</p>
+                <label for="tipoEstudios">¿Qué tipo de estudios realizas?</label>
+                <select class="select" id="tipoEstudios">
+                    <option value="universidad">Universidad</option>
+                    <option value="fp">Formación Profesional</option>
+                    <option value="otro">Otro</option>
+                </select>
+
+                <p>¿Trabajas a tiempo parcial?</p>
+                <div id="radio-group">
+                    <input type="radio" id="trabajoSi" name="trabajoParcial" value="si">
+                    <label for="trabajoSi">Sí</label>
+                    <input type="radio" id="trabajoNo" name="trabajoParcial" value="no">
+                    <label for="trabajoNo">No</label>
+                </div>
+
+                <p>¿Recibes alguna beca? ¿De cuánto?</p>
+
+                <input class="line" type="number" id="becaCantidad" placeholder="Cantidad anual en euros" required />
+                <button class="boton" type="submit">Enviar cuestionario</button>
+            </form>
+        </section>
+
+
+
+        <!----------------------------------------------------------------------------------------------->
+
+
+
+
+        <section id="ajustesCuadroJubilado" class="ajustes-cuadro">
+            <h2 id="ajustesTitulo">Información de Usuario - Jubilado</h2>
+            <form>
+                <p>¿Cuánto cobras anualmente por pensión?</p>
+                <input class="line" type="number" id="pensionAnual" placeholder="Pensión anual en euros" required />
+
+                <p>¿Tienes una segunda vivienda no alquilada?</p>
+                <div id="radio-group">
+                    <input type="radio" id="segundaViviendaSi" name="segundaVivienda" value="si">
+                    <label for="segundaViviendaSi">Sí</label>
+                    <input type="radio" id="segundaViviendaNo" name="segundaVivienda" value="no">
+                    <label for="segundaViviendaNo">No</label>
+                </div>
+
+                <p>¿Tienes gastos médicos significativos?</p>
+                <input class="line" type="number" id="gastosMedicos" placeholder="Gastos médicos anuales" required />
+                <button class="boton" type="submit">Enviar cuestionario</button>
+            </form>
+        </section>
+
+
+
+        <!----------------------------------------------------------------------------------------------->
+
+
+
+
+
+        <section id="ajustesCuadroEmpresario" class="ajustes-cuadro">
+            <h2 id="ajustesTitulo">Información de Usuario - Empresario</h2>
+            <form>
+                <p>¿Qué tipo de sociedad gestionas?</p>
+                <label for="tipoContrato">¿Qué tipo de contrato tienes?</label>
+                <select class="select" id="tipoContrato">
+                    <option value="indefinido">Indefinido</option>
+                    <option value="temporal">Temporal</option>
+                    <option value="parcial">Parcial</option>
+                </select>
+
+                <p>¿Cuál es la facturación anual aproximada de tu empresa?</p>
+                <input class="line" type="number" id="facturacionEmpresa" placeholder="Facturación en euros" required />
+
+                <p>¿Cobras sueldo como administrador? ¿Cuánto?</p>
+                <input class="line" type="number" id="sueldoAdministrador" placeholder="Sueldo anual" required />
+
+                <p>¿Cuántos empleados tienes?</p>
+                <input class="line" type="number" id="empleados" placeholder="Número de empleados" required />
+
+                <p>¿Cuáles son los gastos deducibles anuales?</p>
+                <input class="line" type="number" id="gastosDeduciblesEmpresa" placeholder="Gastos deducibles"
+                    required />
+                <button class="boton" type="submit">Enviar cuestionario</button>
+            </form>
+        </section>
+
+        <script src="../Pagina web/javaScript/afinarUsuario.js"></script>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+        <section id="infoFooter">
+            <p>Para contactar a la empresa Peliculón S.L, puedes utilizar la siguiente información de contacto:</p>
+            <ul>
+                <li class="datoFooter">Teléfono: 123-456-7890</li>
+                <li class="datoFooter">Correo electrónico: info@sonchez.com</li>
+                <li class="datoFooter">Dirección: Calle Principal, 123, Ciudad Financiera</li>
+            </ul>
+        </section>
+        <h3 id="footerCopyrigth">&copy; ChinChonChun S.A - Todos los derechos reservados.</h3>
+    </footer>
+
+</body>
+
+</html>

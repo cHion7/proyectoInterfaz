@@ -42,7 +42,7 @@ header h1 {
 /* Contenido principal */
 main {
   padding: 20px;
-  max-width: 1200px;
+
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -94,7 +94,7 @@ form label {
 
 form input,
 form button {
-  width: 100%;
+  
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
