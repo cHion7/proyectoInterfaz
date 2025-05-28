@@ -1,12 +1,4 @@
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f3f4f6;
-  color: #333;
-}
-
 nav {
   grid-column: 1 / -1;
   margin-bottom: 1rem;
@@ -55,12 +47,18 @@ form {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+*:disabled {
+  background-color: rgb(238, 227, 227);
+  color: linen;
+  opacity: 70%;
+}
+
 #igualar {
   background-color: white;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   padding: 2rem;
-  margin-bottom: 2rem;
+
   grid-row: 2;
   grid-column: 1;
 }
@@ -70,7 +68,7 @@ form {
   padding: 1rem;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
-  min-height: 30rem;
+  min-height: 33rem;
   max-width: 30rem;
   margin: 0 auto;
 }
@@ -86,7 +84,18 @@ form {
 }
 
 
-#graficoHipoteca, #graficoPrestamo {
+#graficoHipoteca {
+  grid-row: 4;
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0.1rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+#graficoPrestamo {
   grid-row: 4;
   grid-column: 0 / -1;
   width: 100%;
@@ -103,7 +112,7 @@ form {
   grid-column: 1 / -1;
   width: 100%;
   max-width: 800px;
-  margin-left: 20rem;
+  margin-left: 2rem;
   border: 1px solid #1d4ed8;
   border-radius: 0.5rem;
   padding: 1rem;

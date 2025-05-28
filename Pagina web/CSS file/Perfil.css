@@ -1,0 +1,139 @@
+    main{}
+    
+    #upload {
+        display: none;
+
+    }
+
+    #preview {
+        width: 150px;
+        height: 150px;
+        cursor: pointer;
+        border: 2px dashed #ccc;
+        padding: 5px;
+        border-radius: 1000rem;
+        gap: 2;
+    }
+
+
+
+    #fotoPerfil {
+        margin-top: 20px;
+    }
+
+    #parteArriba {
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+        padding: 1rem;
+        gap: 4;
+        border: 2px solid #000000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #parteMitad {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #c3dafe, #e0e7ff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3rem;
+    }
+
+
+    p {
+        font-size: 1.2rem;
+        color: #0f0f10;
+        margin-top: 1.5rem;
+    }
+
+    .ajustes-cuadro {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 1rem;
+        min-height: 50rem;
+        display: flex;
+        border: 2px solid #000000;
+        max-width: 400px;
+        gap: 10;
+        display: none;
+        /* Por defecto, oculto */
+
+    }
+
+    .ajustes-cuadro.activo {
+        display: flex;
+        margin-left: 110px;
+    }
+
+    .primeraVista {
+        display: flex;
+
+    }
+
+    .titulo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitulo {
+        font-size: 1.2rem;
+        color: #4b5563;
+        margin-bottom: 1.5rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        width: 30rem;
+        box-shadow: none;
+    }
+
+    .select,
+    .line {
+        padding: 0.75rem 1rem;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+    }
+
+    #radio-group {
+        display: -webkit-box;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+
+    .boton {
+        background-color: #1e3a8a;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 1rem;
+    }
+
+    .miniFooter {
+        background-color: #1e3a8a;
+        color: #ffffff;
+        font-weight: 600;
+        padding: 0.75rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+        margin-left: 40%;
+        margin-right: 43%;
+    }
+
+    .boton:hover {
+        background-color: #3b82f6;
+    }

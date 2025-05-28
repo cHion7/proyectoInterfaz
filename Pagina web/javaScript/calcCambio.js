@@ -4,74 +4,64 @@ const resultados = document.getElementById('resultados');
 let chart = null;
 
 const contenido = {
-  renta: {
+  hipoteca: {
     campos: `
       <label for="precio">Precio inmueble:</label><br>
-      <input type="number" id="precio"><br><br>
+      <input type="number" id="precio" placeholder="Ej: 300000"><br><br>
       <label for="ahorro">Ahorro aportado:</label><br>
-      <input type="number" id="ahorro"><br><br>
+      <input type="number" id="ahorro" placeholder="Ej: 5000"><br><br>
       <label for="plazo">Plazo préstamo:</label><br>
-      <input type="number" id="plazo"><br><br>
+      <input type="number" id="plazo" placeholder="Ej: 30"><br><br>
       <label for="impuesto">Impuesto:</label><br>
-      <input type="number" id="impuesto"><br><br>
-      <button type="button" id="btnHipoteca">Calcular hipoteca</button>
+      <input type="number" id="impuesto" placeholder="Ej: 7"><br><br>
+      <button type="button" id="btnHipoteca" onclick=calcularPie()>Calcular hipoteca</button>
     `,
     resultados: `
-      <p><strong>Cuota mensual:</strong> €0.00</p>
-      <p><strong>Importe hipoteca:</strong> €0.00</p>
-      <p><strong>Porcentaje de financiacion:</strong> €0.00</p>
-      <p><strong>Precio del inmueble:</strong> €0.00</p>
-      <p><strong>Impuestos y gastos:</strong> €0.00</p>
-      <p><strong>Ahorro aportado:</strong> €0.00</p>
-      <p><strong>Importe hipoteca:</strong> €0.00</p>
-      <p><strong>Interes hipoteca:</strong> €0.00</p>
-      <p><strong>Coste total:</strong> €0.00</p>
+    <p><strong>Cuota mensual sin interés:</strong></p>
+    <p><strong>Importe hipoteca:</strong></p>
+    <p><strong>Interés mensual:</strong></p>
+    <p><strong>Interes anual:</strong></p>
+    <p><strong>Coste total:</strong></p>
     `
   },
-  iva: {
+  prestamo: {
     campos: `
-      <label for="capital">Capital inicial:</label><br>
-      <input type="number" id="capital"><br><br>
+      <label for="capital" >Capital inicial:</label><br>
+      <input type="number" id="capital" placeholder="Ej: 10000"><br><br>
       <label for="plazoPrestamo">Plazo (años):</label><br>
-      <input type="number" id="plazoPrestamo"><br><br>
+      <input type="number" id="plazoPrestamo" placeholder="Ej: 30"><br><br>
       <label for="tipoInteres">Tipo interés (%):</label><br>
-      <input type="number" id="tipoInteres"><br><br>
-      <label for="checkbox">InteresPosterior?</label>
-      <input type="checkbox" id="checkbox"><br><br>
-      <label for="interesPost">Interés posterior:</label><br>
-      <input type="number" id="interesPost"><br><br>
-      <label for="anioCambio">Año de cambio de tipo:</label><br>
-      <input type="number" id="anioCambio"><br><br>
-      <button type="button" id="btnPrestamo">Calcular préstamo</button>
+      <input type="number" id="tipoInteres" placeholder="Ej: 3.5"><br><br>
+      <button type="button" id="btnPrestamo" onclick=calcularLinea()>Calcular préstamo</button>
     `,
     resultados: `
       <p><strong>Mensualidad:</strong> €0.00</p>
       <p><strong>Mensualidad posterior:</strong> €0.00</p>
     `
   },
-  autonomos: {
+  criptomonedas: {
     campos: `
       <label>¿Cómo has ganado dinero?:</label><br>
       <label>Seleccione una opción:</label><br>
-      <label for="opcion3">He vendido criptomonedas</label><br>
-      <input type="radio" id="venta" name="vender" value="vender">
+      <label for="venta">He vendido criptomonedas</label><br>
+      <input type="radio" id="venta" name="tipoOperacion" value="vender">
 
       <label for="cambio">He cambiado una criptomoneda por otra</label><br>
-      <input type="radio" id="cambio" name="cambiar" value="cambiar">
+      <input type="radio" id="cambio" name="tipoOperacion" value="cambiar">
 
       <label for="regalo">Me han regalado criptomonedas</label><br>
-      <input type="radio" id="regalo" name="regalar" value="regalar">
+      <input type="radio" id="regalo" name="tipoOperacion" value="regalar">
 
       <label for="mineria">Hago minería de criptomonedas</label><br>
-      <input type="radio" id="mineria" name="minar" value="minar">
+      <input type="radio" id="mineria" name="tipoOperacion" value="minar">
 
       <label for="prestamo">Presto criptomonedas</label><br>
-      <input type="radio" id="prestamo" name="prestar" value="prestar">
+      <input type="radio" id="prestamo" name="tipoOperacion" value="prestar">
 
       <label for="ganancias">¿Cuánto dinero has ganado?:</label><br>
 
-      <input type="text" id="ganancias"><br><br>
-      <button type="button" id="btnAutonomo">Calcular</button>
+      <input type="text" id="ganancias" placeholder="Ej: 1000"><br><br>
+      <button type="button" id="btnCriptomoneda" onclick=calcularCripto()>Calcular</button>
     `,
     resultados: `
       <p><strong>(+)Tus ganancias:</strong> €0.00</p>
@@ -81,7 +71,7 @@ const contenido = {
   }
 };
 
-function mostrarGrafico(tabId) {
+function quitarGraficos() {
   const graficoHipoteca = document.getElementById('graficoHipoteca');
   const graficoPrestamo = document.getElementById('graficoPrestamo');
   if (graficoHipoteca) graficoHipoteca.style.display = 'none';
@@ -91,24 +81,17 @@ function mostrarGrafico(tabId) {
     chart.destroy();
     chart = null;
   }
-
-  if (tabId === 'renta') {
-    calcularPie();
-  } else if (tabId === 'iva') {
-    calcularLinea();
-  } else if (tabId === 'autonomos') {
-    calcularCripto();
-  }
 }
 
 function calcularPie() {
+  quitarGraficos();
   const precio = parseFloat(document.getElementById('precio').value) || 0;
   const ahorro = parseFloat(document.getElementById('ahorro').value) || 0;
   const plazo = parseInt(document.getElementById('plazo').value) || 1;
   const impuesto = parseFloat(document.getElementById('impuesto').value) || 0;
 
-  const gastos = precio * 0.10;
-  const hipoteca = (precio + gastos) - ahorro;
+
+  const hipoteca = precio - ahorro;
   const interesAnual = impuesto / 100;
   const interesMensual = interesAnual / 12;
   const numeroCuotas = Math.floor(plazo * 12);
@@ -116,21 +99,17 @@ function calcularPie() {
   const pow = Math.pow(1 + interesMensual, numeroCuotas);
   const cuotaMensualCalculada = hipoteca * ((interesMensual * pow) / (pow - 1));
   const cuotaMensualSinInteres = hipoteca / numeroCuotas;
-  const cuotaMensualConImpuesto = cuotaMensualCalculada * (1 + impuesto / 100);
 
   const totalPagado = cuotaMensualCalculada * numeroCuotas;
   const interesesTotales = totalPagado - hipoteca;
-  const costeTotal = precio + gastos + interesesTotales;
+  const costeTotal = precio + interesesTotales;
 
   resultados.innerHTML = `
     <p><strong>Cuota mensual:</strong> €${cuotaMensualCalculada.toFixed(2)}</p>
     <p><strong>Cuota mensual sin interés:</strong> €${cuotaMensualSinInteres.toFixed(2)}</p>
-    <p><strong>Cuota mensual con impuesto:</strong> €${cuotaMensualConImpuesto.toFixed(2)}</p>
     <p><strong>Importe hipoteca:</strong> €${hipoteca.toFixed(2)}</p>
-    <p><strong>Interés hipoteca:</strong> €${(interesesTotales / numeroCuotas).toFixed(2)}</p>
-    <p><strong>Precio del inmueble:</strong> €${precio.toFixed(2)}</p>
-    <p><strong>Impuestos y gastos:</strong> €${gastos.toFixed(2)}</p>
-    <p><strong>Ahorro aportado:</strong> €${ahorro.toFixed(2)}</p>
+    <p><strong>Interés mensual:</strong> €${(interesesTotales / numeroCuotas).toFixed(2)}</p>
+    <p><strong>Interes anual:</strong> €${(interesesTotales / plazo).toFixed(2)}</p>
     <p><strong>Coste total:</strong> €${costeTotal.toFixed(2)}</p>
   `;
 
@@ -161,62 +140,81 @@ function calcularPie() {
   if (graficoHipoteca) graficoHipoteca.style.display = 'block';
 }
 
-function calcularLinea() {  //me falta usar el calculod de checkbox
-  const capitalInicial = parseFloat(document.getElementById('capital').value) || 0;
+
+function verCheckbox() {
+  const checkbox = document.getElementById('checkbox');
+  if (checkbox.checked) {
+    document.getElementById('interesPost').disabled = false;
+    document.getElementById('anioCambio').disabled = false;
+  } else {
+    document.getElementById('interesPost').disabled = true;
+    document.getElementById('anioCambio').disabled = true;
+  }
+}
+
+
+
+function calcularLinea() {
+  quitarGraficos();
+
+
+  let capitalInicial = parseFloat(document.getElementById('capital').value) || 0;
   const plazoPrestamo = parseInt(document.getElementById('plazoPrestamo').value) || 1;
   const tipoInteres = parseFloat(document.getElementById('tipoInteres').value) || 0;
-  const checkbox = document.getElementById('checkbox').checked;
-  const interesPost = parseFloat(document.getElementById('interesPost').value) || 0;
-  const anioCambio = parseInt(document.getElementById('anioCambio').value) || 0;
 
-  const cuotaMensual = (capitalInicial * tipoInteres / 100) / 12;
-  const totalIntereses = cuotaMensual * plazoPrestamo * 12 - capitalInicial;
-  const totalPagar = cuotaMensual * plazoPrestamo * 12 + capitalInicial;
-  const cuotaMensualConImpuesto = cuotaMensual * (1 + tipoInteres / 100);
-  const cuotaMensualConImpuestoPost = cuotaMensual * (1 + interesPost / 100);
+  const i = tipoInteres / 100;
+  const anualidad = (capitalInicial * i) / (1 - Math.pow(1 + i, -plazoPrestamo));
+
+  const interesesArray = [];
+  const capitalAcumuladoArray = [];
+  const capitalPendienteArray = [];
+
+  let capitalPendiente = capitalInicial;
+  let capitalAcumulado = 0;
+  let totalIntereses = 0;
+
+  for (let año = 0; año < plazoPrestamo; año++) {
+    const interesAnual = capitalPendiente * i;
+    const cuotaAmortizacion = anualidad - interesAnual;
+    capitalPendiente -= cuotaAmortizacion;
+    capitalAcumulado += cuotaAmortizacion;
+    totalIntereses += interesAnual;
+
+
+    interesesArray.push(interesAnual);
+    capitalAcumuladoArray.push(capitalAcumulado);
+    capitalPendienteArray.push(Math.max(capitalPendiente, 0));
+  }
+
+
   resultados.innerHTML = `
-    <p><strong>Cuota mensual:</strong> €${cuotaMensual.toFixed(2)}</p>
+    <p><strong>Anualidad:</strong> €${anualidad.toFixed(2)}</p>
     <p><strong>Total intereses:</strong> €${totalIntereses.toFixed(2)}</p>
-    <p><strong>Cuota mensual con impuesto:</strong> €${cuotaMensualConImpuesto.toFixed(2)}</p>
+    <p><strong>Pago tatal:</strong> €${(totalIntereses + capitalInicial).toFixed(2)}</p>
   `;
 
+
   const labels = Array.from({ length: plazoPrestamo }, (_, i) => `Año ${i + 1}`);
-  let capitalRestante = capitalInicial;
-  const listaDeLineasCapital = [];
-  for (let i = 1; i <= plazoPrestamo; i++) {
-    if (checkbox && i >= anioCambio) {
-      capitalRestante -= cuotaMensualConImpuestoPost * 12;
-
-    } else {
-      capitalRestante -= cuotaMensualConImpuesto * 12;
-    }
-    listaDeLineasCapital.push(Math.max(capitalRestante, 0));
-  }
-
-  let capitalRestanteSinInteres = capitalInicial;
-  const listaDeLineasCapitalSin = [];
-  for (let i = 1; i <= plazoPrestamo; i++) {
-    capitalRestanteSinInteres -= cuotaMensual * 12;
-    listaDeLineasCapitalSin.push(Math.max(capitalRestanteSinInteres, 0));
-  }
-  if (chart) {
-    chart.destroy();
-    chart = null;
-  }
-
   const data = {
     labels: labels,
     datasets: [
       {
-        label: 'Capital restante con impuesto',
-        data: listaDeLineasCapital,
+        label: 'Intereses',
+        data: interesesArray,
         fill: false,
-        borderColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgb(255, 159, 64)',
         tension: 0.1
       },
       {
-        label: 'Capital restante sin impuesto',
-        data: listaDeLineasCapitalSin,
+        label: 'Capital acumulado',
+        data: capitalAcumuladoArray,
+        fill: false,
+        borderColor: 'rgb(54, 162, 235)',
+        tension: 0.1
+      },
+      {
+        label: 'Capital pendiente',
+        data: capitalPendienteArray,
         fill: false,
         borderColor: 'rgb(255, 99, 132)',
         tension: 0.1
@@ -224,12 +222,12 @@ function calcularLinea() {  //me falta usar el calculod de checkbox
     ]
   };
 
-  const graficoPrestamo = document.getElementById('graficoPrestamo');
+
+  const ctx = document.getElementById('graficoBarra').getContext('2d');
   if (chart) {
     chart.destroy();
     chart = null;
   }
-  const ctx = document.getElementById('graficoBarra').getContext('2d');
   chart = new Chart(ctx, {
     type: 'line',
     data: data,
@@ -241,21 +239,18 @@ function calcularLinea() {  //me falta usar el calculod de checkbox
       }
     }
   });
+
   if (graficoPrestamo) graficoPrestamo.style.display = 'flex';
-  if (checkbox) {
-    genera_tabla(plazoPrestamo, tipoInteres, cuotaMensual, totalPagar, interesPost, anioCambio, cuotaMensualConImpuestoPost);
-  } else {
-    genera_tabla(plazoPrestamo, tipoInteres, cuotaMensual, totalPagar, 0, 0, cuotaMensualConImpuestoPost);
-  }
+    genera_tabla(plazoPrestamo, anualidad, interesesArray, capitalAcumuladoArray, capitalPendienteArray);
 
 }
 
-function genera_tabla(anos, interes, cuotamensual, capitalRestante, interesPost, anioCambio, cuotaMensualConImpuestoPost) {
+function genera_tabla(anos, anualidad, intereses, capitalAcumulado, capitalPendiente) {
   const body = document.getElementById("creacionDeTabla");
   const tablasExistentes = document.querySelectorAll("table");
   tablasExistentes.forEach(tabla => tabla.remove());
 
-  const datosPrincipales = ["Años", "Interés", "Cuota sin interés", "Capital pendiente"];
+  const datosPrincipales = ["Años", "Anualidad (€)", "Intereses (€)", "Cuota amortizada (€)", "Capital pendiente (€)"];
 
   const tabla = document.createElement("table");
   const tblHead = document.createElement("thead");
@@ -273,31 +268,35 @@ function genera_tabla(anos, interes, cuotamensual, capitalRestante, interesPost,
   for (let i = 0; i < anos; i++) {
     const hilera = document.createElement("tr");
 
+    // Columna 1: Año
     const celdaAnio = document.createElement("td");
     const textoAnio = document.createTextNode(`Año ${i + 1}`);
     celdaAnio.appendChild(textoAnio);
     hilera.appendChild(celdaAnio);
 
+    // Columna 2: Anualidad
+    const celdaAnualidad = document.createElement("td");
+    const textoAnualidad = document.createTextNode(anualidad.toFixed(2));
+    celdaAnualidad.appendChild(textoAnualidad);
+    hilera.appendChild(celdaAnualidad);
+
+    // Columna 3: Intereses
     const celdaInteres = document.createElement("td");
-    const textoInteres = document.createTextNode(i < anioCambio ? interes.toFixed(2) : interesPost.toFixed(2));
+    const textoInteres = document.createTextNode(intereses[i].toFixed(2));
     celdaInteres.appendChild(textoInteres);
     hilera.appendChild(celdaInteres);
 
+    // Columna 4: Cuota amortizada
     const celdaCuota = document.createElement("td");
-    const textoCuota = document.createTextNode(cuotamensual.toFixed(2));
+    const textoCuota = document.createTextNode(capitalAcumulado[i].toFixed(2));
     celdaCuota.appendChild(textoCuota);
     hilera.appendChild(celdaCuota);
 
-    const celdaCapital = document.createElement("td");
-    const textoCapital = document.createTextNode(capitalRestante.toFixed(2));
-    celdaCapital.appendChild(textoCapital);
-    hilera.appendChild(celdaCapital);
-
-    if (i < anioCambio) {
-      capitalRestante -= cuotamensual * 12;
-    } else {
-      capitalRestante -= cuotaMensualConImpuestoPost * 12;
-    }
+    // Columna 5: Capital pendiente
+    const celdaCapitalPendiente = document.createElement("td");
+    const textoCapitalPendiente = document.createTextNode(capitalPendiente[i].toFixed(2));
+    celdaCapitalPendiente.appendChild(textoCapitalPendiente);
+    hilera.appendChild(celdaCapitalPendiente);
 
     tblBody.appendChild(hilera);
   }
@@ -320,19 +319,19 @@ function genera_tabla(anos, interes, cuotamensual, capitalRestante, interesPost,
 
 
 
-
 function calcularCripto() {
+  quitarGraficos();
   var impuestos = 0;
   const ganancias = parseFloat(document.getElementById('ganancias').value) || 0;
   var gananciaEntera = Math.floor(ganancias);
-  const radioCripto1 = document.getElementById('venta');
-  const radioCripto2 = document.getElementById('cambio');
-  const radioCripto3 = document.getElementById('prestamo');
-  const radioCripto4 = document.getElementById('regalo');
-  const radioCripto5 = document.getElementById('mineria');
+  const ventaCripto = document.getElementById('venta');
+  const cambioCripto = document.getElementById('cambio');
+  const prestarCripto = document.getElementById('prestamo');
+  const regaloCripto = document.getElementById('regalo');
+  const mineriaCripto = document.getElementById('mineria');
 
 
-  if (radioCripto1.checked || radioCripto2.checked || radioCripto3.checked || radioCripto4.checked || radioCripto5.checked) {
+  if (ventaCripto.checked || cambioCripto.checked || prestarCripto.checked) {
     if (ganancias <= 6000) {
       impuestos = ganancias * 0.19;
     } else if (ganancias <= 50000) {
@@ -357,7 +356,7 @@ function calcularCripto() {
     resultados.innerHTML = `
       <p><strong>(+)Tus ganancias:</strong> €${gananciaEntera.toFixed(2)}</p>
       <p><strong>(-)Tus perdidas:</strong> €${impuestos.toFixed(2)}</p>
-      <p><strong>(=)Después de impuestos:</strong> €${ganancias.toFixed(2)}</p>
+      <p><strong>(=)Después de impuestos:</strong> €${(ganancias - impuestos).toFixed(2)}</p>
   `;
 
   } else if (regaloCripto.checked || mineriaCripto.checked) {
@@ -392,14 +391,10 @@ function calcularCripto() {
     resultados.innerHTML = `
       <p><strong>(+)Tus ganancias:</strong> €${gananciaEntera.toFixed(2)}</p>
       <p><strong>(-)Tus perdidas:</strong> €${impuestos.toFixed(2)}</p>
-      <p><strong>(=)Después de impuestos:</strong> €${ganancias.toFixed(2)}</p>
+      <p><strong>(=)Después de impuestos:</strong> €${(ganancias - impuestos).toFixed(2)}</p>
   `;
   }
 }
-
-
-
-
 
 
 function cambiarContenido(tabId) {
@@ -414,29 +409,13 @@ function cambiarContenido(tabId) {
   formulario.innerHTML = contenido[tabId].campos;
   resultados.innerHTML = contenido[tabId].resultados;
 
-  setTimeout(() => {
-    const btnHipoteca = document.getElementById('btnHipoteca');
-    const btnPrestamo = document.getElementById('btnPrestamo');
-    const btnAutonomo = document.getElementById('btnAutonomo');
+  const checkbox = document.getElementById('checkbox');
 
-    if (btnHipoteca) {
-      btnHipoteca.addEventListener('click', () => {
-        mostrarGrafico('renta');
-      });
+  checkbox.addEventListener('change', (event) => {
+    if (checkbox) {
+      verCheckbox();
     }
-
-    if (btnPrestamo) {
-      btnPrestamo.addEventListener('click', () => {
-        mostrarGrafico('iva');
-      });
-    }
-
-    if (btnAutonomo) {
-      btnAutonomo.addEventListener('click', () => {
-        // Aquí puedes poner la lógica para la pestaña de autónomos si lo necesitas
-      });
-    }
-  }, 100);
+  })
 }
 
 tabs.forEach(tab => {
@@ -447,5 +426,8 @@ tabs.forEach(tab => {
   });
 });
 
-// Inicialización por defecto
-cambiarContenido('renta');
+
+cambiarContenido('hipoteca');
+
+
+
