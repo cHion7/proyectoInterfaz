@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio de sesion | InpoSmart</title>
+    <link rel="stylesheet" href="../Pagina web/CSS file/InicioSesion.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">emailjs.init('OXblKMh3Qmzf1P3Kj')</script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <main id="main">
+        <section id="registroCuadro">
+            <h1 class="titulo">InpoSmart</h1>
+            <h2 class="subtitulo">Ingrese el email de recuperacion</h2>
+            <form id="resetPasswordForm">
+                <input class="line" type="email" id="email" placeholder="Introduce tu correo" required />
+                <button class="boton" type="submit">Enviar enlace para restablecer</button>
+            </form>
+        </section>
+    </main>
+    <script type="module" src="../Pagina web/javaScript/contrasen.js"></script>
+</body>
+
+</html>
+
+<!--https://www.youtube.com/watch?v=Hcsr8doIED4&ab_channel=MoureDevTV-->
+<!--https://www.youtube.com/watch?v=mmo9PR_9m84&ab_channel=QuantDani-->
