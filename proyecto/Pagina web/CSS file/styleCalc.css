@@ -1,0 +1,133 @@
+
+nav {
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  gap: 1rem;
+  justify-content: center;
+}
+
+nav li {
+  padding: 0.5rem 1rem;
+  background: #e0e0e0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+nav li.active {
+  background: #1d4ed8;
+  color: white;
+}
+
+nav li:hover {
+  background: #d0d0d0;
+  transform: scale(1.05);
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 2rem;
+  margin: 1rem auto;
+  max-width: 1200px;
+  padding: 1rem;
+}
+
+form {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+*:disabled {
+  background-color: rgb(238, 227, 227);
+  color: linen;
+  opacity: 70%;
+}
+
+#igualar {
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  padding: 2rem;
+
+  grid-row: 2;
+  grid-column: 1;
+}
+
+#formulario {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  min-height: 33rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+#resultados {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  min-height: 34rem;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+
+#graficoHipoteca {
+  grid-row: 4;
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0.1rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+#graficoPrestamo {
+  grid-row: 4;
+  grid-column: 0 / -1;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0.1rem;
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#creacionDeTabla {
+  grid-row: 4;
+  grid-column: 1 / -1;
+  width: 100%;
+  max-width: 800px;
+  margin-left: 2rem;
+  border: 1px solid #1d4ed8;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+aside {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  grid-row: 2;
+  grid-column: 2;
+  height: fit-content;
+}
+
