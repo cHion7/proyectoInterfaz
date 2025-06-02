@@ -7,6 +7,8 @@
   <title>Inicio de sesion | InpoSmart</title>
   <link rel="stylesheet" href="../Pagina web/CSS file/InicioSesion.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
 
 <body>
@@ -19,6 +21,10 @@
         <input class="line" type="password" id="password" placeholder="Contraseña" required />
         <button class="boton" type="submit">Iniciar sesión</button>
       </form>
+      <br>
+      <button id="googleLogin">Iniciar con Google</button>
+
+  
       <p class="texto-abajo">¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
       <p class="texto-abajo">¿No recuerdas tu contraseña? <a href="recogerEmail.html">Cambiar contraseña</a></p>
     </section>
