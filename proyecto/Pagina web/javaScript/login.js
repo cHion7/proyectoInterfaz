@@ -9,11 +9,12 @@ const firebaseConfig = {
   messagingSenderId: "322269238228",
   appId: "1:322269238228:android:90de023599f3f7f7157c41"
 };
-
+//--------------------------------------------------------------
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+//--------------------------------------------------------------
 
 document.getElementById("googleLogin").addEventListener("click", () => {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -29,6 +30,8 @@ document.getElementById("googleLogin").addEventListener("click", () => {
       alert("Error: " + error.message);
     });
 });
+
+//--------------------------------------------------------------
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -47,7 +50,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     alert("Error al iniciar sesión: " + error.message);
   }
 });
-
+//--------------------------------------------------------------
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -57,7 +60,7 @@ onAuthStateChanged(auth, (user) => {
     console.log("Nadie ha iniciado sesión");
   }
 });
-
+//--------------------------------------------------------------
 
 
 
@@ -81,6 +84,7 @@ function enviarDatos() {
     alert("Usuario no autenticado.");
   }
 }
+//--------------------------------------------------------------
 
 auth.signInWithEmailAndPassword("usuario@ejemplo.com", "contraseña123")
   .then(() => {
@@ -107,7 +111,7 @@ auth.signInWithEmailAndPassword("usuario@ejemplo.com", "contraseña123")
     console.error("Error al autenticar:", error.message);
   });
 
-
+//--------------------------------------------------------------
 
 db.ref("usuarios/" + uid + "/mensajes").get().then(snapshot => {
   if (snapshot.exists()) {
@@ -116,7 +120,7 @@ db.ref("usuarios/" + uid + "/mensajes").get().then(snapshot => {
   }
 });
 
-
+//--------------------------------------------------------------
 onAuthStateChanged(auth, (user) => {
   if (user) {
     window.location.href = "Inicio.html"; // ya está logueado, ir directamente
