@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCi97vgUzaR-TXpFvmv5vMKG7cdm7vNhU",
@@ -23,7 +23,9 @@ const db = getDatabase(app);
 
 //--------------------------------------------------------------
 
-document.getElementById("googleLogin").addEventListener("click", async () => {
+document.getElementById("googleLogin").addEventListener("click", async (e) => {
+  e.preventDefault();
+  
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
@@ -64,71 +66,3 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 //--------------------------------------------------------------
-
-
-
-
-
-function enviarDatos(datosGuardar) {
-  const user = auth.currentUser;
-  if (datosGuardar != null) {
-    if (user) {
-      const uid = user.uid;
-      datosGuardar.forEach((item, index) => {
-
-        for (let clave in item) {
-          set(ref(db, "usuarios/" + uid + "/datos/" + clave), item[clave])
-            .catch((error) => {
-              console.error("Error al guardar datos:", error);
-            });
-        }
-      });
-    }
-  } else {
-    //Si es null borra todo 
-  }
-}
-//--------------------------------------------------------------
-/*
-auth.signInWithEmailAndPassword("usuario@ejemplo.com", "contraseña123")
-  .then(() => {
-    const user = auth.currentUser;
-    if (user) {
-      const uid = user.uid;
-      const referencia = db.ref("usuarios/" + uid + "/mensajes");
-
-      referencia.on("value", (snapshot) => {
-        const lista = document.getElementById("listaMensajes");
-        lista.innerHTML = ""; // Limpiar lista
-
-        const datos = snapshot.val();
-        for (let clave in datos) {
-          const mensaje = datos[clave].texto;
-          const item = document.createElement("li");
-          item.textContent = mensaje;
-          lista.appendChild(item);
-        }
-      });
-    }
-  })
-  .catch((error) => {
-    console.error("Error al autenticar:", error.message);
-  });
-
-//--------------------------------------------------------------
-
-db.ref("usuarios/" + uid + "/mensajes").get().then(snapshot => {
-  if (snapshot.exists()) {
-    const datos = snapshot.val();
-    // usar datos
-  }
-});
-
-//--------------------------------------------------------------
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    window.location.href = "Inicio.html"; // ya está logueado, ir directamente
-  }
-});
-
-*/

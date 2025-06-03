@@ -132,11 +132,18 @@ function enviarCuestionario() {
       gastosDeduciblesEmpresa: lineGastosDeduciblesEmpresario.value
     });
   }
-  //login.enviarDatos(datos)//--------------------------------------------------------------------------------
+
+
+  if (window.transferenciaDeDatos && typeof window.transferenciaDeDatos.enviarDatos === "function") {
+    window.transferenciaDeDatos.enviarDatos(datos); //--------------------------------------------------------------------------------
+    mostrarToast("Formulario enviado correctamente", "success");
+  } else {
+    mostrarToast("No se pudo enviar los datos: función no disponible", "error");
+  }
+
   deshabilitarCampos();
 
 
-  mostrarToast("Formulario enviado correctamente", "success");
 
   // añadirFirebase(datos);
 } function mostrarToast(mensaje, tipo) {
