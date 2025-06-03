@@ -1,5 +1,12 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCi97vgUzaR-TXpFvmv5vMKG7cdm7vNhU",
@@ -10,27 +17,23 @@ const firebaseConfig = {
   appId: "1:322269238228:android:90de023599f3f7f7157c41"
 };
 //--------------------------------------------------------------
-
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
 //--------------------------------------------------------------
 
-document.getElementById("googleLogin").addEventListener("click", () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-
-  auth.signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
-      console.log("Usuario autenticado:", user.email);
-      window.location.href = "Inicio.html";
-    })
-    .catch((error) => {
-      console.error("Error en login con Google:", error.message);
-      alert("Error: " + error.message);
-    });
+document.getElementById("googleLogin").addEventListener("click", async () => {
+  const provider = new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    console.log("Usuario autenticado con Google:", user.email);
+    window.location.href = "Inicio.html";
+  } catch (error) {
+    console.error("Error en login con Google:", error.message);
+  }
 });
-
 //--------------------------------------------------------------
 
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
@@ -66,26 +69,27 @@ onAuthStateChanged(auth, (user) => {
 
 
 
-function enviarDatos() {
-  const mensaje = document.getElementById("mensaje").value;
-
+function enviarDatos(datosGuardar) {
   const user = auth.currentUser;
-  if (user) {
-    const uid = user.uid;
-    const referencia = db.ref("usuarios/" + uid + "/mensajes");
+  if (datosGuardar != null) {
+    if (user) {
+      const uid = user.uid;
+      datosGuardar.forEach((item, index) => {
 
-    // Enviamos el mensaje con una clave única
-    referencia.push({
-      texto: mensaje,
-      timestamp: Date.now()
-    });
-    alert("Mensaje enviado!");
+        for (let clave in item) {
+          set(ref(db, "usuarios/" + uid + "/datos/" + clave), item[clave])
+            .catch((error) => {
+              console.error("Error al guardar datos:", error);
+            });
+        }
+      });
+    }
   } else {
-    alert("Usuario no autenticado.");
+    //Si es null borra todo 
   }
 }
 //--------------------------------------------------------------
-
+/*
 auth.signInWithEmailAndPassword("usuario@ejemplo.com", "contraseña123")
   .then(() => {
     const user = auth.currentUser;
@@ -126,3 +130,5 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "Inicio.html"; // ya está logueado, ir directamente
   }
 });
+
+*/

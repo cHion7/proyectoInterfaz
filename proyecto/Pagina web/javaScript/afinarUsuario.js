@@ -51,7 +51,6 @@ function modCampos() {
 
 
 function enviarCuestionario() {
-  const notificacion = document.createElement("div");
   let datos = [];
 
 
@@ -61,12 +60,20 @@ function enviarCuestionario() {
   }
 
 
-  const eleecion = comboSituacionBasic.value;
-  const ingresoBruto = lineIngresoBasic.value;
-  const edad = lineEdadBasic.value;
-  const personasACargo = lineAcargoBasic.value;
-  const vivienda = radioViviendaTrueBasic.checked ? true : false;
 
+  const eleecion = comboSituacionBasic.value;
+  /* const ingresoBruto = lineIngresoBasic.value;
+   const edad = lineEdadBasic.value;
+   const personasACargo = lineAcargoBasic.value;
+   const vivienda = radioViviendaTrueBasic.checked ? true : false;*/
+
+  datos.push({
+    eleecion: comboSituacionBasic.value,
+    ingresoBruto: lineIngresoBasic.value,
+    edad: lineEdadBasic.value,
+    personasACargo: lineAcargoBasic.value,
+    vivienda: radioViviendaTrueBasic.value
+  });
 
   if (eleecion === "Autonomo") {
     if (!dateAltaAutonomo.value || !lineActividadAutonomo.value || !lineGastosAutonomo.value || !lineIvaSuportAutonomo.value || !lineIvaRepertAutonomo.value || (!radiovehiculoTrueAutonomo.checked && !radiovehiculoFalseAutonomo.checked)) {
@@ -125,8 +132,7 @@ function enviarCuestionario() {
       gastosDeduciblesEmpresa: lineGastosDeduciblesEmpresario.value
     });
   }
-
-
+  //login.enviarDatos(datos)//--------------------------------------------------------------------------------
   deshabilitarCampos();
 
 
