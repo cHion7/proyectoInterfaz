@@ -375,6 +375,20 @@
   gap: 0.5rem;
 }
 
+/* Alineación del título y Día Actual */
+.transactions-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem; /* el mismo margen que ya tienes */
+}
+
+.current-day {
+  font-size: 0.875rem;
+  color: #6b7280; /* gris suave */
+}
+
+
 /* Sección derecha */
 .right-section {
   background: white;
