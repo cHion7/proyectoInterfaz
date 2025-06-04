@@ -51,7 +51,6 @@ function modCampos() {
 
 
 function enviarCuestionario() {
-  const notificacion = document.createElement("div");
   let datos = [];
 
 
@@ -61,12 +60,20 @@ function enviarCuestionario() {
   }
 
 
-  const eleecion = comboSituacionBasic.value;
-  const ingresoBruto = lineIngresoBasic.value;
-  const edad = lineEdadBasic.value;
-  const personasACargo = lineAcargoBasic.value;
-  const vivienda = radioViviendaTrueBasic.checked ? true : false;
 
+  const eleecion = comboSituacionBasic.value;
+  /* const ingresoBruto = lineIngresoBasic.value;
+   const edad = lineEdadBasic.value;
+   const personasACargo = lineAcargoBasic.value;
+   const vivienda = radioViviendaTrueBasic.checked ? true : false;*/
+
+  datos.push({
+    eleecion: comboSituacionBasic.value,
+    ingresoBruto: lineIngresoBasic.value,
+    edad: lineEdadBasic.value,
+    personasACargo: lineAcargoBasic.value,
+    vivienda: radioViviendaTrueBasic.value
+  });
 
   if (eleecion === "Autonomo") {
     if (!dateAltaAutonomo.value || !lineActividadAutonomo.value || !lineGastosAutonomo.value || !lineIvaSuportAutonomo.value || !lineIvaRepertAutonomo.value || (!radiovehiculoTrueAutonomo.checked && !radiovehiculoFalseAutonomo.checked)) {
@@ -127,10 +134,16 @@ function enviarCuestionario() {
   }
 
 
+  if (window.transferenciaDeDatos && typeof window.transferenciaDeDatos.enviarDatos === "function") {
+    window.transferenciaDeDatos.enviarDatos(datos); //--------------------------------------------------------------------------------
+    mostrarToast("Formulario enviado correctamente", "success");
+  } else {
+    mostrarToast("No se pudo enviar los datos: función no disponible", "error");
+  }
+
   deshabilitarCampos();
 
 
-  mostrarToast("Formulario enviado correctamente", "success");
 
   // añadirFirebase(datos);
 } function mostrarToast(mensaje, tipo) {

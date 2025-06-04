@@ -241,7 +241,7 @@ function calcularLinea() {
   });
 
   if (graficoPrestamo) graficoPrestamo.style.display = 'flex';
-    genera_tabla(plazoPrestamo, anualidad, interesesArray, capitalAcumuladoArray, capitalPendienteArray);
+  genera_tabla(plazoPrestamo, anualidad, interesesArray, capitalAcumuladoArray, capitalPendienteArray);
 
 }
 
@@ -268,31 +268,26 @@ function genera_tabla(anos, anualidad, intereses, capitalAcumulado, capitalPendi
   for (let i = 0; i < anos; i++) {
     const hilera = document.createElement("tr");
 
-    // Columna 1: Año
     const celdaAnio = document.createElement("td");
     const textoAnio = document.createTextNode(`Año ${i + 1}`);
     celdaAnio.appendChild(textoAnio);
     hilera.appendChild(celdaAnio);
 
-    // Columna 2: Anualidad
     const celdaAnualidad = document.createElement("td");
     const textoAnualidad = document.createTextNode(anualidad.toFixed(2));
     celdaAnualidad.appendChild(textoAnualidad);
     hilera.appendChild(celdaAnualidad);
 
-    // Columna 3: Intereses
     const celdaInteres = document.createElement("td");
     const textoInteres = document.createTextNode(intereses[i].toFixed(2));
     celdaInteres.appendChild(textoInteres);
     hilera.appendChild(celdaInteres);
 
-    // Columna 4: Cuota amortizada
     const celdaCuota = document.createElement("td");
     const textoCuota = document.createTextNode(capitalAcumulado[i].toFixed(2));
     celdaCuota.appendChild(textoCuota);
     hilera.appendChild(celdaCuota);
 
-    // Columna 5: Capital pendiente
     const celdaCapitalPendiente = document.createElement("td");
     const textoCapitalPendiente = document.createTextNode(capitalPendiente[i].toFixed(2));
     celdaCapitalPendiente.appendChild(textoCapitalPendiente);
