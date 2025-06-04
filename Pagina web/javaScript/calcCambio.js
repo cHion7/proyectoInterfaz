@@ -141,16 +141,6 @@ function calcularPie() {
 }
 
 
-function verCheckbox() {
-  const checkbox = document.getElementById('checkbox');
-  if (checkbox.checked) {
-    document.getElementById('interesPost').disabled = false;
-    document.getElementById('anioCambio').disabled = false;
-  } else {
-    document.getElementById('interesPost').disabled = true;
-    document.getElementById('anioCambio').disabled = true;
-  }
-}
 
 
 
@@ -403,14 +393,6 @@ function cambiarContenido(tabId) {
   }
   formulario.innerHTML = contenido[tabId].campos;
   resultados.innerHTML = contenido[tabId].resultados;
-
-  const checkbox = document.getElementById('checkbox');
-
-  checkbox.addEventListener('change', (event) => {
-    if (checkbox) {
-      verCheckbox();
-    }
-  })
 }
 
 tabs.forEach(tab => {

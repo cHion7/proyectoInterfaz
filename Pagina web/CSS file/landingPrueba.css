@@ -37,6 +37,7 @@
   font-weight: 500;
   transition: background-color 0.3s ease;
 }
+
 .btn-firebase:hover {
   background-color: #e0f2fe;
 }
@@ -52,7 +53,7 @@
   background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
   color: white;
 
-  
+
 }
 
 .seccionArriba-title {
@@ -65,7 +66,7 @@
 .seccionArriba-subtitle {
   font-size: 1.25rem;
   color: #dbeafe;
-  
+
 }
 
 #seccionArriba-image {
@@ -103,7 +104,7 @@
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(3, 1fr);
-  
+
 }
 
 .carta {
@@ -140,13 +141,12 @@
   background-color: #f3f4f6;
 }
 
+
+
 #disposicioSobreNosotros {
   max-width: 80rem;
   margin: 0 auto;
   padding: 5rem 1rem;
-}
-
-#disposicioSobreNosotros {
   display: grid;
   gap: 3rem;
   grid-template-columns: 1fr 1fr;
@@ -210,8 +210,8 @@ footer {
   text-align: center;
   padding: 20px;
   margin-top: 20px;
-    margin-bottom: 10px;
-    list-style: none;
+  margin-bottom: 10px;
+  list-style: none;
 }
 
 footer #infoFooter ul {
@@ -222,4 +222,35 @@ footer #infoFooter ul {
 footer #footerCopyrigth {
   font-size: 0.9em;
   color: #ccc;
+}
+
+
+
+@media screen and (max-width: 750px) {
+  #seccionArriba-image {
+    display: none;
+  }
+
+  .carta-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  #sobreImagenes {
+    display: none;
+
+  }
+
+  .btn-firebase {
+    padding: 0.5rem;
+  }
+
+  #disposicioSobreNosotros {
+    display: flex;
+    grid-template-columns: 1fr; 
+
+  }
+  .seccionArriba-container {
+    display: flex;
+  }
+
 }

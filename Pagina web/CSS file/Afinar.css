@@ -68,7 +68,6 @@ main {
   background-color: #fff;
   border-radius: 1rem;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.05);
-  ç
 }
 
 #cuadrado {
@@ -80,7 +79,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 32rem;
+  margin-left: 40%;
 }
 
 #parteMedia {
@@ -88,7 +87,7 @@ main {
   background: linear-gradient(135deg, #c3dafe, #e0e7ff);
   display: flex;
   justify-content: center;
-  padding: 5rem 80px;
+  padding: 5rem 5rem;
 
 }
 
@@ -121,13 +120,13 @@ p {
   padding: auto;
   display: flex;
   border: 1px solid #0f0f10;
-  margin-left: 20px;
+  margin-left: 1.25rem;
 }
 
 .primeraVista {
   display: flex;
   border: 1px solid #0000ff;
-  margin-right: 20px;
+  margin-right: 1.25rem;
 
 }
 
@@ -207,9 +206,9 @@ form {
 }
 
 #cambiarDatos {
-  margin: 10px;
-  padding: 10px;
-  border-radius: 20px;
+  margin: 0.63rem;
+  padding: 0.63rem;
+  border-radius: 1.25rem;
   color: white;
   background-color: #29489d;
   transition: background-color 0.3s ease;
@@ -220,7 +219,7 @@ form {
 }
 
 #cerrarSesion {
-  margin: 5px;
+  margin: 0.31rem;
   background-color: #fd0404;
   transition: background-color 0.3s ease;
 
@@ -231,7 +230,7 @@ form {
 }
 
 #cambiarContra {
-  margin: 5px;
+  margin: 0.31rem;
   background-color: #009d13;
   transition: background-color 0.3s ease;
 }

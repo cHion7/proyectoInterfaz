@@ -1,16 +1,14 @@
-    main{}
-    
     #upload {
         display: none;
 
     }
 
     #preview {
-        width: 150px;
-        height: 150px;
+        width: 9.38rem;
+        height: 9.38rem;
         cursor: pointer;
         border: 2px dashed #ccc;
-        padding: 5px;
+        padding: 0.31rem;
         border-radius: 1000rem;
         gap: 2;
     }
@@ -55,7 +53,7 @@
         min-height: 50rem;
         display: flex;
         border: 2px solid #000000;
-        max-width: 400px;
+        max-width: 25rem;
         gap: 10;
         display: none;
         /* Por defecto, oculto */
@@ -64,7 +62,7 @@
 
     .ajustes-cuadro.activo {
         display: flex;
-        margin-left: 110px;
+        margin-left: 6.68rem;
     }
 
     .primeraVista {

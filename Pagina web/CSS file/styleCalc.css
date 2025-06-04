@@ -1,4 +1,3 @@
-
 nav {
   grid-column: 1 / -1;
   margin-bottom: 1rem;
@@ -96,28 +95,17 @@ form {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 #graficoPrestamo {
-  grid-row: 4;
-  grid-column: 0 / -1;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0.1rem;
-  background: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column; /* o row si los quieres lado a lado */
+    gap: 20px; /* separación visual */
+    padding: 20px;
 }
 
-#creacionDeTabla {
-  grid-row: 4;
-  grid-column: 1 / -1;
-  width: 100%;
-  max-width: 800px;
-  margin-left: 2rem;
-  border: 1px solid #1d4ed8;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  background: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.grafico, .tabla {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fafafa;
+    border-radius: 5px;
 }
 
 
@@ -131,3 +119,14 @@ aside {
   height: fit-content;
 }
 
+@media screen and (max-width: 750px) {
+  main{
+    display: block;
+  }
+  #igualar{
+    margin-bottom: 2rem;
+  }
+  aside{
+    margin-bottom: 2rem;
+  }
+}
