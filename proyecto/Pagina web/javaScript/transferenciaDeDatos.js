@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, set, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
 const firebaseConfig = {
@@ -9,7 +9,8 @@ const firebaseConfig = {
   projectId: "base-de-datos-del-tfg-1",
   storageBucket: "base-de-datos-del-tfg-1.appspot.com",
   messagingSenderId: "322269238228",
-  appId: "1:322269238228:android:90de023599f3f7f7157c41"
+  appId: "1:322269238228:android:90de023599f3f7f7157c41",
+  databaseURL: "https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app"
 };
 //--------------------------------------------------------------
 const app = initializeApp(firebaseConfig);
@@ -21,6 +22,10 @@ function enviarDatos(datosGuardar) {
   if (datosGuardar != null) {
     const uid = user.email.split(/[@.]/).join("_");
     console.log(uid)
+    remove(ref(db, "Usuarios/" + uid + "/datos/"))
+      .catch((error) => {
+        console.error("Esta ya vacio:", error);
+      });
     datosGuardar.forEach((item) => {
       for (let clave in item) {
         const valor = item[clave];

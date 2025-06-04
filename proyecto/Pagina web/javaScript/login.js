@@ -14,7 +14,8 @@ const firebaseConfig = {
   projectId: "base-de-datos-del-tfg-1",
   storageBucket: "base-de-datos-del-tfg-1.appspot.com",
   messagingSenderId: "322269238228",
-  appId: "1:322269238228:android:90de023599f3f7f7157c41"
+  appId: "1:322269238228:android:90de023599f3f7f7157c41",
+   databaseURL: "https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app"
 };
 //--------------------------------------------------------------
 const app = initializeApp(firebaseConfig);
