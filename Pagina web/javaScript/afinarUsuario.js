@@ -1,3 +1,24 @@
+function hacer() {
+  if (
+    typeof window.transferenciaDeDatos.recibirDatos === "function" &&
+    typeof window.transferenciaDeDatos.recibirDatosPerfil === "function"
+  ) {
+    window.transferenciaDeDatos.recibirDatos().then((datos) => {
+      console.log("Datos del usuario:", datos);
+      rellenarDatosUsuario(datos);
+    });
+
+    window.transferenciaDeDatos.recibirDatosPerfil().then((datos) => {
+      console.log("Perfil del usuario:", datos);
+      rellenarDatosPerfil(datos);
+    });
+  } else {
+    console.error("recibirDatos o recibirDatosPerfil no están definidos.");
+  }
+}
+
+
+
 function mostrarCuadro(idCuadroActivo) {
   const cuadros = document.querySelectorAll(".ajustes-cuadro");
   cuadros.forEach(cuadro => {
@@ -25,21 +46,37 @@ combo.addEventListener('change', (event) => {
 
 let activo = false
 function modCampos() {
+  console.log("modCampos ejecutado");
+  let perfilDatos = [];
   const nombre = document.querySelector("#nombres");
-  const situacion = document.querySelector("#situacion");
+  const telefono = document.querySelector("#telefono");
   const button = document.querySelector("#cambiarDatos");
+
+  perfilDatos.push({
+    nombre: nombre.value,
+    telefono: telefono.value,
+  });
+  console.log(nombre.value)
+  console.log(telefono.value)
+
+  console.log("ejecuta")
+  if (window.transferenciaDeDatos && typeof window.transferenciaDeDatos.enviarPerfil === "function") {
+    window.transferenciaDeDatos.enviarPerfil(perfilDatos);
+  } else {
+    console.error("enviarPerfil no está definido como función en transferenciaDeDatos");
+  }
+
   if (!activo) {
     button.style.backgroundColor = "green";
-    activo = true
+    activo = true;
     nombre.disabled = false;
-    situacion.disabled = false;
-    button.textContent = "guardar cambios"
-
+    telefono.disabled = false;
+    button.textContent = "guardar cambios";
   } else {
     button.style.backgroundColor = "blue";
-    activo = false
+    activo = false;
     nombre.disabled = true;
-    situacion.disabled = true;
+    telefono.disabled = true;
     button.innerHTML = `
     Cambiar datos 
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -47,6 +84,92 @@ function modCampos() {
     </svg>
     `;
   }
+}
+function rellenarDatosPerfil(datosPerfil) {
+  console.log("paso 1.1")
+  const nombre = document.querySelector("#nombres");
+  const telefono = document.querySelector("#telefono");
+  console.log(datosPerfil)
+  if (datosPerfil) {
+    console.log("paso 1.2")//no entra
+    nombre.value = datosPerfil.nombre || "";
+    telefono.value = datosPerfil.telefono || "";
+  }
+}
+
+function rellenarDatosUsuario(datosPerfilar) {
+  console.log("paso 1.3")
+  console.log(datosPerfilar)
+   console.log("--------------------------entra---------------------------")
+
+  // Rellenar preguntas comunes
+  const datosComunes = datosPerfilar[0];
+  console.log("Rellenando preguntas comunes:", datosComunes);
+  comboSituacionBasic.value = datosComunes.eleecion || "";
+  lineIngresoBasic.value = datosComunes.ingresoBruto || "";
+  lineEdadBasic.value = datosComunes.edad || "";
+  lineAcargoBasic.value = datosComunes.personasACargo || "";
+  if (typeof datosComunes.vivienda === "boolean") {
+    radioViviendaTrueBasic.checked = datosComunes.vivienda === true;
+    radioViviendaFalseBasic.checked = datosComunes.vivienda === false;
+  }
+
+  // Mostrar el cuadro adecuado según la situación
+  console.log("Mostrando cuadro para:", datosComunes.eleecion);
+  mostrarCuadro("ajustesCuadro" + (datosComunes.eleecion || ""));
+
+  // Rellenar preguntas específicas según el tipo
+  const tipo = datosComunes.eleecion;
+  const datosEspecificos = datosPerfilar[1] || {};
+  console.log("Tipo de usuario:", tipo, "Datos específicos:", datosEspecificos);
+
+  if (tipo === "Autonomo") {
+    console.log("Rellenando campos de Autónomo");
+    dateAltaAutonomo.value = datosEspecificos.fechaAlta || "";
+    lineActividadAutonomo.value = datosEspecificos.actividad || "";
+    lineGastosAutonomo.value = datosEspecificos.gastosDeducibles || "";
+    lineIvaSuportAutonomo.value = datosEspecificos.ivaSoportado || "";
+    lineIvaRepertAutonomo.value = datosEspecificos.ivaRepercutido || "";
+    if (typeof datosEspecificos.vehiculo === "boolean") {
+      radiovehiculoTrueAutonomo.checked = datosEspecificos.vehiculo === true;
+      radiovehiculoFalseAutonomo.checked = datosEspecificos.vehiculo === false;
+    }
+  } else if (tipo === "Asalariado") {
+    console.log("Rellenando campos de Asalariado");
+    comboTipoJobAsalariado.value = datosEspecificos.tipoContrato || "";
+    if (typeof datosEspecificos.familiaNumerosa === "boolean") {
+      radioFamiliaTrueAsalariado.checked = datosEspecificos.familiaNumerosa === true;
+      radioFamiliaFalseAsalariado.checked = datosEspecificos.familiaNumerosa === false;
+    }
+    lineArrayEdadesAsalariado.value = datosEspecificos.edadesHijos || "";
+    lineGastosAsalariado.value = datosEspecificos.gastosEscolares || "";
+  } else if (tipo === "Estudiante") {
+    console.log("Rellenando campos de Estudiante");
+    comboEstudiosEstudiante.value = datosEspecificos.tipoEstudios || "";
+    if (typeof datosEspecificos.trabaja === "boolean") {
+      radioTrabajoTrueEstudiante.checked = datosEspecificos.trabaja === true;
+      radioTrabajoFalseEstudiante.checked = datosEspecificos.trabaja === false;
+    }
+    lineBecaEstudiante.value = datosEspecificos.becaCantidad || "";
+  } else if (tipo === "Jubilado") {
+    console.log("Rellenando campos de Jubilado");
+    linePensionJubilado.value = datosEspecificos.pensionAnual || "";
+    if (typeof datosEspecificos.segundaVivienda === "boolean") {
+      radioSegundaViviendaTrueJubilado.checked = datosEspecificos.segundaVivienda === true;
+      radioSegundaViviendaFalseJubilado.checked = datosEspecificos.segundaVivienda === false;
+    }
+    lineGastosMedicosJubilado.value = datosEspecificos.gastosMedicos || "";
+  } else if (tipo === "Empresario") {
+    console.log("Rellenando campos de Empresario");
+    comboTipoContratoEmpresario.value = datosEspecificos.tipoContrato || "";
+    lineFacturacionEmpresario.value = datosEspecificos.facturacionEmpresa || "";
+    lineSueldoAdministradorEmpresario.value = datosEspecificos.sueldoAdministrador || "";
+    lineEmpleadosEmpresario.value = datosEspecificos.empleados || "";
+    lineGastosDeduciblesEmpresario.value = datosEspecificos.gastosDeduciblesEmpresa || "";
+  }
+
+  // Deshabilitar todos los campos del formulario
+  deshabilitarCampos();
 }
 
 
@@ -64,7 +187,7 @@ function enviarCuestionario() {
   const eleecion = comboSituacionBasic.value;
   /* const ingresoBruto = lineIngresoBasic.value;
    const edad = lineEdadBasic.value;
-   const personasACargo = lineAcargoBasic.value;
+   const personasACargo = lineAcasgoBasic.value;
    const vivienda = radioViviendaTrueBasic.checked ? true : false;*/
 
   datos.push({

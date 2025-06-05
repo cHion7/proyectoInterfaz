@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Impuestos</title>
+    <!-- Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Nuestro CSS (sin Tailwind) -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="header__container">
+            <div class="header__logo-seccion">
+                <div class="header__logo-circulo">
+                    <i class="fas fa-calculator header__logo-icono"></i>
+                </div>
+                <h1 class="header__titulo">Calculadora de Impuestos</h1>
+            </div>
+            <nav class="nav">
+                <a href="Inicio.html" class="nav__enlace">
+                    <i class="far fa-calendar-alt nav__icono"></i>
+                    <span class="nav__texto">Calendario</span>
+                </a>
+                <a href="Calculadora.html" class="nav__enlace nav__enlace--activo">
+                    <i class="fas fa-calculator nav__icono nav__icono--activo"></i>
+                    <span class="nav__texto nav__texto--activo">Calculadora</span>
+                </a>
+                <a href="afinarPerfil.html" class="nav__enlace">
+                    <i class="far fa-user nav__icono"></i>
+                    <span class="nav__texto">Perfil</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section id="hero" class="hero">
+        <div class="hero__container">
+            <h2 class="hero__titulo">Calcula tu situación fiscal con precisión</h2>
+            <p class="hero__texto">
+                Nuestra calculadora avanzada te permite estimar tus impuestos en hipotecas, préstamos y criptomonedas de forma simple y rápida.
+            </p>
+            <div class="hero__boton-contenedor">
+                <button class="btn-primary">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Cómo funciona</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal -->
+    <main class="main">
+        <!-- Pestañas de navegación -->
+        <div class="tabs-container">
+            <ul class="tabs">
+                <li class="tabs__item tabs__item--activo" data-tab="hipoteca">
+                    <i class="fas fa-home tabs__icono"></i>
+                    <span>Hipoteca</span>
+                </li>
+                <li class="tabs__item" data-tab="prestamo">
+                    <i class="fas fa-hand-holding-usd tabs__icono"></i>
+                    <span>Préstamo</span>
+                </li>
+                <li class="tabs__item" data-tab="criptomonedas">
+                    <i class="fab fa-bitcoin tabs__icono"></i>
+                    <span>Criptomonedas</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="grid">
+            <!-- Formulario -->
+            <div id="igualar" class="card">
+                <div class="card__header">
+                    <div class="card__icono-wrapper">
+                        <i class="fas fa-edit card__icono"></i>
+                    </div>
+                    <h2 id="form-title" class="card__titulo">Formulario de Hipoteca</h2>
+                </div>
+                <form id="formulario" class="formulario">
+                    <!-- El contenido del formulario se inyectará dinámicamente por JavaScript -->
+                </form>
+            </div>
+
+            <!-- Resultados -->
+            <aside class="card card--aside">
+                <div class="card__header">
+                    <div class="card__icono-wrapper card__icono-wrapper--verde">
+                        <i class="fas fa-chart-line card__icono"></i>
+                    </div>
+                    <h2 class="card__titulo">Resultados</h2>
+                </div>
+                <div id="resultados" class="resultados">
+                    <!-- El contenido de los resultados se inyectará dinámicamente por JavaScript -->
+                </div>
+            </aside>
+
+            <!-- Gráficos Hipoteca -->
+            <section id="graficoHipoteca" class="card card--chart">
+                <div class="card__header">
+                    <div class="card__icono-wrapper card__icono-wrapper--morado">
+                        <i class="fas fa-chart-pie card__icono"></i>
+                    </div>
+                    <h2 class="card__titulo">Análisis de Hipoteca</h2>
+                </div>
+                <canvas id="graficoPie" class="grafico"></canvas>
+            </section>
+
+            <!-- Gráficos Préstamo (oculto por defecto) -->
+            <section id="graficoPrestamo" class="card card--chart card--oculto">
+                <div class="card__header">
+                    <div class="card__icono-wrapper card__icono-wrapper--naranja">
+                        <i class="fas fa-chart-bar card__icono"></i>
+                    </div>
+                    <h2 class="card__titulo">Proyección del Préstamo</h2>
+                </div>
+                <div class="chart__grid">
+                    <div class="chart__wrapper">
+                        <canvas id="graficoBarra" class="grafico"></canvas>
+                    </div>
+                    <div id="creacionDeTabla" class="tabla-contenedor">
+                        <!-- Tabla se generará aquí -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__seccion">
+                <h3 class="footer__titulo">Contacto</h3>
+                <ul class="footer__lista">
+                    <li class="footer__item">
+                        <i class="fas fa-phone footer__icono"></i>
+                        <span>123-456-7890</span>
+                    </li>
+                    <li class="footer__item">
+                        <i class="fas fa-envelope footer__icono"></i>
+                        <span>info@sonchez.com</span>
+                    </li>
+                    <li class="footer__item">
+                        <i class="fas fa-map-marker-alt footer__icono"></i>
+                        <span>Calle Principal, 123, Ciudad Financiera</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__seccion">
+                <h3 class="footer__titulo">Nuestros Servicios</h3>
+                <ul class="footer__lista">
+                    <li class="footer__item">
+                        <i class="fas fa-calculator footer__icono"></i>
+                        <span>Cálculo de impuestos</span>
+                    </li>
+                    <li class="footer__item">
+                        <i class="fas fa-file-invoice-dollar footer__icono"></i>
+                        <span>Asesoramiento fiscal</span>
+                    </li>
+                    <li class="footer__item">
+                        <i class="fas fa-chart-line footer__icono"></i>
+                        <span>Planificación financiera</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer__bottom">
+            <p>© 2023 ChinChonChun S.A - Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

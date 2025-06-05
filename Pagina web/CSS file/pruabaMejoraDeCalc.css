@@ -1,0 +1,816 @@
+/* =======================================
+   style.css (versión revisada y corregida)
+   ======================================= */
+
+/* ---------------------
+   Variables de color
+   --------------------- */
+:root {
+  --color-primary: #1d4ed8;
+  --color-secondary: #3b82f6;
+  --color-accent: #10b981;
+  --color-dark: #1e293b;
+  --color-light: #f1f5f9;
+  --color-white: #ffffff;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-800: #1f2937;
+  --color-blue-100: #bfdbfe;
+  --color-blue-700: #1d4ed8;
+  --color-purple-100: #e9d5ff;
+  --color-purple-700: #7c3aed;
+  --color-orange-100: #ffedd5;
+  --color-orange-700: #d97706;
+  --color-green-100: #d1fae5;
+  --color-green-700: #047857;
+  --color-red-600: #dc2626;
+  --color-green-600: #16a34a;
+  --radius-default: 0.5rem; /* 8px */
+  --radius-card: 1rem;     /* 16px */
+  --shadow-default: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --transition-fast: 0.2s;
+  --transition-medium: 0.3s;
+  --font-family-base: Arial, sans-serif;
+}
+
+/* ---------------------
+   Reset y estilos base
+   --------------------- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color var(--transition-medium),
+              color var(--transition-medium),
+              transform var(--transition-fast);
+}
+
+body {
+  background-color: var(--color-light);
+  color: var(--color-gray-800);
+  font-family: var(--font-family-base);
+  line-height: 1.5;
+}
+
+/* Contenedor genérico */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* --------------------------
+   Estilos de Header y Nav
+   -------------------------- */
+.header {
+  background-color: var(--color-white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.header__logo-seccion {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+}
+
+.header__logo-circulo {
+  width: 2.5rem;  /* 40px */
+  height: 2.5rem; /* 40px */
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__logo-icono {
+  color: var(--color-white);
+  font-size: 1.25rem; /* 20px */
+}
+
+.header__titulo {
+  font-size: 1.5rem;   /* 24px */
+  font-weight: 700;
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem; /* 4px */
+  background-color: var(--color-gray-100);
+  padding: 0.25rem; /* 4px */
+  border-radius: var(--radius-default);
+}
+
+.nav__enlace {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  padding: 0.5rem 1rem; /* 8px 16px */
+  border-radius: var(--radius-default);
+  color: var(--color-gray-800);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem; /* 16px */
+}
+
+.nav__enlace:hover {
+  background-color: var(--color-white);
+}
+
+.nav__enlace--activo {
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav__icono {
+  font-size: 1rem; /* 16px */
+  color: var(--color-gray-800);
+}
+
+.nav__icono--activo {
+  color: var(--color-primary);
+}
+
+.nav__texto--activo {
+  color: var(--color-primary);
+}
+
+/* --------------------------
+   Sección Hero (Banner)
+   -------------------------- */
+.hero {
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  color: var(--color-white);
+  padding: 2.5rem 0; /* 40px 0 */
+  text-align: center;
+}
+
+.hero__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero__titulo {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  margin-bottom: 1rem; /* 16px */
+}
+
+.hero__texto {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+.hero__boton-contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-primary {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  border-radius: var(--radius-default);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-medium),
+              transform var(--transition-fast);
+}
+
+.btn-primary i {
+  font-size: 1rem; /* 16px */
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gray-100);
+  transform: translateY(-2px);
+}
+
+/* -----------------------------
+   Tabs de Navegación Interna
+   ----------------------------- */
+.tabs-container {
+  background-color: var(--color-gray-100);
+  padding: 0.5rem; /* 8px */
+  border-radius: var(--radius-card);
+  max-width: 1024px;
+  margin: 2rem auto; /* 32px arriba y abajo */
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* 8px */
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+
+.tabs__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* 8px */
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  border-radius: var(--radius-default);
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-800);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--transition-medium),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+.tabs__item:hover {
+  background-color: var(--color-gray-200);
+}
+
+.tabs__item--activo {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.tabs__icono {
+  font-size: 1rem; /* 16px */
+}
+
+/* -----------------------------
+   Grid Principal (Main Content)
+   ----------------------------- */
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem; /* 32px 16px */
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem; /* 32px */
+    row-gap: 2rem;    /* 32px */
+  }
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 2rem; /* 32px */
+  }
+}
+
+/* -----------------------------
+   Estilos de Tarjeta (Card)
+   ----------------------------- */
+.card {
+  background-color: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-default);
+  overflow: hidden;
+  padding: 1.5rem; /* 24px */
+  position: relative;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+.card__icono-wrapper {
+  width: 2.5rem;  /* 40px */
+  height: 2.5rem; /* 40px */
+  border-radius: 50%;
+  background-color: var(--color-blue-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__icono-wrapper--verde {
+  background-color: var(--color-green-100);
+}
+
+.card__icono-wrapper--morado {
+  background-color: var(--color-purple-100);
+}
+
+.card__icono-wrapper--naranja {
+  background-color: var(--color-orange-100);
+}
+
+.card__icono {
+  font-size: 1.25rem; /* 20px */
+  color: #374151;     /* gris oscuro */
+}
+
+.card__titulo {
+  font-size: 1.5rem;   /* 24px */
+  font-weight: 700;
+}
+
+/* -----------------------------
+   Formulario (Inputs + Layout)
+   ----------------------------- */
+.formulario__grupo {
+  margin-bottom: 1rem; /* 16px */
+}
+
+.formulario__grupo label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem; /* 8px */
+}
+
+.input-icono {
+  position: relative;
+}
+
+.input-icono i {
+  position: absolute;
+  left: 0.75rem; /* 12px */
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray-400);
+  font-size: 1rem; /* 16px */
+}
+
+.input-icono input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* 12px 12px 12px 40px */
+  border-radius: var(--radius-default);
+  border: 1px solid #cbd5e1; /* gris claro */
+  background-color: var(--color-white);
+  font-size: 1rem; /* 16px */
+}
+
+.input-icono input:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.formulario__grid-dos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem; /* 16px */
+}
+
+.formulario__boton-contenedor {
+  margin-top: 1rem; /* 16px */
+}
+
+.formulario__boton-contenedor .btn-primary {
+  width: 100%;
+}
+
+/* -----------------------------
+   Resultados (Listado + Total)
+   ----------------------------- */
+.resultados__contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 8px */
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0; /* 12px 0 */
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.resultado-valor {
+  font-weight: 600;
+  color: var(--color-gray-800);
+}
+
+.text--verde {
+  color: var(--color-green-600);
+}
+
+.text--rojo {
+  color: var(--color-red-600);
+}
+
+.result-total {
+  background-color: #eff6ff;
+  border-radius: var(--radius-default);
+  margin-top: 1rem; /* 16px */
+  padding: 0.75rem; /* 12px */
+}
+
+.result-total__contenedor {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.result-total-valor {
+  font-size: 1.125rem; /* 18px */
+  color: var(--color-primary);
+}
+
+/* -----------------------------
+   Gráficos (Pie + Line)
+   ----------------------------- */
+.card--chart {}
+
+/* Oculta el elemento */
+.card--oculto {
+  display: none;
+}
+
+.grafico {
+  width: 100%;
+  height: 300px;
+}
+
+.chart__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* 32px */
+}
+
+@media (min-width: 768px) {
+  .chart__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.chart__wrapper {
+  background-color: var(--color-white);
+  padding: 1rem; /* 16px */
+  border-radius: var(--radius-default);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-contenedor {
+  background-color: var(--color-gray-100);
+  padding: 1rem; /* 16px */
+  border-radius: var(--radius-default);
+  overflow: auto;
+  max-height: 24rem; /* 384px */
+}
+
+/* -----------------------------
+   Cripto-radio Buttons
+   ----------------------------- */
+/* ============================================
+   Estilos específicos para la sección Criptomonedas
+   ============================================ */
+
+/* 1) Fondo y padding para el bloque completo de Criptomonedas */
+#criptomonedas {
+  background-color: rgba(16, 185, 129, 0.1); /* muy suave verde */
+  border-radius: var(--radius-card);
+  padding: 1.5rem; /* 24px */
+  margin-top: 1.5rem; /* separación arriba */
+}
+
+/* 2) Cabecera del formulario: aumentamos contraste */
+#criptomonedas h3 {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  color: var(--color-green-700);
+  margin-bottom: 1rem; /* 16px */
+}
+
+/* 3) Contenedor de los radio-buttons con más separación */
+.cryptoradio__contenedor {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* 16px en lugar de 12px */
+}
+
+/* 4) Cada item de radio: fondo claro + borde suave + hover y checked */
+.cryptoradio__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+  padding: 0.75rem 1rem; /* 12px 16px */
+  border: 2px solid transparent;
+  border-radius: var(--radius-default);
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: background-color var(--transition-medium),
+              border-color var(--transition-medium),
+              transform var(--transition-fast);
+}
+
+.cryptoradio__item:hover {
+  background-color: var(--color-green-100);
+  transform: translateY(-2px);
+}
+
+/* Cuando el radio está marcado, destacamos bordes y fondo */
+.cryptoradio__item input[type="radio"]:checked + label {
+  border: 2px solid var(--color-green-700);
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+/* Aseguramos que el <label> ocupe todo el espacio clicable */
+.cryptoradio__item label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+  width: 100%;
+  cursor: pointer;
+  font-size: 1rem; /* 16px */
+  color: var(--color-gray-800);
+}
+
+/* Íconos de cada opción: colores distintivos */
+.cryptoradio__item label i {
+  font-size: 1.2rem; /* 19px */
+}
+
+/* Asignar colores específicos según el tipo */
+#venta + label i {
+  color: var(--color-blue-700);
+}
+#cambio + label i {
+  color: var(--color-purple-700);
+}
+#regalo + label i {
+  color: var(--color-accent);
+}
+#mineria + label i {
+  color: var(--color-orange-700);
+}
+#prestamo + label i {
+  color: var(--color-dark);
+}
+
+/* 5) Input de “Ganancias” con borde y enfoque más marcado */
+#ganancias {
+  border: 2px solid #cbd5e1;
+  border-radius: var(--radius-default);
+  padding: 0.75rem 1rem; /* 12px 16px */
+  font-size: 1rem; /* 16px */
+  transition: border-color var(--transition-medium),
+              box-shadow var(--transition-medium);
+}
+
+#ganancias:focus {
+  border-color: var(--color-green-700);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+  outline: none;
+}
+
+/* Añadimos algo de espacio bajo el label del input de Ganancias */
+#ganancias + span,
+#ganancias + .input-icono span {
+  margin-left: 0.5rem;
+  color: var(--color-green-700);
+}
+
+/* 6) Botón “Calcular impuestos” con estilo destacado */
+#btnCriptomoneda {
+  background-color: var(--color-green-700);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-default);
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-medium),
+              transform var(--transition-fast),
+              box-shadow var(--transition-medium);
+}
+
+#btnCriptomoneda:hover {
+  background-color: #047857; /* verde un poco más oscuro */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 7) Resultados específicos de Criptomonedas */
+#criptomonedas .resultados__contenedor {
+  margin-top: 1.5rem; /* espacio arriba de los resultados */
+  background-color: rgba(16, 185, 129, 0.05);
+  padding: 1rem; /* 16px */
+  border-radius: var(--radius-default);
+}
+
+#criptomonedas .result-item {
+  padding: 0.75rem 0; /* 12px 0 */
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+#criptomonedas .result-item:last-child {
+  border-bottom: none;
+}
+
+/* Ajustamos los colores de cada valor */
+#criptomonedas .resultado-valor {
+  font-weight: 700;
+  font-size: 1rem; /* 16px */
+}
+
+/* Para Ganancias (verde oscuro) */
+#criptomonedas .resultado-valor.text--verde {
+  color: var(--color-green-700);
+}
+
+/* Para Pérdidas/Impuestos (rojo) */
+#criptomonedas .resultado-valor.text--rojo {
+  color: var(--color-red-600);
+}
+
+/* Valor “Después de impuestos” */
+#criptomonedas .resultado-valor:not(.text--verde):not(.text--rojo) {
+  color: var(--color-gray-800);
+}
+
+/* Estilo del total final para Criptomonedas */
+#resultadoTotalCripto {
+  font-size: 1.25rem; /* 20px */
+  color: var(--color-green-700);
+}
+
+/* 8) Aseguramos que la sección completa esté separada de los demás bloques */
+#criptomonedas.card {
+  margin-bottom: 2rem; /* espacio abajo si hay algo más */
+}
+
+/* -----------------------------
+   Footer
+   ----------------------------- */
+.footer {
+  background-color: var(--color-dark);
+  color: var(--color-gray-100);
+  padding: 2.5rem 0; /* 40px 0 */
+  margin-top: 3rem;  /* 48px */
+}
+
+.footer__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* 32px */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .footer__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.footer__seccion {
+  /* Espaciado interno ya dado por el grid */
+}
+
+.footer__titulo {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 1rem; /* 16px */
+}
+
+.footer__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 8px */
+}
+
+.footer__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+}
+
+.footer__icono {
+  font-size: 1rem; /* 16px */
+  color: var(--color-primary);
+}
+
+.footer__bottom {
+  border-top: 1px solid #374151; /* gris oscuro */
+  margin-top: 2rem; /* 32px */
+  padding-top: 1.5rem; /* 24px */
+  text-align: center;
+  font-size: 0.875rem; /* 14px */
+  color: var(--color-gray-100);
+}
+
+/* -----------------------------
+   Animaciones
+   ----------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Aseguramos que la sección de gráficos ocupe las dos columnas en pantallas grandes */
+@media (min-width: 1024px) {
+  /* Tanto la sección de hipoteca como la de préstamo */
+  #graficoHipoteca.card--chart,
+  #graficoPrestamo.card--chart {
+    grid-column: span 2;
+  }
+}
+
+/* Wrapper general para cada gráfico o bloque de gráfico+tabla */
+.chart__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem; /* separación entre gráfico y tabla */
+  margin-top: 1rem;
+}
+
+/* En pantallas medianas o más grandes, dos columnas: gráfico a la izquierda, tabla a la derecha */
+@media (min-width: 768px) {
+  .chart__grid {
+    grid-template-columns: 2fr 3fr; /* puedes ajustar proporción (por ejemplo, 1fr 1fr) */
+  }
+}
+
+/* Contenedor que enmarca al <canvas> para darle padding y fondo */
+.chart__wrapper {
+  background-color: var(--color-white);
+  padding: 1rem;           /* 16px de relleno */
+  border-radius: var(--radius-default);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilo base para el <canvas> de Chart.js */
+.grafico {
+  width: 100% !important;  /* ocupa todo el ancho de su contenedor */
+  height: auto !important; /* que la altura la calcule Chart.js en función del aspecto */
+  max-height: 400px;       /* límite superior de altura para que no sea excesivamente alto */
+}
+
+/* Contenedor de la tabla de amortización */
+.tabla-contenedor {
+  background-color: var(--color-gray-100);
+  padding: 1rem;       /* 16px */
+  border-radius: var(--radius-default);
+  overflow-x: auto;    /* para scroll horizontal si la tabla es muy ancha */
+  max-height: 400px;   /* límite de alto, con scroll si excede */
+}
+
+/* Para que la tabla ocupe todo el ancho disponible dentro de su contenedor */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
