@@ -1,40 +1,119 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil de Usuario - Sistema Tributario</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        .profile-picture {
-            transition: all 0.3s ease;
-            border-color: #3b82f6;
+        /* Estilos globales */
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1d4ed8;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --rounded-sm: 0.125rem;
+            --rounded: 0.25rem;
+            --rounded-md: 0.375rem;
+            --rounded-lg: 0.5rem;
+            --rounded-xl: 0.75rem;
+            --rounded-full: 9999px;
         }
-        .profile-picture:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .form-section {
-            transition: all 0.3s ease;
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f0ff 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
         }
-        .form-section:hover {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        .toast {
-            animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
         }
+
+        .logo {
+            height: 40px;
+            width: 40px;
+            background-color: var(--primary);
+            border-radius: var(--rounded-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .app-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        nav {
+            display: none;
+        }
+
         .nav-link {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            padding: 8px 12px;
             position: relative;
+            display: flex;
+            align-items: center;
         }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
         .nav-link:after {
             content: '';
             position: absolute;
@@ -42,881 +121,1180 @@
             height: 2px;
             bottom: 0;
             left: 0;
-            background-color: #3b82f6;
+            background-color: var(--primary);
             transition: width 0.3s ease;
         }
+
         .nav-link:hover:after {
             width: 100%;
         }
-        .custom-radio input[type="radio"] {
-            display: none;
+
+        .nav-icon {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
         }
-        .custom-radio input[type="radio"] + label {
-            padding-left: 28px;
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            background-color: var(--white);
+            padding: 15px 20px;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu .nav-link {
+            padding: 10px 0;
+            display: block;
+        }
+
+        /* Main Content */
+        main {
+            padding: 30px 0;
+        }
+
+        .card {
+            background-color: var(--white);
+            border-radius: var(--rounded-xl);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .profile-section {
+                flex-direction: row;
+            }
+        }
+
+        .profile-picture-section {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        @media (min-width: 768px) {
+            .profile-picture-section {
+                width: 33.333%;
+                border-right: 1px solid var(--gray-200);
+                border-bottom: none;
+            }
+        }
+
+        .profile-picture-container {
             position: relative;
+            margin-bottom: 20px;
+        }
+
+        .profile-picture {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--gray-100);
+            transition: all 0.3s ease;
             cursor: pointer;
         }
-        .custom-radio input[type="radio"] + label:before {
-            content: '';
+
+        .profile-picture-overlay {
             position: absolute;
-            left: 0;
             top: 0;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #d1d5db;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .profile-picture-container:hover .profile-picture-overlay {
+            opacity: 1;
+        }
+
+        .profile-info {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--rounded-md);
+            background-color: var(--gray-100);
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
-        .custom-radio input[type="radio"]:checked + label:before {
-            border-color: #3b82f6;
-            background-color: #3b82f6;
-            box-shadow: inset 0 0 0 4px white;
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-700);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            border-radius: var(--rounded-md);
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-icon {
+            margin-left: 8px;
+        }
+
+        /* Tax Information Section */
+        .tax-section {
+            padding: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .tax-section {
+                width: 66.667%;
+            }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 10px;
+        }
+
+        .section-description {
+            color: var(--gray-700);
+            margin-bottom: 20px;
+        }
+
+        .form-section {
+            background-color: var(--gray-50);
+            padding: 25px;
+            border-radius: var(--rounded-lg);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-subtitle {
+            color: var(--gray-700);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-icon {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .select-field,
+        .input-field-form {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--rounded-md);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+        }
+
+        .select-field:focus,
+        .input-field-form:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .custom-radio {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gray-300);
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-radio::after {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked+.custom-radio {
+            border-color: var(--primary);
+        }
+
+        input[type="radio"]:checked+.custom-radio::after {
+            opacity: 1;
+        }
+
+        .form-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .step-indicator {
+            background-color: var(--primary);
+            color: var(--white);
+            font-weight: 600;
+            padding: 5px 15px;
+            border-radius: var(--rounded-full);
+            font-size: 0.875rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .action-buttons {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .btn-secondary {
+            background-color: var(--gray-300);
+            color: var(--gray-800);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray-400);
+        }
+
+        .btn-danger {
+            background-color: var(--error);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #059669;
+        }
+
+        .btn-icon-left {
+            margin-right: 8px;
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .btn-full {
+                width: auto;
+            }
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .buttons-container {
+                flex-direction: row;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--gray-800);
+            color: var(--gray-300);
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        .footer-info {
+            margin-bottom: 20px;
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 10px;
+        }
+
+        .footer-description {
+            max-width: 300px;
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .contact-icon {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .footer-column h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--gray-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-700);
+            text-align: center;
+            font-size: 0.875rem;
+            margin-top: 30px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 15px 20px;
+            border-radius: var(--rounded-md);
+            color: var(--white);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+        }
+
+        .toast-success {
+            background-color: var(--success);
+        }
+
+        .toast-error {
+            background-color: var(--error);
+        }
+
+        .toast-warning {
+            background-color: var(--warning);
+        }
+
+        .toast-icon {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .toast-close {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* SVG icons */
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        #main {
+            background: linear-gradient(135deg, #c3dafe, #e0e7ff);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+        }
+
         #upload {
             display: none;
         }
+
+        #preview {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            border: 2px dashed #94a3b8;
+            padding: 5px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: border-color 0.3s;
+        }
+
+        #preview:hover {
+            border-color: #60a5fa;
+        }
+
+        #textos {
+            padding: 10px;
+            align-items: center;
+        }
+
+        #fotoPerfil {
+            margin-top: 1rem;
+        }
+
+        #nombres,
+        #telefono {
+            background-color: #f9f9fa;
+            color: #000000;
+            font-weight: 600;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            border-radius: 0.75rem;
+        }
+
+        #parteArriba {
+            display: flex;
+            grid-template-columns: 1fr 2fr;
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 1rem;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        #cuadrado {
+            align-items: center;
+            border-radius: 20px;
+        }
+
+        #reiniciarForm {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 40%;
+        }
+
+        #parteMedia {
+            border-radius: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+        }
+
+        br {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid #000000;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #0f0f10;
+            margin-top: 1.5rem;
+        }
+
+        .ajustes-cuadro {
+            background-color: #ffffff;
+            padding: 2rem;
+            width: 30rem;
+            border-radius: 1rem;
+            min-height: 50rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            display: none;
+            /* Por defecto, oculto */
+
+        }
+
+        .ajustes-cuadro.activo {
+            padding: auto;
+            display: flex;
+            border: 1px solid #0f0f10;
+            margin-left: 1.25rem;
+        }
+
+        .primeraVista {
+            display: flex;
+            margin-right: 1.25rem;
+
+        }
+
+        .titulo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitulo {
+            font-size: 1.2rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            width: 30rem;
+            box-shadow: none;
+        }
+
+        .select,
+        .line {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        #radio-group {
+            display: -webkit-box;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .toasts {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .toast {
+            background-color: #d6f2f2;
+            color: #000;
+            border-radius: 5px;
+            padding: 1rem 2rem;
+            margin: 5px;
+            font-size: 1.8;
+        }
+
+
+        .boton {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .boton:hover {
+            background-color: #3b82f6;
+        }
+
+        #botones {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cambiarDatos {
+            margin: 0.63rem;
+            padding: 0.63rem;
+            border-radius: 1.25rem;
+            color: white;
+            background-color: #29489d;
+            transition: background-color 0.3s ease;
+        }
+
+        #cambiarDatos:hover {
+            background-color: #3b82f6;
+        }
+
+        #cerrarSesion {
+            margin: 0.31rem;
+            background-color: #fd0404;
+            transition: background-color 0.3s ease;
+
+        }
+
+        #cerrarSesion:hover {
+            background-color: rgb(92, 2, 2);
+        }
+
+        #cambiarContra {
+            margin: 0.31rem;
+            background-color: #009d13;
+            transition: background-color 0.3s ease;
+        }
+
+        #cambiarContra:hover {
+            background-color: #013d08;
+        }
+
+
+        .miniFooter {
+            background-color: #1e3a8a;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-left: 40%;
+            margin-right: 46%;
+        }
+
+
+        @media screen and (max-width: 1100px) {
+            #parteArriba {
+                flex-direction: column;
+                margin: -12px;
+            }
+
+            .ajustes-cuadro {
+                width: 80%;
+                flex-direction: columncc;
+            }
+
+            .ajustes-cuadro.activo {
+                margin-left: 0rem;
+                margin-top: 2rem;
+            }
+
+            #parteMedia {
+                flex-direction: column;
+                padding: 0;
+            }
+
+            form {
+                width: 100%;
+            }
+
+            .miniFooter {
+                margin-left: 36%;
+                margin-right: 38%;
+            }
+
+            #reiniciarForm {
+                margin-left: 20%;
+            }
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+<body>
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="index.html" class="flex items-center">
-                <img src="../IMG/logo.svg" alt="Logo" class="h-10">
-                <span class="ml-2 text-xl font-bold text-blue-800">TributApp</span>
+    <header>
+        <section class="container header-container">
+            <a href="index.html" class="logo-container">
+                <span class="app-name">TributApp</span>
             </a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="Inicio.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
-                    <i class="fas fa-calendar-alt mr-2"></i>Calendario
+
+            <nav class="nav-desktop">
+                <a href="Inicio.html" class="nav-link">
+                    Calendario
                 </a>
-                <a href="Calculadora.html" class="nav-link text-gray-700 hover:text-blue-600 font-medium transition-colors duration-300">
-                    <i class="fas fa-calculator mr-2"></i>Calculadora
+                <a href="Calculadora.html" class="nav-link">
+                    Calculadora
                 </a>
-                <a href="afinarPerfil.html#ejecutar" class="nav-link text-blue-600 font-medium transition-colors duration-300">
-                    <i class="fas fa-user mr-2"></i>Perfil
+                <a href="afinarPerfil.html#ejecutar" class="nav-link active">
+                    Perfil
                 </a>
             </nav>
-            <button class="md:hidden text-blue-600" id="mobile-menu-button">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-        <!-- Mobile menu -->
-        <div class="md:hidden hidden bg-white shadow-lg rounded-b-lg" id="mobile-menu">
-            <div class="px-4 py-3 flex flex-col space-y-3">
-                <a href="Inicio.html" class="text-gray-700 hover:text-blue-600 font-medium">
-                    <i class="fas fa-calendar-alt mr-2"></i>Calendario
-                </a>
-                <a href="Calculadora.html" class="text-gray-700 hover:text-blue-600 font-medium">
-                    <i class="fas fa-calculator mr-2"></i>Calculadora
-                </a>
-                <a href="afinarPerfil.html#ejecutar" class="text-blue-600 font-medium">
-                    <i class="fas fa-user mr-2"></i>Perfil
-                </a>
-            </div>
-        </div>
-    </header>
 
-    <main class="container mx-auto px-4 py-8 max-w-6xl">
-        <!-- User Profile Section -->
-        <section class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-            <div class="md:flex">
-                <!-- Profile Picture Section -->
-                <div class="md:w-1/3 p-8 flex flex-col items-center border-b md:border-b-0 md:border-r border-gray-200">
-                    <div class="relative group">
-                        <img id="preview" src="../Pagina web/imagens/OIP.jpg" alt="Foto de perfil" 
-                             class="w-40 h-40 rounded-full object-cover border-4 border-blue-100 profile-picture cursor-pointer">
-                        <div class="absolute inset-0 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <span class="text-white font-medium"><i class="fas fa-camera mr-1"></i> Cambiar</span>
-                        </div>
-                    </div>
-                    <input type="file" id="upload" accept="image/*">
-                    <div class="mt-6 w-full space-y-4">
-                        <div class="relative">
-                            <input type="text" id="nombres" placeholder="Nombre y Apellido" disabled
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100">
-                        </div>
-                        <div class="relative">
-                            <input type="text" id="telefono" placeholder="Número de teléfono" disabled
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:bg-gray-100">
-                        </div>
-                        <button type="button" id="cambiarDatos" onclick="modCampos()"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 flex items-center justify-center">
-                            <span id="buttonText">Cambiar datos</span>
-                            <i class="fas fa-pencil-alt ml-2"></i>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Tax Information Section -->
-                <div class="md:w-2/3 p-8">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Servicio de asignación de impuestos</h1>
-                    <p class="text-gray-600 mb-6">Complete los siguientes datos para calcular sus obligaciones tributarias y acceder a servicios personalizados.</p>
-
-                    <!-- Form Sections -->
-                    <div class="space-y-6">
-                        <!-- Common Questions -->
-                        <div id="ajustesCuadro" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 primeraVista">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-info-circle mr-2"></i> Información básica
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="encontrate" class="block text-sm font-medium text-gray-700 mb-1">Situación laboral</label>
-                                    <select class="select w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="encontrate">
-                                        <option value="Autonomo">Autónomo</option>
-                                        <option value="Asalariado">Asalariado</option>
-                                        <option value="Estudiante">Estudiante</option>
-                                        <option value="Empresario" selected>Empresario</option>
-                                        <option value="Jubilado">Jubilado</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label for="ingresoBruto" class="block text-sm font-medium text-gray-700 mb-1">Ingreso bruto anual</label>
-                                    <div class="relative">
-                                        <input type="text" id="ingresoBruto" placeholder="Ej: 35000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="edad" class="block text-sm font-medium text-gray-700 mb-1">Edad</label>
-                                    <input type="text" id="edad" placeholder="Ej: 34" required
-                                           class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <label for="personasACargo" class="block text-sm font-medium text-gray-700 mb-1">Personas a tu cargo</label>
-                                    <input type="text" id="personasACargo" placeholder="Número de personas" required
-                                           class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700 mb-2">¿Tienes más de una vivienda en propiedad?</p>
-                                    <div id="radio-group" class="flex space-x-6">
-                                        <div class="custom-radio">
-                                            <input type="radio" id="viviendaSi" name="vivienda" value="si">
-                                            <label for="viviendaSi" class="text-gray-700">Sí</label>
-                                        </div>
-                                        <div class="custom-radio">
-                                            <input type="radio" id="viviendaNo" name="vivienda" value="no">
-                                            <label for="viviendaNo" class="text-gray-700">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="pt-4 text-center text-sm text-blue-800 font-medium">
-                                    <p>1 de 2</p>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Autonomo Section -->
-                        <div id="ajustesCuadroAutonomo" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 hidden">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-user-tie mr-2"></i> Detalles de Autónomo
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="datetime" class="block text-sm font-medium text-gray-700 mb-1">Fecha de alta como autónomo</label>
-                                    <input type="datetime-local" name="datetime" id="datetime"
-                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <label for="actividadProfesional" class="block text-sm font-medium text-gray-700 mb-1">Profesión/Código CNAE</label>
-                                    <input type="number" id="actividadProfesional" placeholder="Ej: 6201" required
-                                           class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <label for="gastosDeducibles" class="block text-sm font-medium text-gray-700 mb-1">Gastos deducibles anuales</label>
-                                    <div class="relative">
-                                        <input type="number" id="gastosDeducibles" placeholder="Ej: 5000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="ivaSoportado" class="block text-sm font-medium text-gray-700 mb-1">IVA soportado</label>
-                                    <div class="relative">
-                                        <input type="number" id="ivaSoportado" placeholder="Ej: 1200" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="ivaRepercutido" class="block text-sm font-medium text-gray-700 mb-1">IVA repercutido</label>
-                                    <div class="relative">
-                                        <input type="number" id="ivaRepercutido" placeholder="Ej: 1800" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700 mb-2">¿Utilizas vehículo para tu actividad?</p>
-                                    <div id="radio-group" class="flex space-x-6">
-                                        <div class="custom-radio">
-                                            <input type="radio" id="vehiculoSi" name="vehiculo" value="si">
-                                            <label for="vehiculoSi" class="text-gray-700">Sí</label>
-                                        </div>
-                                        <div class="custom-radio">
-                                            <input type="radio" id="vehiculoNo" name="vehiculo" value="no">
-                                            <label for="vehiculoNo" class="text-gray-700">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button class="boton w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 mt-4" 
-                                        type="button" onclick="enviarCuestionario()">
-                                    Enviar cuestionario <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Asalariado Section -->
-                        <div id="ajustesCuadroAsalariado" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 hidden">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-briefcase mr-2"></i> Detalles de Asalariado
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="tipoContrato" class="block text-sm font-medium text-gray-700 mb-1">Tipo de contrato</label>
-                                    <select class="select w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="tipoContrato">
-                                        <option value="indefinido">Indefinido</option>
-                                        <option value="temporal">Temporal</option>
-                                        <option value="parcial">Jornada Parcial</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700 mb-2">¿Tienes título de familia numerosa?</p>
-                                    <div id="radio-group" class="flex space-x-6">
-                                        <div class="custom-radio">
-                                            <input type="radio" id="familiaNumerosaSi" name="familiaNumerosa" value="si">
-                                            <label for="familiaNumerosaSi" class="text-gray-700">Sí</label>
-                                        </div>
-                                        <div class="custom-radio">
-                                            <input type="radio" id="familiaNumerosaNo" name="familiaNumerosa" value="no">
-                                            <label for="familiaNumerosaNo" class="text-gray-700">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="edadesHijos" class="block text-sm font-medium text-gray-700 mb-1">Edades de tus hijos (separadas por comas)</label>
-                                    <input type="text" id="edadesHijos" placeholder="Ej: 4, 8, 16" required
-                                           class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <label for="gastosEscolares" class="block text-sm font-medium text-gray-700 mb-1">Gastos escolares/educativos anuales</label>
-                                    <div class="relative">
-                                        <input type="number" id="gastosEscolares" placeholder="Ej: 2500" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <button class="boton w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 mt-4" 
-                                        type="button" onclick="enviarCuestionario()">
-                                    Enviar cuestionario <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Estudiante Section -->
-                        <div id="ajustesCuadroEstudiante" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 hidden">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-graduation-cap mr-2"></i> Detalles de Estudiante
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="tipoEstudios" class="block text-sm font-medium text-gray-700 mb-1">Tipo de estudios</label>
-                                    <select class="select w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="tipoEstudios">
-                                        <option value="universidad">Universidad</option>
-                                        <option value="fp">Formación Profesional</option>
-                                        <option value="otro">Otro</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700 mb-2">¿Trabajas a tiempo parcial?</p>
-                                    <div id="radio-group" class="flex space-x-6">
-                                        <div class="custom-radio">
-                                            <input type="radio" id="trabajoSi" name="trabajoParcial" value="si">
-                                            <label for="trabajoSi" class="text-gray-700">Sí</label>
-                                        </div>
-                                        <div class="custom-radio">
-                                            <input type="radio" id="trabajoNo" name="trabajoParcial" value="no">
-                                            <label for="trabajoNo" class="text-gray-700">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="becaCantidad" class="block text-sm font-medium text-gray-700 mb-1">Beca recibida (anual)</label>
-                                    <div class="relative">
-                                        <input type="number" id="becaCantidad" placeholder="Ej: 3000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <button class="boton w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 mt-4" 
-                                        type="button" onclick="enviarCuestionario()">
-                                    Enviar cuestionario <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Jubilado Section -->
-                        <div id="ajustesCuadroJubilado" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 hidden">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-umbrella-beach mr-2"></i> Detalles de Jubilado
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="pensionAnual" class="block text-sm font-medium text-gray-700 mb-1">Pensión anual</label>
-                                    <div class="relative">
-                                        <input type="number" id="pensionAnual" placeholder="Ej: 18000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm font-medium text-gray-700 mb-2">¿Tienes segunda vivienda no alquilada?</p>
-                                    <div id="radio-group" class="flex space-x-6">
-                                        <div class="custom-radio">
-                                            <input type="radio" id="segundaViviendaSi" name="segundaVivienda" value="si">
-                                            <label for="segundaViviendaSi" class="text-gray-700">Sí</label>
-                                        </div>
-                                        <div class="custom-radio">
-                                            <input type="radio" id="segundaViviendaNo" name="segundaVivienda" value="no">
-                                            <label for="segundaViviendaNo" class="text-gray-700">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="gastosMedicos" class="block text-sm font-medium text-gray-700 mb-1">Gastos médicos anuales</label>
-                                    <div class="relative">
-                                        <input type="number" id="gastosMedicos" placeholder="Ej: 800" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <button class="boton w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 mt-4" 
-                                        type="button" onclick="enviarCuestionario()">
-                                    Enviar cuestionario <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </form>
-                        </div>
-
-                        <!-- Empresario Section -->
-                        <div id="ajustesCuadroEmpresario" class="form-section bg-gray-50 p-6 rounded-lg border border-blue-200 hidden">
-                            <h2 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
-                                <i class="fas fa-building mr-2"></i> Detalles de Empresario
-                            </h2>
-                            <form class="space-y-4">
-                                <div>
-                                    <label for="tipoContratoEmpresario" class="block text-sm font-medium text-gray-700 mb-1">Tipo de sociedad</label>
-                                    <select class="select w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" id="tipoContrato">
-                                        <option value="indefinido">Sociedad Limitada</option>
-                                        <option value="temporal">Sociedad Anónima</option>
-                                        <option value="parcial">Autónomo Societario</option>
-                                    </select>
-                                </div>
-
-                                <div>
-                                    <label for="facturacionEmpresa" class="block text-sm font-medium text-gray-700 mb-1">Facturación anual</label>
-                                    <div class="relative">
-                                        <input type="number" id="facturacionEmpresa" placeholder="Ej: 120000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="sueldoAdministrador" class="block text-sm font-medium text-gray-700 mb-1">Sueldo como administrador</label>
-                                    <div class="relative">
-                                        <input type="number" id="sueldoAdministrador" placeholder="Ej: 30000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label for="empleados" class="block text-sm font-medium text-gray-700 mb-1">Número de empleados</label>
-                                    <input type="number" id="empleados" placeholder="Ej: 5" required
-                                           class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                </div>
-
-                                <div>
-                                    <label for="gastosDeduciblesEmpresa" class="block text-sm font-medium text-gray-700 mb-1">Gastos deducibles anuales</label>
-                                    <div class="relative">
-                                        <input type="number" id="gastosDeduciblesEmpresa" placeholder="Ej: 35000" required
-                                               class="line w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500">€</span>
-                                    </div>
-                                </div>
-
-                                <button class="boton w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-300 mt-4" 
-                                        type="button" onclick="enviarCuestionario()">
-                                    Enviar cuestionario <i class="fas fa-paper-plane ml-2"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
-            <button id="reiniciarForm" class="w-full md:w-auto bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300" 
-                    type="button" onclick="reiniciarCuestionario()">
-                <i class="fas fa-redo mr-2"></i> Reiniciar cuestionario
-            </button>
-            
-            <div id="botones" class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 w-full md:w-auto">
-                <button id="cerrarSesion" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300" 
-                        type="button">
-                    <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
-                </button>
-                <a href="recogerEmail.html" class="w-full text-center bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300">
-                    <i class="fas fa-key mr-2"></i> Cambiar contraseña
+        <!-- Mobile Menu -->
+        <section class="mobile-menu" id="mobile-menu">
+            <section class="container">
+                <a href="Inicio.html" class="nav-link">
+                    Calendario
                 </a>
-            </div>
-        </div>
-    </main>
+                <a href="Calculadora.html" class="nav-link">
+                    Calculadora
+                </a>
+                <a href="afinarPerfil.html#ejecutar" class="nav-link active">
+                    Perfil
+                </a>
+            </section>
+        </section>
+    </header>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-300 py-8">
-        <div class="container mx-auto px-4">
-            <div class="md:flex md:justify-between md:items-center">
-                <div class="mb-6 md:mb-0">
-                    <h3 class="text-xl font-bold text-white mb-2">TributApp</h3>
-                    <p class="max-w-md">Tu solución integral para la gestión tributaria personal y empresarial.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div>
-                        <h4 class="text-lg font-semibold text-white mb-4">Contacto</h4>
-                        <ul class="space-y-2">
-                            <li class="flex items-center"><i class="fas fa-phone-alt mr-2 text-blue-400"></i> 123-456-7890</li>
-                            <li class="flex items-center"><i class="fas fa-envelope mr-2 text-blue-400"></i> info@tributapp.com</li>
-                            <li class="flex items-center"><i class="fas fa-map-marker-alt mr-2 text-blue-400"></i> Calle Principal, 123, Ciudad Financiera</li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h4 class="text-lg font-semibold text-white mb-4">Legal</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#" class="hover:text-blue-400">Términos de servicio</a></li>
-                            <li><a href="#" class="hover:text-blue-400">Política de privacidad</a></li>
-                            <li><a href="#" class="hover:text-blue-400">Aviso legal</a></li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h4 class="text-lg font-semibold text-white mb-4">Síguenos</h4>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-blue-400 hover:text-blue-300 text-xl"><i class="fab fa-facebook"></i></a>
-                            <a href="#" class="text-blue-400 hover:text-blue-300 text-xl"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="text-blue-400 hover:text-blue-300 text-xl"><i class="fab fa-linkedin"></i></a>
-                            <a href="#" class="text-blue-400 hover:text-blue-300 text-xl"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-sm">
-                <p>&copy; 2023 TributApp. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Toast Notifications -->
-    <div id="toasts" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
-
-    <!-- JavaScript -->
-    <script>
-       async function cargarDatosUsuario() {
-  await new Promise(resolve => setTimeout(resolve, 300))
-  if (
-    typeof window.transferenciaDeDatos.recibirDatos === "function" &&
-    typeof window.transferenciaDeDatos.recibirDatosPerfil === "function"
-  ) {
-    const datosPerfil = await window.transferenciaDeDatos.recibirDatosPerfil();
-    console.log("Perfil del usuario:", datosPerfil);
-    rellenarDatosPerfil(datosPerfil);
-
-    const datosUsuario = await window.transferenciaDeDatos.recibirDatos();
-    console.log("Datos del usuario:", datosUsuario);
-    rellenarDatosUsuario(datosUsuario);
-  } else {
-    console.error("recibirDatos o recibirDatosPerfil no están definidos.");
-  }
-  console.log("Script JavaScript iniciado!");
-}
-
-window.onload = cargarDatosUsuario;
+    <main class="container">
+        <!-- User Profile Section -->
+        <section class="card">
+            <section class="profile-section">
+                <!-- Profile Picture Section -->
+                <section class="profile-picture-section">
+                    <section class="profile-picture-container">
+                        <img id="preview" src="" alt="Foto de perfil" class="profile-picture">
+                        <!--Asignarle el metodo para poner fotos--------------------------------->
+                        <section class="profile-picture-overlay">
+                            Cambiar
+                        </section>
+                    </section>
+                    <input type="file" id="upload" accept="image/*">
+                    <section class="profile-info">
+                        <section class="input-group">
+                            <input type="text" id="nombres" placeholder="Nombre y Apellido" disabled
+                                class="input-field">
+                        </section>
+                        <section class="input-group">
+                            <input type="text" id="telefono" placeholder="Número de teléfono" disabled
+                                class="input-field">
+                        </section>
+                        <button type="button" id="cambiarDatos" class="btn btn-primary">
+                            <span id="buttonText">Cambiar datos</span>
+                        </button>
+                    </section>
+                </section>
+                <section class="tax-section">
+                    <h1 class="section-title">Servicio de asignación de impuestos</h1>
+                    <p class="section-description">Complete los siguientes datos para calcular sus obligaciones
+                        tributarias y acceder a servicios personalizados.</p>
 
 
 
+                    <!---------------------------------------------- Primera sección basica informacion comun------------------------------------------>
+                    <section id="parteMedia">
+                        <section id="ajustesCuadro" class="form-section">
+                            <form>
+                                <h2 id="ajustesTitulo">Infromacion de usuario</h2>
+                                <p>¿Cual es tu situacion?</p>
+                                <label for="encontrate">¿En que situacion estas?</label>
+                                <select class="select" id="encontrate">
+                                    <option value="Autonomo">Autónomo</option>
+                                    <option value="Asalariado">Asalariado</option>
+                                    <option value="Estudiante">Estudiante</option>
+                                    <option value="Empresario" selected>Empresario</option>
+                                    <option value="Jubilado">Jubilado</option>
 
-function mostrarCuadro(idCuadroActivo) {
-  const cuadros = document.querySelectorAll(".ajustes-cuadro");
-  cuadros.forEach(cuadro => {
-    cuadro.classList.remove("activo");
-  });
+                                </select>
+                                <p>¿Cuál es tu ingreso bruto anual?</p>
+                                <input class="line" type="text" id="ingresoBruto" placeholder="Ingreso en bruto"
+                                    required />
+                                <p>¿Cuál es tu edad?</p>
+                                <input class="line" type="text" id="edad" placeholder="Ej: 24" required />
+                                <p>¿Tienes personas a tu cargo (hijos, dependientes)? ¿Cuántos? </p>
+                                <input class="line" type="text" id="personasACargo" placeholder="Número de personas"
+                                    required />
+                                <p>¿Tienes más de una vivienda en propiedad?</p>
+                                <div id="radio-group">
+                                    <input type="radio" id="viviendaSi" name="vivienda" value="si">
+                                    <label for="viviendaSi">Sí</label>
 
-  const cuadroActivo = document.getElementById(idCuadroActivo);
-  if (cuadroActivo) {
-    cuadroActivo.classList.add("activo");
-  }
-}
+                                    <input type="radio" id="viviendaNo" name="vivienda" value="no">
+                                    <label for="viviendaNo">No</label>
+                                </div>
 
-function segundaFase() {
-  const encontrate = document.getElementById("encontrate").value;
-  mostrarCuadro("ajustesCuadro" + encontrate);
-}
+                                <p class="miniFooter"> 1 de 2</p>
 
+                            </form>
 
-const combo = document.getElementById('encontrate');
-combo.addEventListener('change', (event) => {
-  const valorSeleccionado = event.target.value;
-  mostrarCuadro("ajustesCuadro" + valorSeleccionado);
-});
+                        </section>
 
 
-let activo = false
-function modCampos() {
-  console.log("modCampos ejecutado");
-  let perfilDatos = [];
-  const nombre = document.querySelector("#nombres");
-  const telefono = document.querySelector("#telefono");
-  const button = document.querySelector("#cambiarDatos");
+                        <!------------------- tercera sección informacion de empresario ------------------------------------------------------------------------>
+                        <section id="ajustesCuadroEmpresario" class="form-section">
+                            <form>
+                                <h2 id="ajustesTitulo">Información de Usuario - Empresario</h2>
+                                <p>¿Qué tipo de sociedad gestionas?</p>
+                                <label for="tipoContrato">¿Qué tipo de contrato tienes?</label>
+                                <select class="select" id="tipoContrato">
+                                    <option value="indefinido">Indefinido</option>
+                                    <option value="temporal">Temporal</option>
+                                    <option value="parcial">Parcial</option>
+                                </select>
 
-  perfilDatos.push({
-    nombre: nombre.value,
-    telefono: telefono.value,
-  });
-  console.log(nombre.value)
-  console.log(telefono.value)
+                                <p>¿Cuál es la facturación anual aproximada de tu empresa?</p>
+                                <input class="line" type="number" id="facturacionEmpresa"
+                                    placeholder="Facturación en euros" required />
 
-  console.log("ejecuta")
-  if (window.transferenciaDeDatos && typeof window.transferenciaDeDatos.enviarPerfil === "function") {
-    window.transferenciaDeDatos.enviarPerfil(perfilDatos);
-  } else {
-    console.error("enviarPerfil no está definido como función en transferenciaDeDatos");
-  }
+                                <p>¿Cobras sueldo como administrador? ¿Cuánto?</p>
+                                <input class="line" type="number" id="sueldoAdministrador" placeholder="Sueldo anual"
+                                    required />
 
-  if (!activo) {
-    button.style.backgroundColor = "green";
-    activo = true;
-    nombre.disabled = false;
-    telefono.disabled = false;
-    button.textContent = "guardar cambios";
-  } else {
-    button.style.backgroundColor = "blue";
-    activo = false;
-    nombre.disabled = true;
-    telefono.disabled = true;
-    button.innerHTML = `
-    Cambiar datos 
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-    </svg>
-    `;
-  }
-}
-function rellenarDatosPerfil(datosPerfil) {
-  console.log("paso 1.1")
-  const nombre = document.querySelector("#nombres");
-  const telefono = document.querySelector("#telefono");
-  console.log(datosPerfil)
-  if (datosPerfil) {
-    console.log("paso 1.2")//no entra
-    nombre.value = datosPerfil.nombre;
-    telefono.value = datosPerfil.telefono;
-  }
-}
+                                <p>¿Cuántos empleados tienes?</p>
+                                <input class="line" type="number" id="empleados" placeholder="Número de empleados"
+                                    required />
 
-function rellenarDatosUsuario(datosPerfilar) {
-  console.log("paso 1.3")
-  console.log(datosPerfilar)
-  console.log("--------------------------entra---------------------------")
+                                <p>¿Cuáles son los gastos deducibles anuales?</p>
+                                <input class="line" type="number" id="gastosDeduciblesEmpresa"
+                                    placeholder="Gastos deducibles" required />
+                                <button class="boton" type="button" onclick="enviarCuestionario()">Enviar
+                                    cuestionario</button>
+                            </form>
+                        </section>
+                        <!-----------------------estudiante--------------------------------------------------------------------------->
+                        <section id="ajustesCuadroEstudiante" class="form-section">
+                            <form>
+                                <h2 id="ajustesTitulo">Información de Usuario - Estudiante</h2>
+                                <p>¿Qué estudios realizas actualmente?</p>
+                                <label for="tipoEstudios">¿Qué tipo de estudios realizas?</label>
+                                <select class="select" id="tipoEstudios">
+                                    <option value="universidad">Universidad</option>
+                                    <option value="fp">Formación Profesional</option>
+                                    <option value="otro">Otro</option>
+                                </select>
 
-  // Rellenar preguntas comunes
-  const datosComunes = datosPerfilar;
-  console.log("Rellenando preguntas comunes:", datosComunes);
-  comboSituacionBasic.value = datosComunes.eleecion;
-  lineIngresoBasic.value = datosComunes.ingresoBruto;
-  lineEdadBasic.value = datosComunes.edad;
-  lineAcargoBasic.value = datosComunes.personasACargo;
-  if (typeof datosComunes.vivienda === "boolean") {
-    radioViviendaTrueBasic.checked = datosComunes.vivienda === true;
-    radioViviendaFalseBasic.checked = datosComunes.vivienda === false;
-  }
+                                <p>¿Trabajas a tiempo parcial?</p>
+                                <div id="radio-group">
+                                    <input type="radio" id="trabajoSi" name="trabajoParcial" value="si">
+                                    <label for="trabajoSi">Sí</label>
+                                    <input type="radio" id="trabajoNo" name="trabajoParcial" value="no">
+                                    <label for="trabajoNo">No</label>
+                                </div>
 
-  // Mostrar el cuadro adecuado según la situación
-  console.log("Mostrando cuadro para:", datosComunes.eleecion);
-  mostrarCuadro("ajustesCuadro" + (datosComunes.eleecion));
+                                <p>¿Recibes alguna beca? ¿De cuánto?</p>
+                                <input class="line" type="number" id="becaCantidad"
+                                    placeholder="Cantidad anual en euros" required />
+                                <button class="boton" type="button" onclick="enviarCuestionario()">Enviar
+                                    cuestionario</button>
+                            </form>
+                        </section>
 
-  // Rellenar preguntas específicas según el tipo
-  const tipo = datosComunes.eleecion;
-  const datosEspecificos = datosPerfilar;
-  console.log("Tipo de usuario:", tipo, "Datos específicos:", datosEspecificos);
+                        <!---------------------------autonomo----------------------------------------------------------------------->
+                        <section id="ajustesCuadroAutonomo" class="form-section">
+                            <h2 id="ajustesTitulo">Infroma de usuario-Autonomo</h2>
+                            <form>
+                                <label for="datetime">¿Desde cuándo estás dado de alta como autónomo?</label>
+                                <input type="datetime-local" name="datetime" id="datetime" />
 
-  if (tipo === "Autonomo") {
-    console.log("Rellenando campos de Autónomo");
-    dateAltaAutonomo.value = datosEspecificos.fechaAlta;
-    lineActividadAutonomo.value = datosEspecificos.actividad;
-    lineGastosAutonomo.value = datosEspecificos.gastosDeducibles;
-    lineIvaSuportAutonomo.value = datosEspecificos.ivaSoportado;
-    lineIvaRepertAutonomo.value = datosEspecificos.ivaRepercutido;
-    if (typeof datosEspecificos.vehiculo === "boolean") {
-      radiovehiculoTrueAutonomo.checked = datosEspecificos.vehiculo === true;
-      radiovehiculoFalseAutonomo.checked = datosEspecificos.vehiculo === false;
+                                <p>¿A qué actividad profesional te dedicas?</p>
+                                <input class="line" type="number" id="actividadProfesional"
+                                    placeholder="Actividad profesional" required />
+                                <p> ¿Qué cantidad anual estimas en gastos deducibles?</p>
+                                <input class="line" type="number" id="gastosDeducibles" placeholder="Gastos deducibles"
+                                    required />
+                                <p>¿Cuánto IVA has soportado en tus gastos?</p>
+                                <input class="line" type="number" id="ivaSoportado" placeholder="IVA soportado"
+                                    required />
+                                <p>¿Cuánto IVA has repercutido en tus facturas?</p>
+                                <input class="line" type="number" id="ivaRepercutido" placeholder="IVA repercutido"
+                                    required />
+                                <p>¿Utilizas vehículo para tu actividad profesional?</p>
+                                <div id="radio-group">
+                                    <input type="radio" id="vehiculoSi" name="vehiculo" value="si">
+                                    <label for="vehiculoSi">Sí</label>
+
+                                    <input type="radio" id="vehiculoNo" name="vehiculo" value="no">
+                                    <label for="vehiculoNo">No</label>
+                                </div>
+                                <button class="boton" type="button" onclick="enviarCuestionario()">Enviar
+                                    cuestionario</button>
+                            </form>
+
+                        </section>
+                        <!-----------------------------------salariadoooo--------------------------------------------------------------->
+                        <section id="ajustesCuadroAsalariado" class="form-section">
+                            <form>
+                                <h2 id="ajustesTitulo">Información de Usuario - Asalariado</h2>
+                                <p>¿Qué tipo de contrato tienes?</p>
+                                <select class="select" id="tipoContrato">
+                                    <option value="indefinido">Indefinido</option>
+                                    <option value="temporal">Temporal</option>
+                                    <option value="parcial">Jornada Parcial</option>
+                                </select>
+
+                                <p>¿Tienes el título de familia numerosa?</p>
+                                <div id="radio-group">
+                                    <input type="radio" id="familiaNumerosaSi" name="familiaNumerosa" value="si">
+                                    <label for="familiaNumerosaSi">Sí</label>
+                                    <input type="radio" id="familiaNumerosaNo" name="familiaNumerosa" value="no">
+                                    <label for="familiaNumerosaNo">No</label>
+                                </div>
+
+                                <p>¿Qué edades tienen tus hijos?</p>
+                                <input class="line" type="text" id="edadesHijos" placeholder="Ej: 4, 8, 16" required />
+
+                                <p>¿Tienes gastos escolares o educativos?</p>
+                                <input class="line" type="number" id="gastosEscolares"
+                                    placeholder="Cantidad anual en euros" required />
+                                <button class="boton" type="button" onclick="enviarCuestionario()">Enviar
+                                    cuestionario</button>
+                            </form>
+                        </section>
+                        <!-------------------------------------------------------------------------------------------------->
+                        <section id="ajustesCuadroJubilado" class="form-section">
+                            <form>
+                                <h2 id="ajustesTitulo">Información de Usuario - Jubilado</h2>
+                                <p>¿Cuánto cobras anualmente por pensión?</p>
+                                <input class="line" type="number" id="pensionAnual" placeholder="Pensión anual en euros"
+                                    required />
+
+                                <p>¿Tienes una segunda vivienda no alquilada?</p>
+                                <div id="radio-group">
+                                    <input type="radio" id="segundaViviendaSi" name="segundaVivienda" value="si">
+                                    <label for="segundaViviendaSi">Sí</label>
+                                    <input type="radio" id="segundaViviendaNo" name="segundaVivienda" value="no">
+                                    <label for="segundaViviendaNo">No</label>
+                                </div>
+
+                                <p>¿Tienes gastos médicos significativos?</p>
+                                <input class="line" type="number" id="gastosMedicos"
+                                    placeholder="Gastos médicos anuales" required />
+                                <button class="boton" type="button" onclick="enviarCuestionario()">Enviar
+                                    cuestionario</button>
+                            </form>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+        </section>
+
+
+
+        <section id="toasts" class="toast-container"></section>
+
+
+<script>
+    function mostrarCuadro(idCuadroActivo) {
+        const cuadros = document.querySelectorAll("#parteMedia .form-section");
+        cuadros.forEach(cuadro => {
+            cuadro.classList.add('hidden');
+        });
+        const cuadroActivo = document.getElementById(idCuadroActivo);
+        if (cuadroActivo) {
+            cuadroActivo.classList.remove('hidden');
+        }
     }
-  } else if (tipo === "Asalariado") {
-    console.log("Rellenando campos de Asalariado");
-    comboTipoJobAsalariado.value = datosEspecificos.tipoContrato;
-    if (typeof datosEspecificos.familiaNumerosa === "boolean") {
-      radioFamiliaTrueAsalariado.checked = datosEspecificos.familiaNumerosa === true;
-      radioFamiliaFalseAsalariado.checked = datosEspecificos.familiaNumerosa === false;
-    }
-    lineArrayEdadesAsalariado.value = datosEspecificos.edadesHijos;
-    lineGastosAsalariado.value = datosEspecificos.gastosEscolares;
-  } else if (tipo === "Estudiante") {
-    console.log("Rellenando campos de Estudiante");
-    comboEstudiosEstudiante.value = datosEspecificos.tipoEstudios; //falaaaaaaaaalalllaaaaaaaaaaa
-    if (typeof datosEspecificos.trabaja === "boolean") {
-      radioTrabajoTrueEstudiante.checked = datosEspecificos.trabaja === true;
-      radioTrabajoFalseEstudiante.checked = datosEspecificos.trabaja === false;
-    }
-    lineBecaEstudiante.value = datosEspecificos.becaCantidad;
-  } else if (tipo === "Jubilado") {
-    console.log("Rellenando campos de Jubilado");
-    linePensionJubilado.value = datosEspecificos.pensionAnual;
-    if (typeof datosEspecificos.segundaVivienda === "boolean") {
-      radioSegundaViviendaTrueJubilado.checked = datosEspecificos.segundaVivienda === true;
-      radioSegundaViviendaFalseJubilado.checked = datosEspecificos.segundaVivienda === false;
-    }
-    lineGastosMedicosJubilado.value = datosEspecificos.gastosMedicos;
-  } else if (tipo === "Empresario") {
-    console.log("Rellenando campos de Empresario");
-    comboTipoContratoEmpresario.value = datosEspecificos.tipoContrato;
-    lineFacturacionEmpresario.value = datosEspecificos.facturacionEmpresa;
-    lineSueldoAdministradorEmpresario.value = datosEspecificos.sueldoAdministrador;
-    lineEmpleadosEmpresario.value = datosEspecificos.empleados;
-    lineGastosDeduciblesEmpresario.value = datosEspecificos.gastosDeduciblesEmpresa;
-  }
 
-  // Deshabilitar todos los campos del formulario
-  deshabilitarCampos();
-}
-
-
-function enviarCuestionario() {
-  let datos = [];
-
-
-  if (!lineIngresoBasic.value || !lineEdadBasic.value || !lineAcargoBasic.value || (!radioViviendaTrueBasic.checked && !radioViviendaFalseBasic.checked)) {
-    mostrarToast("Faltan preguntas comunes por completar", "error");
-    return;
-  }
-
-
-
-  const eleecion = comboSituacionBasic.value;
-  /* const ingresoBruto = lineIngresoBasic.value;
-   const edad = lineEdadBasic.value;
-   const personasACargo = lineAcasgoBasic.value;
-   const vivienda = radioViviendaTrueBasic.checked ? true : false;*/
-
-  datos.push({
-    eleecion: comboSituacionBasic.value,
-    ingresoBruto: lineIngresoBasic.value,
-    edad: lineEdadBasic.value,
-    personasACargo: lineAcargoBasic.value,
-    vivienda: radioViviendaTrueBasic.value
-  });
-
-  if (eleecion === "Autonomo") {
-    if (!dateAltaAutonomo.value || !lineActividadAutonomo.value || !lineGastosAutonomo.value || !lineIvaSuportAutonomo.value || !lineIvaRepertAutonomo.value || (!radiovehiculoTrueAutonomo.checked && !radiovehiculoFalseAutonomo.checked)) {
-      mostrarToast("Faltan preguntas específicas de Autónomo por completar", "error");
-      return;
-    }
-    datos.push({
-      fechaAlta: dateAltaAutonomo.value,
-      actividad: lineActividadAutonomo.value,
-      gastosDeducibles: lineGastosAutonomo.value,
-      ivaSoportado: lineIvaSuportAutonomo.value,
-      ivaRepercutido: lineIvaRepertAutonomo.value,
-      vehiculo: radiovehiculoTrueAutonomo.checked ? true : false
+    const selectSituacion = document.getElementById('encontrate');
+    
+    // Mostrar el formulario correcto al cargar la página
+    window.addEventListener('DOMContentLoaded', () => {
+        mostrarCuadro("ajustesCuadro" + selectSituacion.value);
     });
-  } else if (eleecion === "Asalariado") {
-    if (!comboTipoJobAsalariado.value || (!radioFamiliaTrueAsalariado.checked && !radioFamiliaFalseAsalariado.checked) || !lineArrayEdadesAsalariado.value || !lineGastosAsalariado.value) {
-      mostrarToast("Faltan preguntas específicas de Asalariado por completar", "error");
-      return;
-    }
-    datos.push({
-      tipoContrato: comboTipoJobAsalariado.value,
-      familiaNumerosa: radioFamiliaTrueAsalariado.checked ? true : false,
-      edadesHijos: lineArrayEdadesAsalariado.value,
-      gastosEscolares: lineGastosAsalariado.value
+
+    // Cambiar al formulario correspondiente al cambiar la selección
+    selectSituacion.addEventListener('change', (event) => {
+        const valorSeleccionado = event.target.value;
+        mostrarCuadro("ajustesCuadro" + valorSeleccionado);
     });
-  } else if (eleecion === "Estudiante") {
-    if (!comboEstudiosEstudiante.value || (!radioTrabajoTrueEstudiante.checked && !radioTrabajoFalseEstudiante.checked) || !lineBecaEstudiante.value) {
-      mostrarToast("Faltan preguntas específicas de Estudiante por completar", "error");
-      return;
-    }
-    datos.push({
-      tipoEstudios: comboEstudiosEstudiante.value,
-      trabaja: radioTrabajoTrueEstudiante.checked ? true : false,
-      becaCantidad: lineBecaEstudiante.value
-    });
-  } else if (eleecion === "Jubilado") {
-    if (!linePensionJubilado.value || (!radioSegundaViviendaTrueJubilado.checked && !radioSegundaViviendaFalseJubilado.checked) || !lineGastosMedicosJubilado.value) {
-      mostrarToast("Faltan preguntas específicas de Jubilado por completar", "error");
-      return;
-    }
-    datos.push({
-      pensionAnual: linePensionJubilado.value,
-      segundaVivienda: radioSegundaViviendaTrueJubilado.checked ? true : false,
-      gastosMedicos: lineGastosMedicosJubilado.value
-    });
-  } else if (eleecion === "Empresario") {
-    if (!comboTipoContratoEmpresario.value || !lineFacturacionEmpresario.value || !lineSueldoAdministradorEmpresario.value || !lineEmpleadosEmpresario.value || !lineGastosDeduciblesEmpresario.value) {
-      mostrarToast("Faltan preguntas específicas de Empresario por completar", "error");
-      return;
-    }
-    datos.push({
-      tipoContrato: comboTipoContratoEmpresario.value,
-      facturacionEmpresa: lineFacturacionEmpresario.value,
-      sueldoAdministrador: lineSueldoAdministradorEmpresario.value,
-      empleados: lineEmpleadosEmpresario.value,
-      gastosDeduciblesEmpresa: lineGastosDeduciblesEmpresario.value
-    });
-  }
-
-
-  if (window.transferenciaDeDatos && typeof window.transferenciaDeDatos.enviarDatos === "function") {
-    window.transferenciaDeDatos.enviarDatos(datos); //--------------------------------------------------------------------------------
-    mostrarToast("Formulario enviado correctamente", "success");
-  } else {
-    mostrarToast("No se pudo enviar los datos: función no disponible", "error");
-  }
-
-  deshabilitarCampos();
-
-
-
-  // añadirFirebase(datos);
-} function mostrarToast(mensaje, tipo) {
-  const notificacion = document.createElement("div");
-  notificacion.classList.add("toast");
-  notificacion.classList.add(tipo === "success" ? "toast-success" : "toast-error");
-  notificacion.innerHTML = mensaje;
-  toasts.appendChild(notificacion);
-
-  setTimeout(() => {
-    notificacion.remove();
-  }, 3000);
-}
-
-
-function deshabilitarCampos() {
-  const campos = document.querySelectorAll("input, select");
-  campos.forEach(campo => {
-    campo.disabled = true;
-  });
-}
-
-
-function reiniciarCuestionario() {
-
-  const campos = document.querySelectorAll("input, select");
-  campos.forEach(campo => {
-    campo.disabled = false;
-  });
-
-
-  const inputs = document.querySelectorAll("input");
-  inputs.forEach(input => {
-    if (input.type === "radio" || input.type === "checkbox") {
-      input.checked = false;
-    } else {
-      input.value = "";
-    }
-  });
-
-  const selects = document.querySelectorAll("select");
-  selects.forEach(select => {
-    select.selectedIndex = 0;
-  });
-
-  mostrarToast("Cuestionario reiniciado", "success");
-}
-
-
-
-
-
-
-const enviar = document.querySelector('.boton');
-const toasts = document.getElementById('toasts');
-// Preguntas comunes
-const comboSituacionBasic = document.querySelector('#encontrate')
-const lineIngresoBasic = document.querySelector('#ingresoBruto');
-const lineEdadBasic = document.querySelector('#edad');
-const lineAcargoBasic = document.querySelector('#personasACargo');
-const radioViviendaTrueBasic = document.querySelector('#viviendaSi');
-const radioViviendaFalseBasic = document.querySelector('#viviendaNo');
-
-// Preguntas Autónomo
-const dateAltaAutonomo = document.querySelector('#datetime');
-const lineActividadAutonomo = document.querySelector('#actividadProfesional');
-const lineGastosAutonomo = document.querySelector('#gastosDeducibles');
-const lineIvaSuportAutonomo = document.querySelector('#ivaSoportado');
-const lineIvaRepertAutonomo = document.querySelector('#ivaRepercutido');
-const radiovehiculoTrueAutonomo = document.querySelector('#vehiculoSi');
-const radiovehiculoFalseAutonomo = document.querySelector('#vehiculoNo');
-
-// Preguntas Asalariado
-const comboTipoJobAsalariado = document.querySelector('#tipoContrato');
-const radioFamiliaTrueAsalariado = document.querySelector('#familiaNumerosaSi');
-const radioFamiliaFalseAsalariado = document.querySelector('#familiaNumerosaNo');
-const lineArrayEdadesAsalariado = document.querySelector('#edadesHijos');
-const lineGastosAsalariado = document.querySelector('#gastosEscolares');
-
-// Preguntas Estudiante
-const comboEstudiosEstudiante = document.querySelector('#tipoEstudios');
-const radioTrabajoTrueEstudiante = document.querySelector('#trabajoSi');
-const radioTrabajoFalseEstudiante = document.querySelector('#trabajoNo');
-const lineBecaEstudiante = document.querySelector('#becaCantidad');
-
-// Preguntas Jubilado
-const linePensionJubilado = document.querySelector('#pensionAnual');
-const radioSegundaViviendaTrueJubilado = document.querySelector('#segundaViviendaSi');
-const radioSegundaViviendaFalseJubilado = document.querySelector('#segundaViviendaNo');
-const lineGastosMedicosJubilado = document.querySelector('#gastosMedicos');
-
-// Preguntas Empresario
-const comboTipoContratoEmpresario = document.querySelector('#tipoContrato');
-const lineFacturacionEmpresario = document.querySelector('#facturacionEmpresa');
-const lineSueldoAdministradorEmpresario = document.querySelector('#sueldoAdministrador');
-const lineEmpleadosEmpresario = document.querySelector('#empleados');
-const lineGastosDeduciblesEmpresario = document.querySelector('#gastosDeduciblesEmpresa');
-    </script>
+</script>
 </body>
+
 </html>
