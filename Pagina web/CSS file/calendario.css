@@ -1,0 +1,572 @@
+/* ESTILO DEL BODY */
+.page-container {
+  background-color: #f9fafb; /* bg-gray-50 */
+  color: #1f2937; /* text-gray-800 */
+  min-height: 100vh;
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .page-container {
+    background-color: #111827; /* dark:bg-gray-900 */
+    color: #e5e7eb; /* dark:text-gray-200 */
+  }
+}
+
+/* Tarjetas de meses */
+.month-card {
+    transition: all 0.3s ease;
+    transform: scale(0.95);
+}
+.month-card.active {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Carrusel */
+.carousel-container {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.carousel-item {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+}
+
+/* Calendario */
+.calendar-day {
+    position: relative;
+}
+
+/* Punto de color (para marcar eventos en los días) */
+.day-dot {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+/* Colores para los puntos */
+.dot-red {
+    background-color: #ef4444;
+}
+.dot-green {
+    background-color: #10b981;
+}
+.dot-yellow {
+    background-color: #f59e0b;
+}
+
+/* Animación para los puntos */
+@keyframes pulse {
+    0% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.2);
+    }
+    100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+
+/* ESTILOS PARA EL FOOTER */
+.footer {
+  background-color: #1f2937; /* bg-gray-800 */
+  color: white;
+  padding: 2rem 0; /* py-8 */
+}
+
+.container {
+  max-width: 1280px; /* mx-auto */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem;
+}
+
+.contact-section {
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.contact-section h3 {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 0.5rem; /* mb-2 */
+  color: #818cf8; /* text-indigo-300 */
+}
+
+.contact-section p {
+  margin-bottom: 1rem; /* mb-4 */
+  color: #d1d5db; /* text-gray-300 */
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* space-y-2 */
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  color: #d1d5db; /* text-gray-300 */
+}
+
+.contact-item i {
+  margin-right: 0.5rem; /* mr-2 */
+  color: #a5b4fc; /* text-indigo-400 */
+}
+
+.copyright {
+  border-top: 1px solid #374151; /* border-t border-gray-700 */
+  padding-top: 1rem; /* pt-4 */
+  text-align: center;
+  color: #9ca3af; /* text-gray-400 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* ESTILOS PARA EL HEADER */
+.main-header {
+  background-color: #ffffff; /* bg-white */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+}
+
+.header-container {
+  max-width: 1280px; /* mx-auto */
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column; /* flex-col */
+  align-items: center; /* items-center */
+  justify-content: space-between; /* justify-between */
+  padding: 1rem; /* p-4 */
+}
+
+@media (min-width: 768px) {
+  .header-container {
+    flex-direction: row; /* md:flex-row */
+  }
+}
+
+.header-logo {
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+@media (min-width: 768px) {
+  .header-logo {
+    margin-bottom: 0; /* md:mb-0 */
+  }
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-image {
+  height: 2.5rem; /* h-10 */
+}
+
+.logo-text {
+  margin-left: 0.5rem; /* ml-2 */
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  color: #4f46e5; /* text-indigo-600 */
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem; /* space-x-6 */
+}
+
+.nav-link {
+  color: #4b5563; /* text-gray-700 */
+  font-weight: 500; /* font-medium */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #4f46e5; /* hover:text-indigo-600 */
+}
+
+/* ESTILOS PARA EL MAIN */
+/* Contenedor principal */
+.main-container {
+  max-width: 1920px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  flex: 1;
+}
+
+@media(min-width: 768px) {
+  .main-container {
+    padding: 1.5rem;
+  }
+}
+
+/* Flexbox general */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media(min-width: 1024px) {
+  .content-wrapper {
+    flex-direction: row;
+  }
+}
+
+/* Sección izquierda */
+.left-section {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding: 1rem;
+  width: 100%;
+}
+
+@media(min-width: 1024px) {
+  .left-section {
+    width: 66.6667%;
+  }
+}
+
+/* Header izquierda */
+.header-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header-left h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937; /* text-gray-800 */
+}
+
+.month-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-month-text {
+  font-weight: 500;
+}
+
+/* Botones circulares (flechas) */
+.btn-circle {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn-circle:hover {
+  background-color: #f3f4f6; /* hover:bg-gray-100 */
+}
+
+/* Resumen mensual */
+.monthly-summary {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f9fafb; /* bg-gray-50 */
+  border-radius: 0.5rem;
+}
+
+.monthly-summary h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #374151; /* text-gray-700 */
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media(min-width: 768px) {
+  .summary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tarjetas resumen */
+.summary-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  border-left-width: 4px;
+}
+
+.summary-card .label {
+  font-size: 0.875rem;
+  color: #6b7280; /* text-gray-500 */
+}
+
+.summary-card .amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+/* Colores específicos */
+.income {
+  border-left-color: #10b981; /* green-500 */
+}
+
+.income .amount {
+  color: #16a34a; /* green-600 */
+}
+
+.expenses {
+  border-left-color: #ef4444; /* red-500 */
+}
+
+.expenses .amount {
+  color: #dc2626; /* red-600 */
+}
+
+.balance {
+  border-left-color: #6366f1; /* indigo-500 */
+}
+
+.balance .amount {
+  color: inherit;
+}
+
+/* Últimas transacciones */
+.recent-transactions {
+  margin-top: 1.5rem;
+}
+
+.recent-transactions h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Alineación del título y Día Actual */
+.transactions-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem; /* el mismo margen que ya tienes */
+}
+
+.current-day {
+  font-size: 0.875rem;
+  color: #6b7280; /* gris suave */
+}
+
+
+/* Sección derecha */
+.right-section {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding: 1rem;
+  width: 100%;
+  position: sticky;
+  top: 1rem;
+}
+
+@media(min-width: 1024px) {
+  .right-section {
+    width: 33.3333%;
+  }
+}
+
+/* Header derecha */
+.header-right {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header-right h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.year-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-year-text {
+  font-weight: 500;
+}
+
+/* Controles calendario mes */
+.month-calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.current-month-calendar-text {
+  font-weight: 500;
+}
+
+/* Grid calendario */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+}
+
+/* Días de la semana */
+.weekday {
+  text-align: center;
+  font-weight: 500;
+  color: #6b7280; /* text-gray-500 */
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+}
+
+/* Leyenda */
+.legend {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb; /* border-gray-200 */
+}
+
+.legend h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.legend-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.dot-green {
+  background-color: #10b981;
+}
+
+.dot-red {
+  background-color: #ef4444;
+}
+
+.dot-yellow {
+  background-color: #f59e0b;
+}
+
+/* Resumen anual */
+.annual-summary {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #e0e7ff; /* bg-indigo-50 */
+  border-radius: 0.5rem;
+}
+
+.annual-summary h3 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #3730a3; /* text-indigo-800 */
+}
+
+.annual-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.income-amount {
+  font-weight: 500;
+  color: #16a34a;
+}
+
+.expenses-amount {
+  font-weight: 500;
+  color: #dc2626;
+}
+
+.annual-balance {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #3730a3;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Botón flotante añadir transacción */
+.btn-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #4f46e5; /* indigo-600 */
+  color: white;
+  border-radius: 9999px;
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+  transition: background-color 0.3s ease;
+  z-index: 1000;
+}
+
+.btn-float:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
