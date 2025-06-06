@@ -63,26 +63,44 @@
           </div>
           <!--Datos de añadir eventos------------------------------------------------------->
           <div class="add-event-body">
-            <div class="add-event-input">
-              <input type="text" placeholder="Event Name" class="event-name" />
+            <h2 class="add-event-title">Nuevo Evento</h2>
+            <div class="add-event-field">
+              <label for="event-title" class="add-event-label">Título</label>
+              <input type="text" id="event-title" class="add-event-input" placeholder="Introduce un título" />
             </div>
-            <div class="add-event-input">
-              <input
-                type="text"
-                placeholder="Event Time From"
-                class="event-time-from"
-              />
+
+            <div class="add-event-field">
+              <label for="event-description" class="add-event-label">Descripción</label>
+              <textarea id="event-description" class="add-event-textarea" placeholder="Descripción del evento"></textarea>
             </div>
-            <div class="add-event-input">
-              <input
-                type="text"
-                placeholder="Event Time To"
-                class="event-time-to"
-              />
+
+            <div class="add-event-field">
+              <label for="event-amount" class="add-event-label">Cantidad (€)</label>
+              <input type="number" id="event-amount" class="add-event-input" placeholder="0.00" />
+            </div>
+
+            <div class="add-event-field">
+              <label class="add-event-label">Tipo</label>
+              <div class="add-event-radio-group">
+                <label><input type="radio" name="event-type" value="GASTO" checked /> Gasto</label>
+                <label><input type="radio" name="event-type" value="COBRO" /> Cobro</label>
+              </div>
+            </div>
+
+            <div class="add-event-field">
+              <label for="event-category" class="add-event-label">Categoría</label>
+              <select id="categoria" class="add-event-select">
+                <option>Selecciona una categoría</option>
+                <!-- Opciones dinámicas -->
+              </select>
+            </div>
+            <div class="add-event-field">
+              <label for="event-date" class="add-event-label">Fecha</label>
+              <input type="date" id="event-date" class="add-event-input" />
             </div>
           </div>
           <div class="add-event-footer">
-            <button class="add-event-btn">Add Event</button>
+            <button class="add-event-btn">Guardar</button>
           </div>
         </div>
       </div>
@@ -90,6 +108,6 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-    <script src="calendarioJS.js""></script>
+    <script src="calendarioJS.js"></script>
   </body>
 </html>
