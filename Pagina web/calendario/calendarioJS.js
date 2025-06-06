@@ -1,24 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getDatabase, ref, push, set, remove, update, get } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDCi97vgUzaR-TXpFvmv5vMKG7cdm7vNhU",
-  authDomain: "base-de-datos-del-tfg-1.firebaseapp.com",
-  projectId: "base-de-datos-del-tfg-1",
-  storageBucket: "base-de-datos-del-tfg-1.appspot.com",
-  messagingSenderId: "322269238228",
-  appId: "1:322269238228:android:90de023599f3f7f7157c41",
-  databaseURL: "https://base-de-datos-del-tfg-1-default-rtdb.europe-west1.firebasedatabase.app"
-};
-//--------------------------------------------------------------
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getDatabase(app);
-
-
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
@@ -31,12 +10,12 @@ const calendar = document.querySelector(".calendar"),
   eventDate = document.querySelector(".event-date"),
   eventsContainer = document.querySelector(".events"),
   addEventBtn = document.querySelector(".add-event"),
-  addEventWrapper = document.querySelector(".add-event-wrapper "),
-  addEventCloseBtn = document.querySelector(".close "),
-  addEventTitle = document.querySelector(".event-name "),
-  addEventFrom = document.querySelector(".event-time-from "),
-  addEventTo = document.querySelector(".event-time-to "),
-  addEventSubmit = document.querySelector(".add-event-btn ");
+  addEventWrapper = document.querySelector(".add-event-wrapper"),
+  addEventCloseBtn = document.querySelector(".close"),
+  addEventTitle = document.querySelector(".event-name"),
+  addEventFrom = document.querySelector(".event-time-from"),
+  addEventTo = document.querySelector(".event-time-to"),
+  addEventSubmit = document.querySelector(".add-event-btn");
 
 let today = new Date();
 let activeDay;
