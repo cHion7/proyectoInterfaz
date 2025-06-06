@@ -1,21 +1,24 @@
-function hacer() {
+async function cargarDatosUsuario() {
+  await new Promise(resolve => setTimeout(resolve, 300))
   if (
     typeof window.transferenciaDeDatos.recibirDatos === "function" &&
     typeof window.transferenciaDeDatos.recibirDatosPerfil === "function"
   ) {
-    window.transferenciaDeDatos.recibirDatosPerfil().then((datos) => {
-      console.log("Perfil del usuario:", datos);
-      rellenarDatosPerfil(datos);
-    });
-    window.transferenciaDeDatos.recibirDatos().then((datos) => {
-      console.log("Datos del usuario:", datos);
-      rellenarDatosUsuario(datos);
-    });
+    const datosPerfil = await window.transferenciaDeDatos.recibirDatosPerfil();
+    console.log("Perfil del usuario:", datosPerfil);
+    rellenarDatosPerfil(datosPerfil);
 
+    const datosUsuario = await window.transferenciaDeDatos.recibirDatos();
+    console.log("Datos del usuario:", datosUsuario);
+    rellenarDatosUsuario(datosUsuario);
   } else {
     console.error("recibirDatos o recibirDatosPerfil no están definidos.");
   }
+  console.log("Script JavaScript iniciado!");
 }
+
+window.onload = cargarDatosUsuario;
+
 
 
 

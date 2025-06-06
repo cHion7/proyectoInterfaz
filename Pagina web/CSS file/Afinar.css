@@ -254,8 +254,6 @@ form {
 }
 
 
-
-
 @media screen and (max-width: 1100px) {
   #parteArriba {
   flex-direction: column;
