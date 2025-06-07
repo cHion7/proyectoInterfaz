@@ -73,11 +73,11 @@
           </div>
 
           <div class="add-event-field">
-            <label class="add-event-label">Tipo</label>
-            <div class="add-event-radio-group">
-              <input id="gasto" type="radio" name="event-type" value="GASTO" checked /> Gasto
-              <input id="ingreso" type="radio" name="event-type" value="COBRO" /> Cobro
-            </div>
+            <label for="event-type" class="add-event-label">Categoría</label>
+            <select id="event-type" class="add-event-select">
+              <option style="color:#d32f2f;">GASTO</option>
+              <option style="color:#388e3c;">COBRO</option>
+            </select>
           </div>
 
           <div class="add-event-field">
@@ -104,7 +104,6 @@
               <option style="color:#388e3c;">Devoluciones</option>
               <option style="color:#388e3c;">Premios - Loteria</option>
               <option style="color:#388e3c;">Regalos - Donaciones</option>
-
             </select>
           </div>
           <div class="add-event-footer">
@@ -116,6 +115,7 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-    <script  src="../Pagina web/javaScript/calendarioJS.js"></script>
-    <script type="module" src="firebaseCalendario.js"></script>
+    <script src="../Pagina web/javaScript/calendarioJS.js"></script>
+    <script type="module" src="../Pagina web/javaScript/firebaseCalendario.js"></script>
+
 </html>

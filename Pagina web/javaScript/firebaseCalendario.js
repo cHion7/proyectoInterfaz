@@ -21,29 +21,39 @@ const db = getDatabase(app);
 
 function subirEvento(event) {
   const user = auth.currentUser;
-
-  if (event != null && user) {
-    const uid = user.email.split(/[@.]/).join("_");
-
-    // Generar una nueva referencia con clave automática
-    const newEventRef = push(ref(db, "Usuarios/" + uid + "/eventos"));
-    const key = newEventRef.key;
-
-    // Incluir la clave dentro del objeto evento
-    const eventWithKey = { ...event, key: key };
-
-    // Subir el evento con la clave incluida
-    set(newEventRef, eventWithKey)
-      .then(() => {
-        console.log("Evento guardado correctamente con key:", key);
-      })
-      .catch((error) => {
-        console.log("Error al guardar datos:", error);
-      });
-
-  } else {
-    console.warn("Usuario no autenticado o evento nulo. No se puede guardar.");
+  if (!user) {
+    console.warn("No hay usuario autenticado.");
+    return;
   }
+
+  const uid = user.email.replace(/[@.]/g, "_");
+  const eventosRef = ref(db, "Usuarios/" + uid + "/eventos");
+
+  eventsArr.forEach(entry => {
+    if (Array.isArray(entry.events)) {
+      entry.events.forEach(event => {
+        const newRef = push(eventosRef);  // crea clave única
+        const key = newRef.key;
+
+        // Sumar un día (en milisegundos) a fechaMillis si existe
+        let eventoConKey = { ...event, key: key };
+        if (eventoConKey.fechaMillis) {
+          eventoConKey.fechaMillis = eventoConKey.fechaMillis + 24 * 60 * 60 * 1000;
+        }
+
+        // ✅ Mostrar en consola el evento justo antes de subirlo
+        console.log("Evento que se va a subir:", eventoConKey);
+
+        set(newRef, eventoConKey)
+          .then(() => {
+            console.log("Evento subido correctamente:", eventoConKey);
+          })
+          .catch(error => {
+            console.error("Error al subir evento:", error);
+          });
+      });
+    }
+  });
 }
 
 
@@ -68,7 +78,6 @@ async function recibirTodasFechas() { //se supone que coje todas las fechas
 
 
 window.firebaseCalendario = {
-    enviarFecha,
     recibirTodasFechas,
     subirEvento
 };

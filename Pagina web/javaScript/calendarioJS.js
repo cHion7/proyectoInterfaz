@@ -35,7 +35,7 @@ const calendar = document.querySelector(".calendar"),
   addEventTitle = document.querySelector("#event-title"),
   addEventDescription = document.querySelector("#event-description"),
   addEventAmount = document.querySelector("#event-amount"),
-  addEventType = document.querySelectorAll('input[name="event-type"]'),
+  addEventType = document.querySelector("#event-type"),
   addEventCategory = document.querySelector("#event-category"),
 
   addEventFrom = document.querySelector(".event-time-from"),
@@ -339,7 +339,6 @@ function guardarBtn() {
 
   if (eventTitle === "" || eventDescription === "" || eventAmount === "" || eventType === "" || eventCategory === "") {//cambiar dato
     alert("Porfavor rellena todos los campos");
-
     return;
   }
 
@@ -383,11 +382,7 @@ function guardarBtn() {
   addEventTitle.value = "";
   addEventDescription.value = "";//cambiar dato
   addEventAmount.value = "";//cambiar dato
-  addEventType.forEach((input) => {
-    if (input.checked) {
-      input.checked = false; //cambiar dato
-    }
-  });
+  addEventType.value = "Selecciona un tipo"; //cambiar dato
   addEventCategory.value = "Selecciona una categoría"; //cambiar dato
 
   updateEvents(activeDay);
@@ -440,6 +435,7 @@ function saveEvents() {
     console.log("No se pudo enviar los datos: función no disponible");
   }
 }
+
 
 //function to get events from local storage
 async function getEvents() {
