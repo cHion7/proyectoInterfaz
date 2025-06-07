@@ -1,103 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Stay organized with our user-friendly Calendar featuring events, reminders, and a customizable interface. Built with HTML, CSS, and JavaScript. Start scheduling today!"
-    />
-    <meta
-      name="keywords"
-      content="calendar, events, reminders, javascript, html, css, open source coding"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
-      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="stylesheet" href="calendarioStyle.css"/>
-    <title>Calendar with Events</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="left">
-        <div class="calendar">
-          <div class="month">
-            <i class="fas fa-angle-left prev"></i>
-            <div class="date">december 2015</div>
-            <i class="fas fa-angle-right next"></i>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Stay organized with our user-friendly Calendar featuring events, reminders, and a customizable interface. Built with HTML, CSS, and JavaScript. Start scheduling today!" />
+  <meta name="keywords" content="calendar, events, reminders, javascript, html, css, open source coding" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="calendarioStyle.css" />
+  <title>Calendar with Events</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      <div class="calendar">
+        <div class="month">
+          <i class="fas fa-angle-left prev"></i>
+          <div class="date">december 2015</div>
+          <i class="fas fa-angle-right next"></i>
+        </div>
+        <div class="weekdays">
+          <div>Lun</div>
+          <div>Mart</div>
+          <div>Mierc</div>
+          <div>Juev</div>
+          <div>Vier</div>
+          <div>Saba</div>
+          <div>Domi</div>
+        </div>
+        <div class="days"></div>
+        <div class="goto-today">
+          <div class="goto">
+            <input type="text" placeholder="mm/yyyy" class="date-input" />
+            <button class="goto-btn">Ir a </button>
           </div>
-          <div class="weekdays">
-            <div>Lun</div>
-            <div>Mart</div>
-            <div>Mierc</div>
-            <div>Juev</div>
-            <div>Vier</div>
-            <div>Saba</div>
-            <div>Domi</div>
-          </div>
-          <div class="days"></div>
-          <div class="goto-today">
-            <div class="goto">
-              <input type="text" placeholder="mm/yyyy" class="date-input" />
-              <button class="goto-btn">Ir a </button>
-            </div>
-            <button class="today-btn">Hoy</button>
-          </div>
+          <button class="today-btn">Hoy</button>
         </div>
       </div>
-      <div class="right">
-        <div class="today-date">
-          <div class="event-day">miercoles</div>
-          <div class="event-date">12th diciembre 2022</div>
+    </div>
+    <div class="right">
+      <div class="today-date">
+        <div class="event-day">miercoles</div>
+        <div class="event-date">12th diciembre 2022</div>
+      </div>
+      <div class="events"></div>
+      <div class="add-event-wrapper">
+        <div class="add-event-header">
+          <div class="title">Añadir Evento</div>
+          <i class="fas fa-times close"></i>
         </div>
-        <div class="events"></div>
-        <div class="add-event-wrapper">
-          <div class="add-event-header">
-            <div class="title">Añadir Evento</div>
-            <i class="fas fa-times close"></i>
+        <!--Datos de añadir eventos------------------------------------------------------->
+        <div class="add-event-body">
+          <h2 class="add-event-title">Nuevo Evento</h2>
+          <div class="add-event-field">
+            <label for="event-title" class="add-event-label">Título</label>
+            <input type="text" id="event-title" class="add-event-input" placeholder="Introduce un título" />
           </div>
-          <!--Datos de añadir eventos------------------------------------------------------->
-          <div class="add-event-body">
-            <h2 class="add-event-title">Nuevo Evento</h2>
-            <div class="add-event-field">
-              <label for="event-title" class="add-event-label">Título</label>
-              <input type="text" id="event-title" class="add-event-input" placeholder="Introduce un título" />
-            </div>
 
-            <div class="add-event-field">
-              <label for="event-description" class="add-event-label">Descripción</label>
-              <textarea id="event-description" class="add-event-textarea" placeholder="Descripción del evento"></textarea>
-            </div>
+          <div class="add-event-field">
+            <label for="event-description" class="add-event-label">Descripción</label>
+            <textarea id="event-description" class="add-event-textarea" placeholder="Descripción del evento"></textarea>
+          </div>
 
-            <div class="add-event-field">
-              <label for="event-amount" class="add-event-label">Cantidad (€)</label>
-              <input type="number" id="event-amount" class="add-event-input" placeholder="0.00" />
-            </div>
+          <div class="add-event-field">
+            <label for="event-amount" class="add-event-label">Cantidad (€)</label>
+            <input type="number" id="event-amount" class="add-event-input" placeholder="0.00" />
+          </div>
 
-            <div class="add-event-field">
-              <label class="add-event-label">Tipo</label>
-              <div class="add-event-radio-group">
-                <label><input type="radio" name="event-type" value="GASTO" checked /> Gasto</label>
-                <label><input type="radio" name="event-type" value="COBRO" /> Cobro</label>
-              </div>
-            </div>
 
-            <div class="add-event-field">
-              <label for="event-category" class="add-event-label">Categoría</label>
-              <select id="categoria" class="add-event-select">
-                <option>Selecciona una categoría</option>
-                <!-- Opciones dinámicas -->
-              </select>
+          <div class="add-event-field">
+            <label class="add-event-label">Tipo</label>
+            <div class="add-event-radio-group">
+              <label><input id="gasto" type="radio" name="event-type" value="GASTO" checked /> Gasto</label>
+              <label><input id="ingreso" type="radio" name="event-type" value="COBRO" /> Cobro</label>
             </div>
-            <div class="add-event-field">
-              <label for="event-date" class="add-event-label">Fecha</label>
-              <input type="date" id="event-date" class="add-event-input" />
-            </div>
+          </div>
+
+          <div class="add-event-field">
+            <label for="event-category" class="add-event-label">Categoría</label>
+            <select id="categoria" class="add-event-select">
+              <option>Selecciona una categoría</option>
+            </select>
           </div>
           <div class="add-event-footer">
             <button class="add-event-btn">Guardar</button>
@@ -109,5 +97,6 @@
       </button>
     </div>
     <script src="calendarioJS.js"></script>
-  </body>
+</body>
+
 </html>

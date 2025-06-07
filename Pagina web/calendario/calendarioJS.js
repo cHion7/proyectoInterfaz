@@ -470,7 +470,7 @@ const categoriasCobros = [
 ];
 
 function actualizarCategorias() {
-  const tipoSeleccionado = document.querySelector('input[name="event-type"]:checked');
+  let gasto = document.querySelector('input[name="event-type"]:checked');
   if (!tipoSeleccionado) return;
 
   const tipo = tipoSeleccionado.value;
@@ -489,14 +489,14 @@ function actualizarCategorias() {
 }
 
 function guardar() {
-  const evento = {
+  eventsArr.push({// se guardan datsos-------------------------------------------------------------------------
     tipo: document.querySelector('input[name="event-type"]:checked')?.value || "",
     categoria: document.getElementById("categoria")?.value || "",
     titulo: document.getElementById("event-title")?.value || "",
     descripcion: document.getElementById("event-description")?.value || "",
     cantidad: document.getElementById("event-amount")?.value || "",
-    fecha: document.getElementById("event-date")?.value || "",
-  };
+    fecha: document.getElementById("event-date")?.value || ""
+  });
 
   console.log("Evento a guardar:", evento);
   alert("Evento guardado correctamente.");
