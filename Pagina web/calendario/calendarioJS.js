@@ -457,69 +457,24 @@ function convertTime(time) {
   return time;
 }
 
+    const categoriasGastos = ["Vivienda", "Transporte", "Alimentación", "Salud", "Educación"];
+    const categoriasCobros = ["Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas"];
 
-// Script para el formulario de eventos
-const categoriasGastos = [
-  "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
-  "Ocio", "Ropa y Calzado", "Seguros", "Impuestos y Tasas", "Otros"
-];
+    document.getElementById("tipo").addEventListener("change", function () {
+      const tipo = this.value;
+      const categoriaSelect = document.getElementById("categoria");
 
-const categoriasCobros = [
-  "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
-  "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
-];
+      // Limpiar opciones anteriores
+      categoriaSelect.innerHTML = '<option>Selecciona una categoría</option>';
 
-function actualizarCategorias() {
-  const tipoSeleccionado = document.querySelector('input[name="event-type"]:checked');
-  if (!tipoSeleccionado) return;
+      // Agregar nuevas opciones según el tipo seleccionado
+      const categorias = tipo === "GASTO" ? categoriasGastos :
+                         tipo === "COBRO" ? categoriasCobros : [];
 
-  const tipo = tipoSeleccionado.value;
-  const select = document.getElementById("categoria");
-  if (!select) return;
-
-  select.innerHTML = "<option>Selecciona una categoría</option>";
-
-  const categorias = tipo === "GASTO" ? categoriasGastos : categoriasCobros;
-  categorias.forEach(cat => {
-    const option = document.createElement("option");
-    option.value = cat;
-    option.textContent = cat;
-    select.appendChild(option);
-  });
-}
-
-function guardar() {
-  const evento = {
-    tipo: document.querySelector('input[name="event-type"]:checked')?.value || "",
-    categoria: document.getElementById("categoria")?.value || "",
-    titulo: document.getElementById("event-title")?.value || "",
-    descripcion: document.getElementById("event-description")?.value || "",
-    cantidad: document.getElementById("event-amount")?.value || "",
-    fecha: document.getElementById("event-date")?.value || "",
-  };
-
-  console.log("Evento a guardar:", evento);
-  alert("Evento guardado correctamente.");
-}
-
-function cancelar() {
-  document.querySelectorAll("input, textarea, select").forEach(el => {
-    if (el.type === "radio" && el.value === "GASTO") el.checked = true;
-    else if (el.type === "radio") el.checked = false;
-    else if (el.type === "checkbox") el.checked = false;
-    else el.value = "";
-  });
-  actualizarCategorias();
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  actualizarCategorias();
-
-  // Escucha cambios de tipo para actualizar categorías en tiempo real
-  document.querySelectorAll('input[name="event-type"]').forEach(input => {
-    input.addEventListener("change", actualizarCategorias);
-  });
-
-  // Asigna el botón de guardar
-  document.querySelector(".add-event-btn")?.addEventListener("click", guardar);
-});
+      categorias.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categoriaSelect.appendChild(option);
+      });
+    });
