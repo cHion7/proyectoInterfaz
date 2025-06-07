@@ -1,5 +1,5 @@
 :root {
-  --primary-clr: #b38add;
+  --primary-clr: #3730A3FF;
 }
 * {
   margin: 0;
@@ -183,13 +183,13 @@ body {
   height: 6px;
   border-radius: 30px;
   transform: translateX(-50%);
-  background-color: var(--primary-clr);
+  background: linear-gradient(90deg, #00ff6a 0%, red 100%);
 }
 .calendar .days .day:hover.event::after {
-  background-color: #fff;
+  background-color: green;
 }
 .calendar .days .active.event::after {
-  background-color: #fff;
+  background-color:green;
   bottom: 20%;
 }
 .calendar .days .active.event {

@@ -26,7 +26,7 @@ function enviarDatos(datosGuardar) {
   if (datosGuardar != null) {
     const uid = user.email.split(/[@.]/).join("_");
     console.log(uid)
-    remove(ref(db, "Usuarios/" + uid + "/datos/"))
+    remove(ref(db, "Usuarios/" + uid + "/datosPersonales/"))
       .catch((error) => {
         console.error("Esta ya vacio:", error);
       });
@@ -34,7 +34,7 @@ function enviarDatos(datosGuardar) {
       for (let clave in item) {
         const valor = item[clave];
         console.log("Guardando", clave, ":", valor);
-        set(ref(db, "Usuarios/" + uid + "/datos/" + clave), valor)
+        set(ref(db, "Usuarios/" + uid + "/datosPersonales/" + clave), valor)
           .catch((error) => {
             console.error("Error al guardar datos:", error);
           });
@@ -95,7 +95,7 @@ async function recibirDatos() {
   console.log(uid);
 
   try {
-    const datosSnap = await get(ref(db, "Usuarios/" + uid + "/datos/"));
+    const datosSnap = await get(ref(db, "Usuarios/" + uid + "/datosPersonales/"));
     const datos = datosSnap.exists() ? datosSnap.val() : {};
     return datos;
   } catch (error) {

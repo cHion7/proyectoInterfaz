@@ -108,7 +108,7 @@ function rellenarDatosUsuario(datosPerfilar) {
   // Rellenar preguntas comunes
   const datosComunes = datosPerfilar;
   console.log("Rellenando preguntas comunes:", datosComunes);
-  comboSituacionBasic.value = datosComunes.eleecion;
+  comboSituacionBasic.value = datosComunes.eleccion;
   lineIngresoBasic.value = datosComunes.ingresoBruto;
   lineEdadBasic.value = datosComunes.edad;
   lineAcargoBasic.value = datosComunes.personasACargo;
@@ -118,11 +118,11 @@ function rellenarDatosUsuario(datosPerfilar) {
   }
 
   // Mostrar el cuadro adecuado según la situación
-  console.log("Mostrando cuadro para:", datosComunes.eleecion);
-  mostrarCuadro("ajustesCuadro" + (datosComunes.eleecion));
+  console.log("Mostrando cuadro para:", datosComunes.eleccion);
+  mostrarCuadro("ajustesCuadro" + (datosComunes.eleccion));
 
   // Rellenar preguntas específicas según el tipo
-  const tipo = datosComunes.eleecion;
+  const tipo = datosComunes.eleccion;
   const datosEspecificos = datosPerfilar;
   console.log("Tipo de usuario:", tipo, "Datos específicos:", datosEspecificos);
 
@@ -187,21 +187,21 @@ function enviarCuestionario() {
 
 
 
-  const eleecion = comboSituacionBasic.value;
+  const eleccion = comboSituacionBasic.value;
   /* const ingresoBruto = lineIngresoBasic.value;
    const edad = lineEdadBasic.value;
    const personasACargo = lineAcasgoBasic.value;
    const vivienda = radioViviendaTrueBasic.checked ? true : false;*/
 
   datos.push({
-    eleecion: comboSituacionBasic.value,
+    eleccion: comboSituacionBasic.value,
     ingresoBruto: lineIngresoBasic.value,
     edad: lineEdadBasic.value,
     personasACargo: lineAcargoBasic.value,
     vivienda: radioViviendaTrueBasic.value
   });
 
-  if (eleecion === "Autonomo") {
+  if (eleccion === "Autonomo") {
     if (!dateAltaAutonomo.value || !lineActividadAutonomo.value || !lineGastosAutonomo.value || !lineIvaSuportAutonomo.value || !lineIvaRepertAutonomo.value || (!radiovehiculoTrueAutonomo.checked && !radiovehiculoFalseAutonomo.checked)) {
       mostrarToast("Faltan preguntas específicas de Autónomo por completar", "error");
       return;
@@ -214,7 +214,7 @@ function enviarCuestionario() {
       ivaRepercutido: lineIvaRepertAutonomo.value,
       vehiculo: radiovehiculoTrueAutonomo.checked ? true : false
     });
-  } else if (eleecion === "Asalariado") {
+  } else if (eleccion === "Asalariado") {
     if (!comboTipoJobAsalariado.value || (!radioFamiliaTrueAsalariado.checked && !radioFamiliaFalseAsalariado.checked) || !lineArrayEdadesAsalariado.value || !lineGastosAsalariado.value) {
       mostrarToast("Faltan preguntas específicas de Asalariado por completar", "error");
       return;
@@ -225,7 +225,7 @@ function enviarCuestionario() {
       edadesHijos: lineArrayEdadesAsalariado.value,
       gastosEscolares: lineGastosAsalariado.value
     });
-  } else if (eleecion === "Estudiante") {
+  } else if (eleccion === "Estudiante") {
     if (!comboEstudiosEstudiante.value || (!radioTrabajoTrueEstudiante.checked && !radioTrabajoFalseEstudiante.checked) || !lineBecaEstudiante.value) {
       mostrarToast("Faltan preguntas específicas de Estudiante por completar", "error");
       return;
@@ -235,7 +235,7 @@ function enviarCuestionario() {
       trabaja: radioTrabajoTrueEstudiante.checked ? true : false,
       becaCantidad: lineBecaEstudiante.value
     });
-  } else if (eleecion === "Jubilado") {
+  } else if (eleccion === "Jubilado") {
     if (!linePensionJubilado.value || (!radioSegundaViviendaTrueJubilado.checked && !radioSegundaViviendaFalseJubilado.checked) || !lineGastosMedicosJubilado.value) {
       mostrarToast("Faltan preguntas específicas de Jubilado por completar", "error");
       return;
@@ -245,7 +245,7 @@ function enviarCuestionario() {
       segundaVivienda: radioSegundaViviendaTrueJubilado.checked ? true : false,
       gastosMedicos: lineGastosMedicosJubilado.value
     });
-  } else if (eleecion === "Empresario") {
+  } else if (eleccion === "Empresario") {
     if (!comboTipoContratoEmpresario.value || !lineFacturacionEmpresario.value || !lineSueldoAdministradorEmpresario.value || !lineEmpleadosEmpresario.value || !lineGastosDeduciblesEmpresario.value) {
       mostrarToast("Faltan preguntas específicas de Empresario por completar", "error");
       return;
