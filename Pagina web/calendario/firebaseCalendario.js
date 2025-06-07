@@ -46,6 +46,7 @@ function enviarFecha(fechaGuardar) { // se añade una fecha con sus datos y id u
 //---------------------------------------------------
 
 async function recibirTodasFechas() { //se supone que coje todas las fechas
+    console.log("entra")
     const user = auth.currentUser;
     const uid = user.email.split(/[@.]/).join("_");
     console.log(uid);

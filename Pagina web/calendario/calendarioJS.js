@@ -1,3 +1,22 @@
+async function cargarFechas() {
+  console.log("Verificando window.firebaseCalendario:", window.firebaseCalendario);
+  if ( typeof window.firebaseCalendario.recibirTodasFechas === "function") {
+    try {
+      const datosFechas = await window.firebaseCalendario.recibirTodasFechas();
+      console.log("Datos recibidos:", datosFechas);
+      // Aquí puedes procesar los datos recibidos
+    } catch (error) {
+      console.error("Error al cargar las fechas:", error);
+    }
+  } else {
+    console.error("window.firebaseCalendario o su función recibirTodasFechas no están definidos.");
+  }
+  console.log("Script JavaScript iniciado!");
+}
+
+window.onload = cargarFechas;
+
+
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
   daysContainer = document.querySelector(".days"),
