@@ -467,6 +467,7 @@ function convertTime(time) {
       // Limpiar opciones anteriores
       categoriaSelect.innerHTML = '<option>Selecciona una categoría</option>';
 
+<<<<<<< HEAD
       // Agregar nuevas opciones según el tipo seleccionado
       const categorias = tipo === "GASTO" ? categoriasGastos :
                          tipo === "COBRO" ? categoriasCobros : [];
@@ -478,3 +479,59 @@ function convertTime(time) {
         categoriaSelect.appendChild(option);
       });
     });
+=======
+function actualizarCategorias() {
+  let gasto = document.querySelector('input[name="event-type"]:checked');
+  if (!tipoSeleccionado) return;
+
+  const tipo = tipoSeleccionado.value;
+  const select = document.getElementById("categoria");
+  if (!select) return;
+
+  select.innerHTML = "<option>Selecciona una categoría</option>";
+
+  const categorias = tipo === "GASTO" ? categoriasGastos : categoriasCobros;
+  categorias.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    select.appendChild(option);
+  });
+}
+
+function guardar() {
+  eventsArr.push({// se guardan datsos-------------------------------------------------------------------------
+    tipo: document.querySelector('input[name="event-type"]:checked')?.value || "",
+    categoria: document.getElementById("categoria")?.value || "",
+    titulo: document.getElementById("event-title")?.value || "",
+    descripcion: document.getElementById("event-description")?.value || "",
+    cantidad: document.getElementById("event-amount")?.value || "",
+    fecha: document.getElementById("event-date")?.value || ""
+  });
+
+  console.log("Evento a guardar:", evento);
+  alert("Evento guardado correctamente.");
+}
+
+function cancelar() {
+  document.querySelectorAll("input, textarea, select").forEach(el => {
+    if (el.type === "radio" && el.value === "GASTO") el.checked = true;
+    else if (el.type === "radio") el.checked = false;
+    else if (el.type === "checkbox") el.checked = false;
+    else el.value = "";
+  });
+  actualizarCategorias();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  actualizarCategorias();
+
+  // Escucha cambios de tipo para actualizar categorías en tiempo real
+  document.querySelectorAll('input[name="event-type"]').forEach(input => {
+    input.addEventListener("change", actualizarCategorias);
+  });
+
+  // Asigna el botón de guardar
+  document.querySelector(".add-event-btn")?.addEventListener("click", guardar);
+});
+>>>>>>> origin/main
