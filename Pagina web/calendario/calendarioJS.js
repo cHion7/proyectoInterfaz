@@ -476,24 +476,23 @@ function convertTime(time) {
   return time;
 }
 
-
-// Script para el formulario de eventos
-const categoriasGastos = [
+//-----------------------------------------------------------------------
+function actualizarCategorias() {
+  const categoriasGastos = [
   "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
   "Ocio", "Ropa y Calzado", "Seguros", "Impuestos y Tasas", "Otros"
-];
-
-const categoriasCobros = [
+  ];
+  
+  const categoriasCobros = [
   "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
   "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
-];
-
-function actualizarCategorias() {
-  let gasto = document.querySelector('input[name="event-type"]:checked');
+  ];
+  console.log("Ejecutando actualizarCategorias");
+  const tipoSeleccionado = document.querySelector('input[name="event-type"]:checked');
   if (!tipoSeleccionado) return;
 
   const tipo = tipoSeleccionado.value;
-  const select = document.getElementById("categoria");
+  const select = document.getElementById("event-category");
   if (!select) return;
 
   select.innerHTML = "<option>Selecciona una categoría</option>";
@@ -507,38 +506,47 @@ function actualizarCategorias() {
   });
 }
 
-function guardar() {
-  eventsArr.push({// se guardan datsos-------------------------------------------------------------------------
-    tipo: document.querySelector('input[name="event-type"]:checked')?.value || "",
-    categoria: document.getElementById("categoria")?.value || "",
-    titulo: document.getElementById("event-title")?.value || "",
-    descripcion: document.getElementById("event-description")?.value || "",
-    cantidad: document.getElementById("event-amount")?.value || "",
-    fecha: document.getElementById("event-date")?.value || ""
-  });
-
-  console.log("Evento a guardar:", evento);
-  alert("Evento guardado correctamente.");
-}
-
-function cancelar() {
-  document.querySelectorAll("input, textarea, select").forEach(el => {
-    if (el.type === "radio" && el.value === "GASTO") el.checked = true;
-    else if (el.type === "radio") el.checked = false;
-    else if (el.type === "checkbox") el.checked = false;
-    else el.value = "";
-  });
-  actualizarCategorias();
-}
-
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   actualizarCategorias();
 
-  // Escucha cambios de tipo para actualizar categorías en tiempo real
   document.querySelectorAll('input[name="event-type"]').forEach(input => {
     input.addEventListener("change", actualizarCategorias);
   });
-
-  // Asigna el botón de guardar
-  document.querySelector(".add-event-btn")?.addEventListener("click", guardar);
 });
+
+    // Guardar evento
+    function guardarEvento() {
+      const tipo = document.querySelector('input[name="event-type"]:checked').value;
+      const categoria = document.getElementById('event-category').value;
+      const titulo = document.getElementById('event-title').value;
+      const descripcion = document.getElementById('event-description').value;
+      const cantidad = document.getElementById('event-amount').value;
+      
+      // Validación básica
+      if (!titulo || !cantidad || categoria === "" || categoria === "Selecciona una categoría") {
+        alert("Por favor, complete todos los campos obligatorios");
+        return;
+      }
+      
+      // Mostrar mensaje de éxito
+      const successMessage = document.getElementById('success-message');
+      successMessage.style.display = 'block';
+      
+      // Ocultar mensaje después de 3 segundos
+      setTimeout(() => {
+        successMessage.style.display = 'none';
+      }, 3000);
+      
+      // Aquí iría la lógica para guardar en base de datos
+      console.log("Evento guardado:", { tipo, categoria, titulo, descripcion, cantidad });
+    }
+
+    // Cancelar evento
+    function cancelarEvento() {
+      document.getElementById('event-title').value = '';
+      document.getElementById('event-description').value = '';
+      document.getElementById('event-amount').value = '';
+      document.getElementById('gasto').checked = true;
+      actualizarCategorias();
+      actualizarPrevisualizacion();
+    }
