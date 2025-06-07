@@ -476,18 +476,29 @@ function convertTime(time) {
   return time;
 }
 
+    const categoriasGastos = ["Vivienda", "Transporte", "Alimentación", "Salud", "Educación"];
+    const categoriasCobros = ["Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas"];
 
-// Script para el formulario de eventos
-const categoriasGastos = [
-  "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
-  "Ocio", "Ropa y Calzado", "Seguros", "Impuestos y Tasas", "Otros"
-];
+    document.getElementById("tipo").addEventListener("change", function () {
+      const tipo = this.value;
+      const categoriaSelect = document.getElementById("categoria");
 
-const categoriasCobros = [
-  "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
-  "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
-];
+      // Limpiar opciones anteriores
+      categoriaSelect.innerHTML = '<option>Selecciona una categoría</option>';
 
+<<<<<<< HEAD
+      // Agregar nuevas opciones según el tipo seleccionado
+      const categorias = tipo === "GASTO" ? categoriasGastos :
+                         tipo === "COBRO" ? categoriasCobros : [];
+
+      categorias.forEach(cat => {
+        const option = document.createElement("option");
+        option.value = cat;
+        option.textContent = cat;
+        categoriaSelect.appendChild(option);
+      });
+    });
+=======
 function actualizarCategorias() {
   let gasto = document.querySelector('input[name="event-type"]:checked');
   if (!tipoSeleccionado) return;
@@ -542,3 +553,4 @@ window.addEventListener("DOMContentLoaded", () => {
   // Asigna el botón de guardar
   document.querySelector(".add-event-btn")?.addEventListener("click", guardar);
 });
+>>>>>>> origin/main
