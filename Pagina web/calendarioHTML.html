@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="Stay organized with our user-friendly Calendar featuring events, reminders, and a customizable interface. Built with HTML, CSS, and JavaScript. Start scheduling today!" />
-  <meta name="keywords" content="calendar, events, reminders, javascript, html, css, open source coding" />
+    content="Calendario de eventos financieros" />
+  <meta name="keywords" content="calendar, eventos, finanzas" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../Pagina web/CSS file/calendarioStyle.css" />
-  <title>Calendar with Events</title>
+  <title>Calendario Financiero</title>
 </head>
 
 <body>
@@ -54,7 +54,7 @@
           <div class="title">Añadir Evento</div>
           <i class="fas fa-times close"></i>
         </div>
-        <!--Datos de añadir eventos------------------------------------------------------->
+        <!-- CORRECCIÓN: Cambiado onclick por id para manejarlo con JS -->
         <div class="add-event-body">
           <h2 class="add-event-title">Nuevo Evento</h2>
           <div class="add-event-field">
@@ -72,42 +72,28 @@
             <input type="number" id="event-amount" class="add-event-input" placeholder="0.00" />
           </div>
 
-          <div class="add-event-field">
-            <label for="event-type" class="add-event-label">Categoría</label>
-            <select id="event-type" class="add-event-select">
-              <option style="color:#d32f2f;">GASTO</option>
-              <option style="color:#388e3c;">COBRO</option>
-            </select>
+          <div class="event-type-tabs">
+            <!-- CORRECCIÓN: Usar radio buttons para tipo de evento -->
+            <label class="event-type-tab active" data-type="GASTO">
+              <input type="radio" name="event-type" value="GASTO" checked style="display: none;">
+              <span style="color:#d32f2f;">GASTO</span>
+            </label>
+            <label class="event-type-tab" data-type="COBRO">
+              <input type="radio" name="event-type" value="COBRO" style="display: none;">
+              <span style="color:#388e3c;">COBRO</span>
+            </label>
           </div>
 
           <div class="add-event-field">
             <label for="event-category" class="add-event-label">Categoría</label>
             <select id="event-category" class="add-event-select">
-              <option disabled style="color:#d32f2f;">GASTOS</option>
-              <option style="color:#d32f2f;">Vivienda</option>
-              <option style="color:#d32f2f;">Transporte</option>
-              <option style="color:#d32f2f;">Alimentacion</option>
-              <option style="color:#d32f2f;">Salud</option>
-              <option style="color:#d32f2f;">Educacion</option>
-              <option style="color:#d32f2f;">Ocio</option>
-              <option style="color:#d32f2f;">Ropa y Calzado</option>
-              <option style="color:#d32f2f;">Seguros</option>
-              <option style="color:#d32f2f;">Impuestos y Tasas</option>
-              <option style="color:#d32f2f;">Otros</option>
-              <option disabled style="color:#388e3c;">COBROS</option>
-              <option style="color:#388e3c;">Salario</option>
-              <option style="color:#388e3c;">Ingresos Extras</option>
-              <option style="color:#388e3c;">Iversiones</option>
-              <option style="color:#388e3c;">Ventas</option>
-              <option style="color:#388e3c;">Rentas</option>
-              <option style="color:#388e3c;">Prestaciones y Subsidios</option>
-              <option style="color:#388e3c;">Devoluciones</option>
-              <option style="color:#388e3c;">Premios - Loteria</option>
-              <option style="color:#388e3c;">Regalos - Donaciones</option>
+              <option>Selecciona una categoría</option>
+              <!-- Las opciones se llenarán dinámicamente con JS -->
             </select>
           </div>
           <div class="add-event-footer">
-            <button class="add-event-btn" onclick="guardarBtn()">Guardar</button>
+            <!-- CORRECCIÓN: Eliminado onclick y agregado id -->
+            <button id="save-event-btn" class="add-event-btn">Guardar</button>
           </div>
         </div>
       </div>
@@ -115,7 +101,9 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-    <script src="../Pagina web/javaScript/calendarioJS.js"></script>
-    <script type="module" src="../Pagina web/javaScript/firebaseCalendario.js"></script>
-
+  </div> <!-- Cierre del div.container -->
+  
+  <script src="../Pagina web/javaScript/calendarioJS.js"></script>
+  <script type="module" src="../Pagina web/javaScript/firebaseCalendario.js"></script>
+</body>
 </html>

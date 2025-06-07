@@ -1,21 +1,27 @@
-/**async function cargarFechas() {
-  console.log("Verificando window.firebaseCalendario:", window.firebaseCalendario);
-  if (typeof window.firebaseCalendario.recibirTodasFechas === "function") {
-    try {
-      const datosFechas = await window.firebaseCalendario.recibirTodasFechas();
-      console.log("Datos recibidos:", datosFechas);
-      // Aquí puedes procesar los datos recibidos
-    } catch (error) {
-      console.error("Error al cargar las fechas:", error);
-    }
-  } else {
-    console.error("window.firebaseCalendario o su función recibirTodasFechas no están definidos.");
-  }
-  console.log("Script JavaScript iniciado!");
+function initializeAppLogic() {
+  getEvents()
+    .then(() => {
+      initCalendar();         // Mostrar el calendario con eventos cargados
+      updateCurrentDate();    // Actualizar encabezado con la fecha actual
+      actualizarCategorias(); // Inicializar categorías
+
+      const tipoEventoInputs = document.querySelectorAll('input[name="event-type"]');
+      if (tipoEventoInputs.length === 0) {
+        console.warn("No se encontraron inputs con name='event-type'");
+      }
+
+      tipoEventoInputs.forEach(input => {
+        input.addEventListener("change", actualizarCategorias);
+      });
+    })
+    .catch(error => {
+      console.error("Error durante la inicialización de la lógica de la app:", error);
+    });
 }
 
-window.onload = cargarFechas;
-*/
+// Ejecutar al cargar el DOM
+window.addEventListener("DOMContentLoaded", initializeAppLogic);
+
 
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
@@ -31,13 +37,11 @@ const calendar = document.querySelector(".calendar"),
   addEventBtn = document.querySelector(".add-event"),
   addEventWrapper = document.querySelector(".add-event-wrapper"),
   addEventCloseBtn = document.querySelector(".close"),
-
   addEventTitle = document.querySelector("#event-title"),
   addEventDescription = document.querySelector("#event-description"),
   addEventAmount = document.querySelector("#event-amount"),
   addEventType = document.querySelector("#event-type"),
   addEventCategory = document.querySelector("#event-category"),
-
   addEventFrom = document.querySelector(".event-time-from"),
   addEventTo = document.querySelector(".event-time-to"),
   addEventSubmit = document.querySelector(".add-event-btn");
@@ -46,45 +50,71 @@ let today = new Date();
 let activeDay;
 let month = today.getMonth();
 let year = today.getFullYear();
+let eventsArr = []; // Array para almacenar eventos
 
 const months = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Novienbre",
-  "Dicienbre",
+  "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+  "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
 
-// const eventsArr = [
-//   {
-//     day: 13,
-//     month: 11,
-//     year: 2022,
-//     events: [
-//       {
-//         title: "Event 1 lorem ipsun dolar sit genfa tersd dsad ",
-//         time: "10:00 AM",
-//       },
-//       {
-//         title: "Event 2",
-//         time: "11:00 AM",
-//       },
-//     ],
-//   },
-// ];
+function updateCurrentDate() {
+  const currentDateEl = document.getElementById("current-date");
+  if (currentDateEl) {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    currentDateEl.textContent = today.toLocaleDateString('es-ES', options);
+  }
+}
 
-const eventsArr = [];
-getEvents();
-console.log(eventsArr);
+// Función para cargar eventos desde Firebase
+// Función para cargar eventos desde Firebase y agruparlos por día
+async function getEvents() {
+  try {
+    if (!(window.firebaseCalendario && typeof window.firebaseCalendario.recibirTodasFechas === "function")) {
+      console.error("Funciones de Firebase no disponibles");
+      eventsArr = [];
+      return;
+    }
 
-//function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
+    // 1) Obtener array “plano” de eventos
+    const raw = await window.firebaseCalendario.recibirTodasFechas();
+    if (!Array.isArray(raw)) {
+      console.warn("recibirTodasFechas no devolvió un array:", raw);
+      eventsArr = [];
+      return;
+    }
+
+    // 2) Agrupar en un diccionario { "día-mes-año": [evento, ...] }
+    const grouped = raw.reduce((acc, ev) => {
+      const d = new Date(ev.fechaMillis);
+      const day = d.getDate();
+      const month = d.getMonth() + 1; // enero = 0 → +1
+      const year = d.getFullYear();
+      const key = `${day}-${month}-${year}`;
+      if (!acc[key]) acc[key] = [];
+      acc[key].push({
+        titulo:    ev.titulo,
+        descripcion: ev.descripcion,
+        dinero:    ev.dinero,
+        cobroOGasto: ev.cobroOGasto,
+        categoria: ev.categoria,
+        fechaMillis: ev.fechaMillis
+      });
+      return acc;
+    }, {});
+
+    // 3) Reconstruir eventsArr en el formato esperado por initCalendar()
+    eventsArr = Object.entries(grouped).map(([key, events]) => {
+      const [day, month, year] = key.split("-").map(Number);
+      return { day, month, year, events };
+    });
+
+    console.log("Eventos cargados y agrupados:", eventsArr);
+
+  } catch (error) {
+    console.error("Error al cargar eventos:", error);
+    eventsArr = [];
+  }
+}
 function initCalendar() {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
@@ -98,52 +128,50 @@ function initCalendar() {
 
   let days = "";
 
+  // Días del mes anterior
   for (let x = day; x > 0; x--) {
     days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
   }
 
+  // Días del mes actual
   for (let i = 1; i <= lastDate; i++) {
-    //check if event is present on that day
-    let event = false;
-    eventsArr.forEach((eventObj) => {
-      if (
-        eventObj.day === i &&
-        eventObj.month === month + 1 &&
-        eventObj.year === year
-      ) {
-        event = true;
-      }
-    });
-    if (
-      i === new Date().getDate() &&
-      year === new Date().getFullYear() &&
-      month === new Date().getMonth()
-    ) {
+    const hasEvent = eventsArr.some(event => 
+      event.day === i && 
+      event.month === month + 1 && 
+      event.year === year
+    );
+
+    const isToday = i === today.getDate() && 
+                    year === today.getFullYear() && 
+                    month === today.getMonth();
+
+    if (isToday) {
       activeDay = i;
       getActiveDay(i);
       updateEvents(i);
-      if (event) {
+      if (hasEvent) {
         days += `<div class="day today active event">${i}</div>`;
       } else {
         days += `<div class="day today active">${i}</div>`;
       }
     } else {
-      if (event) {
+      if (hasEvent) {
         days += `<div class="day event">${i}</div>`;
       } else {
-        days += `<div class="day ">${i}</div>`;
+        days += `<div class="day">${i}</div>`;
       }
     }
   }
 
+  // Días del próximo mes
   for (let j = 1; j <= nextDays; j++) {
     days += `<div class="day next-date">${j}</div>`;
   }
+
   daysContainer.innerHTML = days;
   addListner();
 }
 
-//function to add month and year on prev and next button
 function prevMonth() {
   month--;
   if (month < 0) {
@@ -165,52 +193,45 @@ function nextMonth() {
 prev.addEventListener("click", prevMonth);
 next.addEventListener("click", nextMonth);
 
-initCalendar();
-
 //function to add active on day
 function addListner() {
   const days = document.querySelectorAll(".day");
-  days.forEach((day) => {
-    day.addEventListener("click", (e) => {
-      getActiveDay(e.target.innerHTML);
-      updateEvents(Number(e.target.innerHTML));
-      activeDay = Number(e.target.innerHTML);
-      //remove active
-      days.forEach((day) => {
-        day.classList.remove("active");
-      });
-      //if clicked prev-date or next-date switch to that month
+  days.forEach(day => {
+    day.addEventListener("click", e => {
+      const selectedDay = Number(e.target.textContent);
+      getActiveDay(selectedDay);
+      updateEvents(selectedDay);
+      activeDay = selectedDay;
+
+      // Remover clase active de todos los días
+      days.forEach(d => d.classList.remove("active"));
+      
+      // Añadir clase active al día seleccionado
+      e.target.classList.add("active");
+
+      // Manejar clic en días de meses anteriores/siguientes
       if (e.target.classList.contains("prev-date")) {
         prevMonth();
-        //add active to clicked day afte month is change
         setTimeout(() => {
-          //add active where no prev-date or next-date
-          const days = document.querySelectorAll(".day");
-          days.forEach((day) => {
-            if (
-              !day.classList.contains("prev-date") &&
-              day.innerHTML === e.target.innerHTML
-            ) {
-              day.classList.add("active");
+          const daysAfterChange = document.querySelectorAll(".day");
+          daysAfterChange.forEach(d => {
+            if (d.textContent === e.target.textContent && 
+                !d.classList.contains("next-date")) {
+              d.classList.add("active");
             }
           });
         }, 100);
       } else if (e.target.classList.contains("next-date")) {
         nextMonth();
-        //add active to clicked day afte month is changed
         setTimeout(() => {
-          const days = document.querySelectorAll(".day");
-          days.forEach((day) => {
-            if (
-              !day.classList.contains("next-date") &&
-              day.innerHTML === e.target.innerHTML
-            ) {
-              day.classList.add("active");
+          const daysAfterChange = document.querySelectorAll(".day");
+          daysAfterChange.forEach(d => {
+            if (d.textContent === e.target.textContent && 
+                !d.classList.contains("next-date")) {
+              d.classList.add("active");
             }
           });
         }, 100);
-      } else {
-        e.target.classList.add("active");
       }
     });
   });
@@ -223,67 +244,56 @@ todayBtn.addEventListener("click", () => {
   initCalendar();
 });
 
-dateInput.addEventListener("input", (e) => {
-  dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
-  if (dateInput.value.length === 2) {
-    dateInput.value += "/";
-  }
-  if (dateInput.value.length > 7) {
-    dateInput.value = dateInput.value.slice(0, 7);
-  }
-  if (e.inputType === "deleteContentBackward") {
-    if (dateInput.value.length === 3) {
-      dateInput.value = dateInput.value.slice(0, 2);
-    }
-  }
-});
-
-
 //function get active day day name and date and update eventday eventdate
 function getActiveDay(date) {
   const day = new Date(year, month, date);
-  const dayName = day.toString().split(" ")[0];
-  eventDay.innerHTML = dayName;
-  eventDate.innerHTML = date + " " + months[month] + " " + year;
+  const dayName = day.toLocaleDateString("es-ES", { weekday: 'long' });
+  eventDay.innerHTML = dayName.charAt(0).toUpperCase() + dayName.slice(1);
+  eventDate.innerHTML = `${date} ${months[month]} ${year}`;
 }
 
 //function update events when a day is active
 function updateEvents(date) {
-  let events = "";
-  eventsArr.forEach((event) => {
-    if (
-      date === event.day &&
-      month + 1 === event.month &&
-      year === event.year
-    ) {
-      event.events.forEach((event) => {
-        events += `<div class="event">
-            <div class="title">
-              <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.titulo}</h3>
-            </div>
-            <div class="event-time">
-              <span class="event-time">${event.cobroOGasto}</span>
-            </div>
-              <div class="event-time">
-              <span class="event-time">${event.dinero}</span>
-            </div>
-              <div class="event-time">
-              <span class="event-time">${event.descripcion}</span>
-            </div>
-        </div>`;
-      });
-    }
-  });
-  if (events === "") {
-    events = `<div class="no-event">
-            <h3>No hay eventos</h3>
-        </div>`;
-  }
-  eventsContainer.innerHTML = events;
-  saveEvents(); //save events in local storage
-}
+  let eventsHTML = "";
+  const eventsForDay = eventsArr.find(
+    event => event.day === date && 
+             event.month === month + 1 && 
+             event.year === year
+  );
 
+  if (eventsForDay && eventsForDay.events.length > 0) {
+    eventsForDay.events.forEach(event => {
+      const isIncome = event.cobroOGasto === "COBRO";
+      eventsHTML += `
+        <div class="event ${isIncome ? 'income' : 'expense'}">
+          <div class="title">
+            <i class="fas fa-circle" style="color: ${isIncome ? '#27ae60' : '#e74c3c'}"></i>
+            <h3 class="event-title">${event.titulo}</h3>
+          </div>
+          <div class="event-details">
+            <div class="event-detail">
+              <span class="label">Categoría</span>
+              <span class="value">${event.categoria}</span>
+            </div>
+            <div class="event-detail">
+              <span class="label">Tipo</span>
+              <span class="value">${event.cobroOGasto}</span>
+            </div>
+            <div class="event-detail">
+              <span class="label">Descripción</span>
+              <span class="value">${event.descripcion}</span>
+            </div>
+          </div>
+          <div class="event-money">${event.dinero}</div>
+        </div>
+      `;
+    });
+  } else {
+    eventsHTML = `<div class="no-event"><h3>No hay eventos</h3></div>`;
+  }
+
+  eventsContainer.innerHTML = eventsHTML;
+}
 
 //function to add event
 addEventBtn.addEventListener("click", () => {
@@ -292,185 +302,83 @@ addEventBtn.addEventListener("click", () => {
 
 addEventCloseBtn.addEventListener("click", () => {
   addEventWrapper.classList.remove("active");
+  cancelarEvento();
 });
 
 document.addEventListener("click", (e) => {
   if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
     addEventWrapper.classList.remove("active");
+    cancelarEvento();
   }
 });
 
-//allow 50 chars in eventtitle
-addEventTitle.addEventListener("input", (e) => {
+//allow 60 chars in eventtitle
+addEventTitle.addEventListener("input", () => {
   addEventTitle.value = addEventTitle.value.slice(0, 60);
 });
 
+// Eliminar evento
+eventsContainer.addEventListener("click", async (e) => {
+  // Asegurarnos de que se hace clic en el contenedor del evento, no en un hijo
+  let eventElement = e.target.closest('.event');
+  if (!eventElement) return;
 
-
-//allow only time in eventtime from and to
-addEventFrom.addEventListener("input", (e) => {
-  addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
-  if (addEventFrom.value.length === 2) {
-    addEventFrom.value += ":";
-  }
-  if (addEventFrom.value.length > 5) {
-    addEventFrom.value = addEventFrom.value.slice(0, 5);
-  }
-});
-
-addEventTo.addEventListener("input", (e) => {
-  addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
-  if (addEventTo.value.length === 2) {
-    addEventTo.value += ":";
-  }
-  if (addEventTo.value.length > 5) {
-    addEventTo.value = addEventTo.value.slice(0, 5);
-  }
-});
-
-//cambir porque espara añadir evento----------------------------------------------------------
-function guardarBtn() {
-  console.log("entra")
-  const eventTitle = addEventTitle.value;
-  const eventDescription = addEventDescription.value;//cambiar dato
-  const eventAmount = addEventAmount.value;//cambiar dato
-  const eventType = addEventType.value;//cambiar dato
-  const eventCategory = addEventCategory.value;//cambiar dato
-
-  if (eventTitle === "" || eventDescription === "" || eventAmount === "" || eventType === "" || eventCategory === "") {//cambiar dato
-    alert("Porfavor rellena todos los campos");
-    return;
-  }
-
-
-  const newEvent = {
-    titulo: eventTitle,
-    descripcion: eventDescription, //cambiar dato
-    dinero: eventAmount, //cambiar dato
-    cobroOGasto: eventType, //cambiar dato
-    categoria: eventCategory, //cambiar dato
-    fechaMillis: new Date(year, month, activeDay).getTime() //cambiar dato
-  };
-
-  console.log(newEvent);
-  console.log(activeDay);
-  let eventAdded = false;
-  if (eventsArr.length > 0) {
-    eventsArr.forEach((item) => {
-      if (
-        item.day === activeDay &&
-        item.month === month + 1 &&
-        item.year === year
-      ) {
-        item.events.push(newEvent);
-        eventAdded = true;
-      }
-    });
-  }
-
-  if (!eventAdded) {
-    eventsArr.push({
-      day: activeDay,
-      month: month + 1,
-      year: year,
-      events: [newEvent],
-    });
-  }
-
-  console.log(eventsArr);
-  addEventWrapper.classList.remove("active");
-  addEventTitle.value = "";
-  addEventDescription.value = "";//cambiar dato
-  addEventAmount.value = "";//cambiar dato
-  addEventType.value = "Selecciona un tipo"; //cambiar dato
-  addEventCategory.value = "Selecciona una categoría"; //cambiar dato
-
-  updateEvents(activeDay);
-  //select active day and add event class if not added
-  const activeDayEl = document.querySelector(".day.active");
-  if (!activeDayEl.classList.contains("event")) {
-    activeDayEl.classList.add("event");
-  }
-};
-//------------------------------------------------------------------------------------------------
-//function to delete event when clicked on event
-eventsContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("event")) {
-    if (confirm("Seguro quieres borrar el evento?")) {
-      const eventTitle = e.target.children[0].children[1].innerHTML;
-      eventsArr.forEach((event) => {
-        if (
-          event.day === activeDay &&
-          event.month === month + 1 &&
-          event.year === year
-        ) {
-          event.events.forEach((item, index) => {
-            if (item.title === eventTitle) {
-              event.events.splice(index, 1);
-            }
-          });
-          //if no events left in a day then remove that day from eventsArr
-          if (event.events.length === 0) {
-            eventsArr.splice(eventsArr.indexOf(event), 1);
-            //remove event class from day
-            const activeDayEl = document.querySelector(".day.active");
-            if (activeDayEl.classList.contains("event")) {
-              activeDayEl.classList.remove("event");
-            }
+  if (confirm("¿Seguro que quieres borrar el evento?")) {
+    const eventTitle = eventElement.querySelector('.event-title').textContent;
+    
+    // Buscar el día activo en eventsArr
+    const dayEvents = eventsArr.find(event => 
+      event.day === activeDay && 
+      event.month === month + 1 && 
+      event.year === year
+    );
+    
+    if (dayEvents) {
+      // Encontrar el índice del evento dentro del día
+      const eventIndex = dayEvents.events.findIndex(ev => ev.titulo === eventTitle);
+      if (eventIndex !== -1) {
+        dayEvents.events.splice(eventIndex, 1);
+        
+        // Si no quedan eventos en el día, eliminar el día
+        if (dayEvents.events.length === 0) {
+          const dayIndex = eventsArr.indexOf(dayEvents);
+          eventsArr.splice(dayIndex, 1);
+          // Quitar clase 'event' del día activo
+          const activeDayEl = document.querySelector(".day.active");
+          if (activeDayEl && activeDayEl.classList.contains("event")) {
+            activeDayEl.classList.remove("event");
           }
         }
-      });
-      updateEvents(activeDay);
+        
+        // Guardar en Firebase
+        const success = await saveEvents();
+        if (success) {
+          updateEvents(activeDay);
+        } else {
+          alert("Error al eliminar el evento. Inténtalo de nuevo.");
+        }
+      }
     }
   }
 });
 
-//function to save events in local storage
-function saveEvents() {
-  console.log("Contenido de eventsArr:", eventsArr);
-  if (window.firebaseCalendario && typeof window.firebaseCalendario.subirEvento === "function") {
-    window.firebaseCalendario.subirEvento(eventsArr); //--------------------------------------------------------------------------------
-    console.log("Datos enviados correctamente");
-  } else {
-    console.log("No se pudo enviar los datos: función no disponible");
-  }
-}
-
-
-//function to get events from local storage
-async function getEvents() {
-  //check if events are already saved in local storage then return event else nothing
-  //if (localStorage.getItem("events") === null) {
-  //  return;
-  //}
-  if (window.firebaseCalendario && typeof window.firebaseCalendario.recibirTodasFechas === "function") {
-    try {
-      const eventos = await window.firebaseCalendario.recibirTodasFechas(); //--------------------------------------------------------------------------------
-      mostrarToast("fechas recibidas correctamente", "success");
-      if (Array.isArray(eventos)) {
-        eventsArr.push(...eventos);
-      }
-    } catch (error) {
-      mostrarToast("Error al obtener los datos: " + error, "error");
+//function to save events in firebase
+async function saveEvents() {
+  try {
+    if (window.firebaseCalendario && typeof window.firebaseCalendario.subirEvento === "function") {
+      await window.firebaseCalendario.subirEvento(eventsArr);
+      console.log("Eventos guardados en Firebase");
+      return true;
+    } else {
+      console.error("Funciones de Firebase no disponibles");
+      return false;
     }
-  } else {
-    mostrarToast("No se pudo enviar los datos: función no disponible", "error");
+  } catch (error) {
+    console.error("Error al guardar eventos:", error);
+    return false;
   }
-  //eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
 
-function convertTime(time) {
-  //convert time to 24 hour format
-  let timeArr = time.split(":");
-  let timeHour = timeArr[0];
-  let timeMin = timeArr[1];
-  let timeFormat = timeHour >= 12 ? "PM" : "AM";
-  timeHour = timeHour % 12 || 12;
-  time = timeHour + ":" + timeMin + " " + timeFormat;
-  return time;
-}
-
-//-----------------------------------------------------------------------
 function actualizarCategorias() {
   const categoriasGastos = [
     "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
@@ -481,17 +389,20 @@ function actualizarCategorias() {
     "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
     "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
   ];
-  console.log("Ejecutando actualizarCategorias");
+
   const tipoSeleccionado = document.querySelector('input[name="event-type"]:checked');
   if (!tipoSeleccionado) return;
 
   const tipo = tipoSeleccionado.value;
   const select = document.getElementById("event-category");
+  
   if (!select) return;
 
+  // Limpiar y poblar categorías
   select.innerHTML = "<option>Selecciona una categoría</option>";
-
+  
   const categorias = tipo === "GASTO" ? categoriasGastos : categoriasCobros;
+  
   categorias.forEach(cat => {
     const option = document.createElement("option");
     option.value = cat;
@@ -500,87 +411,82 @@ function actualizarCategorias() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  actualizarCategorias();
+addEventSubmit.addEventListener("click", guardarEvento);
 
-  document.querySelectorAll('input[name="event-type"]').forEach(input => {
-    input.addEventListener("change", actualizarCategorias);
-  });
-});
+async function guardarEvento() {
+  const titulo = addEventTitle.value.trim();
+  const descripcion = addEventDescription.value.trim();
+  const dinero = addEventAmount.value.trim();
+  const tipoRadio = document.querySelector('input[name="event-type"]:checked');
+  const tipo = tipoRadio ? tipoRadio.value : null;
+  const categoria = addEventCategory.value;
 
-// Guardar evento
-function guardarEvento() {
-  const tipo = document.querySelector('input[name="event-type"]:checked').value;
-  const categoria = document.getElementById('event-category').value;
-  const titulo = document.getElementById('event-title').value;
-  const descripcion = document.getElementById('event-description').value;
-  const cantidad = document.getElementById('event-amount').value;
-
-  // Validación básica
-  if (!titulo || !cantidad || categoria === "" || categoria === "Selecciona una categoría") {
-    alert("Por favor, complete todos los campos obligatorios");
+  if (!titulo || !dinero || !tipo || categoria === "Selecciona una categoría") {
+    alert("Por favor complete todos los campos");
     return;
   }
 
-  // Mostrar mensaje de éxito
-  const successMessage = document.getElementById('success-message');
-  successMessage.style.display = 'block';
+  const nuevoEvento = {
+    titulo,
+    descripcion,
+    dinero: dinero + "€",
+    cobroOGasto: tipo,
+    categoria,
+    fechaMillis: new Date(year, month, activeDay).getTime()
+  };
 
-  // Ocultar mensaje después de 3 segundos
-  setTimeout(() => {
-    successMessage.style.display = 'none';
-  }, 3000);
+  // Buscar si ya existe un registro para este día
+  const existingDay = eventsArr.find(e => 
+    e.day === activeDay && 
+    e.month === month + 1 && 
+    e.year === year
+  );
 
-  // Aquí iría la lógica para guardar en base de datos
-  console.log("Evento guardado:", { tipo, categoria, titulo, descripcion, cantidad });
+  if (existingDay) {
+    existingDay.events.push(nuevoEvento);
+  } else {
+    eventsArr.push({
+      day: activeDay,
+      month: month + 1,
+      year: year,
+      events: [nuevoEvento]
+    });
+  }
+
+  // Guardar en Firebase
+  const success = await saveEvents();
+  
+  if (success) {
+    // Actualizar UI
+    addEventWrapper.classList.remove("active");
+    addEventTitle.value = "";
+    addEventDescription.value = "";
+    addEventAmount.value = "";
+    addEventCategory.value = "Selecciona una categoría";
+    
+    updateEvents(activeDay);
+    
+    // Marcar día con evento
+    const activeDayEl = document.querySelector(".day.active");
+    if (activeDayEl && !activeDayEl.classList.contains("event")) {
+      activeDayEl.classList.add("event");
+    }
+  } else {
+    alert("Error al guardar el evento en Firebase");
+  }
 }
 
 // Cancelar evento
 function cancelarEvento() {
-  document.getElementById('event-title').value = '';
-  document.getElementById('event-description').value = '';
-  document.getElementById('event-amount').value = '';
-  document.getElementById('gasto').checked = true;
+  addEventTitle.value = '';
+  addEventDescription.value = '';
+  addEventAmount.value = '';
+  
+  // Restablecer el tipo a GASTO
+  const gastoRadio = document.querySelector('input[name="event-type"][value="GASTO"]');
+  if (gastoRadio) {
+    gastoRadio.checked = true;
+  }
+  
   actualizarCategorias();
-  actualizarPrevisualizacion();
 }
-
-//----------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
