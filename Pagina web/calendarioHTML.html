@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
     integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="calendarioStyle.css" />
+  <link rel="stylesheet" href="../Pagina web/CSS file/calendarioStyle.css" />
   <title>Calendar with Events</title>
 </head>
 
@@ -83,36 +83,30 @@
           <div class="add-event-field">
             <label for="event-category" class="add-event-label">Categoría</label>
             <select id="event-category" class="add-event-select">
-                <option disabled style="color:#d32f2f;">GASTOS</option>
-                <option style="color:#d32f2f;">Vivienda</option>
-                <option style="color:#d32f2f;">Transporte</option>
-                <option style="color:#d32f2f;">Alimentacion</option>
-                <option style="color:#d32f2f;">Salud</option>
-                <option style="color:#d32f2f;">Educacion</option>
-                <option style="color:#d32f2f;">Ocio</option>
-                <option style="color:#d32f2f;">Ropa y Calzado</option>
-                <option style="color:#d32f2f;">Seguros</option>
-                <option style="color:#d32f2f;">Impuestos y Tasas</option>
-                <option style="color:#d32f2f;">Otros</option>
-                <option disabled style="color:#388e3c;">COBROS</option>
-                <option style="color:#388e3c;">Salario</option>
-                <option style="color:#388e3c;">Ingresos Extras</option>
-                <option style="color:#388e3c;">Iversiones</option>
-                <option style="color:#388e3c;">Ventas</option>
-                <option style="color:#388e3c;">Rentas</option>
-                <option style="color:#388e3c;">Prestaciones y Subsidios</option>
-                <option style="color:#388e3c;">Devoluciones</option>
-                <option style="color:#388e3c;">Premios - Loteria</option>
-                <option style="color:#388e3c;">Regalos - Donaciones</option>
+              <option disabled style="color:#d32f2f;">GASTOS</option>
+              <option style="color:#d32f2f;">Vivienda</option>
+              <option style="color:#d32f2f;">Transporte</option>
+              <option style="color:#d32f2f;">Alimentacion</option>
+              <option style="color:#d32f2f;">Salud</option>
+              <option style="color:#d32f2f;">Educacion</option>
+              <option style="color:#d32f2f;">Ocio</option>
+              <option style="color:#d32f2f;">Ropa y Calzado</option>
+              <option style="color:#d32f2f;">Seguros</option>
+              <option style="color:#d32f2f;">Impuestos y Tasas</option>
+              <option style="color:#d32f2f;">Otros</option>
+              <option disabled style="color:#388e3c;">COBROS</option>
+              <option style="color:#388e3c;">Salario</option>
+              <option style="color:#388e3c;">Ingresos Extras</option>
+              <option style="color:#388e3c;">Iversiones</option>
+              <option style="color:#388e3c;">Ventas</option>
+              <option style="color:#388e3c;">Rentas</option>
+              <option style="color:#388e3c;">Prestaciones y Subsidios</option>
+              <option style="color:#388e3c;">Devoluciones</option>
+              <option style="color:#388e3c;">Premios - Loteria</option>
+              <option style="color:#388e3c;">Regalos - Donaciones</option>
 
             </select>
           </div>
-
-          <div class="add-event-field">
-            <label for="event-date" class="add-event-label">Fecha</label>
-            <input type="date" id="event-date" class="add-event-input" />
-          </div>
-          
           <div class="add-event-footer">
             <button class="add-event-btn" onclick="guardarBtn()">Guardar</button>
           </div>
@@ -122,8 +116,6 @@
         <i class="fas fa-plus"></i>
       </button>
     </div>
-    <script src="calendarioJS.js"></script>
-    <script src="firebaseCalendario.js"></script>
-</body>
-
+    <script  src="../Pagina web/javaScript/calendarioJS.js"></script>
+    <script type="module" src="firebaseCalendario.js"></script>
 </html>

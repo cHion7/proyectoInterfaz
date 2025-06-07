@@ -50,7 +50,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const user = userCredential.user;
     console.log("Sesión iniciada con:", user.email);
 
-    window.location.href = "Inicio.html";
+    window.location.href = "calendarioHTML.html";
   } catch (error) {
     console.error("Error al iniciar sesión:", error.message);
     alert("Error al iniciar sesión: " + error.message);

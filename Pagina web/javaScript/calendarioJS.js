@@ -1,6 +1,6 @@
-async function cargarFechas() {
+/**async function cargarFechas() {
   console.log("Verificando window.firebaseCalendario:", window.firebaseCalendario);
-  if ( typeof window.firebaseCalendario.recibirTodasFechas === "function") {
+  if (typeof window.firebaseCalendario.recibirTodasFechas === "function") {
     try {
       const datosFechas = await window.firebaseCalendario.recibirTodasFechas();
       console.log("Datos recibidos:", datosFechas);
@@ -15,7 +15,7 @@ async function cargarFechas() {
 }
 
 window.onload = cargarFechas;
-
+*/
 
 const calendar = document.querySelector(".calendar"),
   date = document.querySelector(".date"),
@@ -31,7 +31,13 @@ const calendar = document.querySelector(".calendar"),
   addEventBtn = document.querySelector(".add-event"),
   addEventWrapper = document.querySelector(".add-event-wrapper"),
   addEventCloseBtn = document.querySelector(".close"),
-  addEventTitle = document.querySelector(".event-name"),
+
+  addEventTitle = document.querySelector("#event-title"),
+  addEventDescription = document.querySelector("#event-description"),
+  addEventAmount = document.querySelector("#event-amount"),
+  addEventType = document.querySelectorAll('input[name="event-type"]'),
+  addEventCategory = document.querySelector("#event-category"),
+
   addEventFrom = document.querySelector(".event-time-from"),
   addEventTo = document.querySelector(".event-time-to"),
   addEventSubmit = document.querySelector(".add-event-btn");
@@ -232,21 +238,6 @@ dateInput.addEventListener("input", (e) => {
   }
 });
 
-gotoBtn.addEventListener("click", gotoDate);
-
-function gotoDate() {
-  console.log("here");
-  const dateArr = dateInput.value.split("/");
-  if (dateArr.length === 2) {
-    if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
-      month = dateArr[0] - 1;
-      year = dateArr[1];
-      initCalendar();
-      return;
-    }
-  }
-  alert("Invalid Date");
-}
 
 //function get active day day name and date and update eventday eventdate
 function getActiveDay(date) {
@@ -269,10 +260,16 @@ function updateEvents(date) {
         events += `<div class="event">
             <div class="title">
               <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.title}</h3>
+              <h3 class="event-title">${event.titulo}</h3>
             </div>
             <div class="event-time">
-              <span class="event-time">${event.time}</span>
+              <span class="event-time">${event.cobroOGasto}</span>
+            </div>
+              <div class="event-time">
+              <span class="event-time">${event.dinero}</span>
+            </div>
+              <div class="event-time">
+              <span class="event-time">${event.descripcion}</span>
             </div>
         </div>`;
       });
@@ -284,8 +281,9 @@ function updateEvents(date) {
         </div>`;
   }
   eventsContainer.innerHTML = events;
-  saveEvents();
+  saveEvents(); //save events in local storage
 }
+
 
 //function to add event
 addEventBtn.addEventListener("click", () => {
@@ -331,56 +329,30 @@ addEventTo.addEventListener("input", (e) => {
 });
 
 //cambir porque espara añadir evento----------------------------------------------------------
-function guardarBtn(){
+function guardarBtn() {
+  console.log("entra")
   const eventTitle = addEventTitle.value;
-  const eventTimeFrom = addEventFrom.value;
-  const eventTimeTo = addEventTo.value;
-  if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+  const eventDescription = addEventDescription.value;//cambiar dato
+  const eventAmount = addEventAmount.value;//cambiar dato
+  const eventType = addEventType.value;//cambiar dato
+  const eventCategory = addEventCategory.value;//cambiar dato
+
+  if (eventTitle === "" || eventDescription === "" || eventAmount === "" || eventType === "" || eventCategory === "") {//cambiar dato
     alert("Porfavor rellena todos los campos");
+
     return;
   }
 
-  //check correct time format 24 hour
-  const timeFromArr = eventTimeFrom.split(":");
-  const timeToArr = eventTimeTo.split(":");
-  if (
-    timeFromArr.length !== 2 ||
-    timeToArr.length !== 2 ||
-    timeFromArr[0] > 23 ||
-    timeFromArr[1] > 59 ||
-    timeToArr[0] > 23 ||
-    timeToArr[1] > 59
-  ) {
-    alert("Formato invalido de fecha");
-    return;
-  }
 
-  const timeFrom = convertTime(eventTimeFrom);
-  const timeTo = convertTime(eventTimeTo);
-
-  //check if event is already added
-  let eventExist = false;
-  eventsArr.forEach((event) => {
-    if (
-      event.day === activeDay &&
-      event.month === month + 1 &&
-      event.year === year
-    ) {
-      event.events.forEach((event) => {
-        if (event.title === eventTitle) {
-          eventExist = true;
-        }
-      });
-    }
-  });
-  if (eventExist) {
-    alert("Evento ya añadido");
-    return;
-  }
   const newEvent = {
-    title: eventTitle,
-    time: timeFrom + " - " + timeTo,
+    titulo: eventTitle,
+    descripcion: eventDescription, //cambiar dato
+    dinero: eventAmount, //cambiar dato
+    cobroOGasto: eventType, //cambiar dato
+    categoria: eventCategory, //cambiar dato
+    fechaMillis: new Date(year, month, activeDay).getTime() //cambiar dato
   };
+
   console.log(newEvent);
   console.log(activeDay);
   let eventAdded = false;
@@ -409,8 +381,15 @@ function guardarBtn(){
   console.log(eventsArr);
   addEventWrapper.classList.remove("active");
   addEventTitle.value = "";
-  addEventFrom.value = "";
-  addEventTo.value = "";
+  addEventDescription.value = "";//cambiar dato
+  addEventAmount.value = "";//cambiar dato
+  addEventType.forEach((input) => {
+    if (input.checked) {
+      input.checked = false; //cambiar dato
+    }
+  });
+  addEventCategory.value = "Selecciona una categoría"; //cambiar dato
+
   updateEvents(activeDay);
   //select active day and add event class if not added
   const activeDayEl = document.querySelector(".day.active");
@@ -453,16 +432,35 @@ eventsContainer.addEventListener("click", (e) => {
 
 //function to save events in local storage
 function saveEvents() {
-  localStorage.setItem("events", JSON.stringify(eventsArr));
+  console.log("Contenido de eventsArr:", eventsArr);
+  if (window.firebaseCalendario && typeof window.firebaseCalendario.subirEvento === "function") {
+    window.firebaseCalendario.subirEvento(eventsArr); //--------------------------------------------------------------------------------
+    console.log("Datos enviados correctamente");
+  } else {
+    console.log("No se pudo enviar los datos: función no disponible");
+  }
 }
 
 //function to get events from local storage
-function getEvents() {
+async function getEvents() {
   //check if events are already saved in local storage then return event else nothing
-  if (localStorage.getItem("events") === null) {
-    return;
+  //if (localStorage.getItem("events") === null) {
+  //  return;
+  //}
+  if (window.firebaseCalendario && typeof window.firebaseCalendario.recibirTodasFechas === "function") {
+    try {
+      const eventos = await window.firebaseCalendario.recibirTodasFechas(); //--------------------------------------------------------------------------------
+      mostrarToast("fechas recibidas correctamente", "success");
+      if (Array.isArray(eventos)) {
+        eventsArr.push(...eventos);
+      }
+    } catch (error) {
+      mostrarToast("Error al obtener los datos: " + error, "error");
+    }
+  } else {
+    mostrarToast("No se pudo enviar los datos: función no disponible", "error");
   }
-  eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+  //eventsArr.push(...JSON.parse(localStorage.getItem("events")));
 }
 
 function convertTime(time) {
@@ -479,13 +477,13 @@ function convertTime(time) {
 //-----------------------------------------------------------------------
 function actualizarCategorias() {
   const categoriasGastos = [
-  "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
-  "Ocio", "Ropa y Calzado", "Seguros", "Impuestos y Tasas", "Otros"
+    "Vivienda", "Transporte", "Alimentacion", "Salud", "Educacion",
+    "Ocio", "Ropa y Calzado", "Seguros", "Impuestos y Tasas", "Otros"
   ];
-  
+
   const categoriasCobros = [
-  "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
-  "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
+    "Salario", "Ingresos Extras", "Inversiones", "Ventas", "Rentas",
+    "Prestaciones y Subsidios", "Devoluciones", "Premios - Lotería", "Regalos - Donaciones"
   ];
   console.log("Ejecutando actualizarCategorias");
   const tipoSeleccionado = document.querySelector('input[name="event-type"]:checked');
@@ -514,42 +512,42 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-    // Guardar evento
-    function guardarEvento() {
-      const tipo = document.querySelector('input[name="event-type"]:checked').value;
-      const categoria = document.getElementById('event-category').value;
-      const titulo = document.getElementById('event-title').value;
-      const descripcion = document.getElementById('event-description').value;
-      const cantidad = document.getElementById('event-amount').value;
-      
-      // Validación básica
-      if (!titulo || !cantidad || categoria === "" || categoria === "Selecciona una categoría") {
-        alert("Por favor, complete todos los campos obligatorios");
-        return;
-      }
-      
-      // Mostrar mensaje de éxito
-      const successMessage = document.getElementById('success-message');
-      successMessage.style.display = 'block';
-      
-      // Ocultar mensaje después de 3 segundos
-      setTimeout(() => {
-        successMessage.style.display = 'none';
-      }, 3000);
-      
-      // Aquí iría la lógica para guardar en base de datos
-      console.log("Evento guardado:", { tipo, categoria, titulo, descripcion, cantidad });
-    }
+// Guardar evento
+function guardarEvento() {
+  const tipo = document.querySelector('input[name="event-type"]:checked').value;
+  const categoria = document.getElementById('event-category').value;
+  const titulo = document.getElementById('event-title').value;
+  const descripcion = document.getElementById('event-description').value;
+  const cantidad = document.getElementById('event-amount').value;
 
-    // Cancelar evento
-    function cancelarEvento() {
-      document.getElementById('event-title').value = '';
-      document.getElementById('event-description').value = '';
-      document.getElementById('event-amount').value = '';
-      document.getElementById('gasto').checked = true;
-      actualizarCategorias();
-      actualizarPrevisualizacion();
-    }
+  // Validación básica
+  if (!titulo || !cantidad || categoria === "" || categoria === "Selecciona una categoría") {
+    alert("Por favor, complete todos los campos obligatorios");
+    return;
+  }
+
+  // Mostrar mensaje de éxito
+  const successMessage = document.getElementById('success-message');
+  successMessage.style.display = 'block';
+
+  // Ocultar mensaje después de 3 segundos
+  setTimeout(() => {
+    successMessage.style.display = 'none';
+  }, 3000);
+
+  // Aquí iría la lógica para guardar en base de datos
+  console.log("Evento guardado:", { tipo, categoria, titulo, descripcion, cantidad });
+}
+
+// Cancelar evento
+function cancelarEvento() {
+  document.getElementById('event-title').value = '';
+  document.getElementById('event-description').value = '';
+  document.getElementById('event-amount').value = '';
+  document.getElementById('gasto').checked = true;
+  actualizarCategorias();
+  actualizarPrevisualizacion();
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -590,97 +588,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
-
-
-
-
-
-
-addEventSubmit.addEventListener("click", () => {
-  const eventTitle = addEventTitle.value;
-  const eventTimeFrom = addEventFrom.value;
-  const eventTimeTo = addEventTo.value;
-  if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
-    alert("Porfavor rellena todos los campos");
-    return;
-  }
-
-  //check correct time format 24 hour
-  const timeFromArr = eventTimeFrom.split(":");
-  const timeToArr = eventTimeTo.split(":");
-  if (
-    timeFromArr.length !== 2 ||
-    timeToArr.length !== 2 ||
-    timeFromArr[0] > 23 ||
-    timeFromArr[1] > 59 ||
-    timeToArr[0] > 23 ||
-    timeToArr[1] > 59
-  ) {
-    alert("Formato invalido de fecha");
-    return;
-  }
-
-  const timeFrom = convertTime(eventTimeFrom);
-  const timeTo = convertTime(eventTimeTo);
-
-  //check if event is already added
-  let eventExist = false;
-  eventsArr.forEach((event) => {
-    if (
-      event.day === activeDay &&
-      event.month === month + 1 &&
-      event.year === year
-    ) {
-      event.events.forEach((event) => {
-        if (event.title === eventTitle) {
-          eventExist = true;
-        }
-      });
-    }
-  });
-  if (eventExist) {
-    alert("Evento ya añadido");
-    return;
-  }
-  const newEvent = {
-    title: eventTitle,
-    time: timeFrom + " - " + timeTo,
-  };
-  console.log(newEvent);
-  console.log(activeDay);
-  let eventAdded = false;
-  if (eventsArr.length > 0) {
-    eventsArr.forEach((item) => {
-      if (
-        item.day === activeDay &&
-        item.month === month + 1 &&
-        item.year === year
-      ) {
-        item.events.push(newEvent);
-        eventAdded = true;
-      }
-    });
-  }
-
-  if (!eventAdded) {
-    eventsArr.push({
-      day: activeDay,
-      month: month + 1,
-      year: year,
-      events: [newEvent],
-    });
-  }
-
-  console.log(eventsArr);
-  addEventWrapper.classList.remove("active");
-  addEventTitle.value = "";
-  addEventFrom.value = "";
-  addEventTo.value = "";
-  updateEvents(activeDay);
-  //select active day and add event class if not added
-  const activeDayEl = document.querySelector(".day.active");
-  if (!activeDayEl.classList.contains("event")) {
-    activeDayEl.classList.add("event");
-  }
-});
