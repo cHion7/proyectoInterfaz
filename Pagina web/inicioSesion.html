@@ -4,17 +4,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio de sesion | InpoSmart</title>
+  <title>Inicio de sesion | ImpoSmart</title>
   <link rel="stylesheet" href="../Pagina web/CSS file/InicioSesion.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 </head>
 
+
+<body>
+  <main class="container">
+    <section class="left-panel">
+      <h1>Bienvenido a ImpoSmart</h1>
+      <p>.....</p>
+    </section>
+    
+    <section class="right-panel">
+      <div class="logo-container">
+        <img src="../Pagina web/imagens/logo3.png" alt="ImpoSmart Logo" class="logo">
+      </div>
+      <form id="loginForm">
+        <div class="input-container">
+          <input class="line" type="email" id="email" placeholder="Correo Electrónico" required />
+        </div>
+        <div class="input-container password-container">
+          <input class="line" type="password" id="password" placeholder="Contraseña" required />
+          <span class="password-toggle" onclick="togglePasswordVisibility()">&#128065;</span>
+        </div>
+        <div class="links-container">
+          <p class="texto-abajo"><a href="registro.html">¿No tienes cuenta? Regístrate</a></p>
+          <p class="texto-abajo"><a href="recogerEmail.html">¿He olvidado mi contraseña? Recuperar</a></p>
+        </div>
+        <button class="boton" type="submit">Iniciar Sesión</button>
+      </form>
+      <div class="separator">O</div>
+      <button id="googleLogin" class="google-boton">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+        Sign in
+      </button>
+    </section>
+  </main>
+  <script type="module" src="../Pagina web/javaScript/login.js"></script>
+  <script>
+    function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const passwordToggle = document.querySelector('.password-toggle');
+      if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        passwordToggle.innerHTML = '&#128064;'; // Eye with a slash
+      } else {
+        passwordField.type = 'password';
+        passwordToggle.innerHTML = '&#128065;'; // Open eye
+      }
+    }
+  </script>
+</body>
+
+<!-- Login de Hugo
 <body>
   <main id="main">
     <section id="registroCuadro">
-      <h1 class="titulo">InpoSmart</h1>
+      <h1 class="titulo">ImpoSmart</h1>
       <h2 class="subtitulo">Ingrese sus datos</h2>
       <form id="loginForm">
         <input class="line" type="email" id="email" placeholder="Correo electrónico" required />
@@ -24,12 +74,11 @@
       <br>
       <button id="googleLogin">Iniciar con Google</button>
 
-  
       <p class="texto-abajo">¿No tienes cuenta? <a href="registro.html">Registrarse</a></p>
       <p class="texto-abajo">¿No recuerdas tu contraseña? <a href="recogerEmail.html">Cambiar contraseña</a></p>
     </section>
   </main>
   <script type="module" src="../Pagina web/javaScript/login.js"></script>
-</body>
+</body>-->
 
 </html>
