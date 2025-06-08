@@ -32,7 +32,7 @@ document.getElementById("googleLogin").addEventListener("click", async (e) => {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     console.log("Usuario autenticado con Google:", user.email);
-    window.location.href = "Inicio.html";
+    window.location.href = "InicioSesion.html";
   } catch (error) {
     console.error("Error en login con Google:", error.message);
   }
