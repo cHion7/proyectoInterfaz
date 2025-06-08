@@ -1,12 +1,126 @@
 :root {
-  --primary-clr: #3730A3FF;
+  /* Variables de color de style.css */
+  --color-primary: #1d4ed8; /* Azul principal */
+  --color-secondary: #3b82f6; /* Azul secundario, más claro */
+  --color-accent: #3730a3; /* Púrpura/Azul oscuro para acentos */
+  --color-dark: #1e293b; /* Gris oscuro para texto y fondos */
+  --color-light: #f1f5f9; /* Gris claro para fondos de página */
+  --color-white: #ffffff;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-blue-100: #bfdbfe; /* Azul muy claro */
+  --color-blue-700: #1d4ed8; /* Azul oscuro */
+  --color-purple-100: #e9d5ff;
+  --color-purple-700: #7c3aed;
+  --color-orange-100: #ffedd5;
+  --color-orange-700: #d97706;
+  --color-green-100: #d1fae5;
+  --color-green-700: #047857;
+  --color-red-100: #fee2e2;
+  --color-red-600: #dc2626;
+  --color-green-600: #16a34a;
+   --color-white: #ffffff;
+  --color-dark: #1e293b; 
+  --color-gray-800: #1f2937; 
+  --color-gray-100: #f3f4f6; 
+  --color-primary: #1d4ed8;
+
+  /* Redefine primary-clr to match color-primary from style.css */
+  --primary-clr: var(--color-primary);
+
+  /* Radius y transiciones de style.css */
+  --radius-default: 0.5rem; /* 8px para elementos pequeños */
+  --radius-card: 1rem; /* 16px para tarjetas y secciones */
+  --shadow-default: 0 10px 15px -3px rgba(0, 0, 0, 0.1); /* Sombra estándar */
+  --transition-fast: 0.2s;
+  --transition-medium: 0.3s;
+  --font-family-base: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
 }
 
 * {
-
-
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif; /* Keeping Poppins for calendar specific, but consider consolidating to --font-family-base */
+}
+
+/* --------------------------
+   Sección Hero (Banner) - Manteniendo los colores del style.css original
+   -------------------------- */
+.hero {
+  background: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  color: var(--color-white);
+  padding: 2.5rem 0; /* 40px 0 */
+  text-align: center;
+}
+
+.hero__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.hero__titulo {
+  font-size: 1.875rem; /* 30px */
+  font-weight: 700;
+  margin-bottom: 1rem; /* 16px */
+}
+
+.hero__texto {
+  font-size: 1.125rem; /* 18px */
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+.hero__boton-contenedor {
+  display: flex;
+  justify-content: center;
+}
+
+/* Si tu sección .hero (el banner grande debajo del header) también quieres que sea blanco y con texto negro */
+.hero {
+  background: var(--color-white); 
+  color: var(--color-dark); 
+  
+}
+
+.hero__titulo {
+  color: var(--color-dark); 
+
+}
+
+.hero__texto {
+  color: var(--color-gray-700); 
+}
+.btn-primary {
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  padding: 0.75rem 1.5rem; /* 12px 24px */
+  border-radius: var(--radius-default);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* 8px */
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-medium),
+    transform var(--transition-fast);
+}
+
+.btn-primary i {
+  font-size: 1rem; /* 16px */
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gray-100);
+  transform: translateY(-2px);
 }
 
 /* nice scroll bar */
@@ -15,7 +129,7 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: var(--color-gray-100); /* Usando gray-100 */
   border-radius: 50px;
 }
 
@@ -24,10 +138,16 @@
   border-radius: 50px;
 }
 
-
+.main-header {
+  background-color: var(--color-white); /* Fondo blanco para el header */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Mantener sombra o ajustarla si es necesario */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-gray-300); /* Fondo blanco para el header */
+}
 
 .header-container {
-
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -38,7 +158,8 @@
   justify-content: space-between;
   /* justify-between */
   padding: 1rem;
-  /* p-4 */
+  border: 1px solid var(--color-gray-300); /* Borde gris alrededor del contenedor */
+  border-radius: var(--radius-default);
 }
 
 @media (min-width: 768px) {
@@ -78,54 +199,67 @@
   /* text-xl */
   font-weight: 600;
   /* font-semibold */
-  color: #4f46e5;
-  /* text-indigo-600 */
+  color: var(--color-dark);
 }
 
 .main-nav {
   display: flex;
   gap: 1.5rem;
   /* space-x-6 */
+  background-color: var(--color-white);
 }
 
 .nav-link {
-  color: #ffffff;
+  color: var(--color-gray-800); /* Manteniendo white para nav-link */
   /* text-gray-700 */
   font-weight: 500;
   /* font-medium */
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color var(--transition-medium); /* Adaptado a transition-medium */
   margin-top: 15px;
+  background-color: var(--color-gray-100); 
+  color: var(--color-dark); 
 }
 
 .nav-link:hover {
-  color: #4f46e5;
-  /* hover:text-indigo-600 */
+  background-color: var(--color-gray-100); /* Fondo ligeramente gris al pasar el ratón */
+  color: var(--color-dark); /* Texto negro al pasar el ratón */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.nav__enlace--activo {
+  background-color: var(--color-white); /* Fondo blanco */
+  color: var(--color-primary); /* Color del texto y el icono azul */
+  padding: 0.75rem 1.25rem; /* Ajusta el padding para que tenga el tamaño similar al de la calculadora */
+  border-radius: var(--radius-default); /* Aplica el radio de borde redondeado */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave como la de la calculadora */
+  display: flex; /* Para alinear el icono y el texto si los tienes */
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav__icono {
+  color: var(--color-dark); /* Iconos en negro */
+}
+
+.nav__icono--activo {
+  color: var(--color-dark); /* Icono activo en negro */
+}
 
 body {
   position: relative;
   min-height: 100vh;
-
   align-items: center;
   justify-content: center;
   padding-bottom: 30px;
- 
+  background-color: var(--color-light); /* Adaptado a color-light */
+  color: var(--color-gray-800); /* Adaptado a color-gray-800 */
 }
 
 .container {
   position: relative;
-  /* width: 1200px; */
-  /* min-height: 850px; */
-  /*
-  margin: 0 auto;
-  padding: 5px;
-  color: #000000;
-  */
   display: flex;
-  /*border-radius: 0;*/
-  background-color: #373c4f;
+  background-color: var(--color-dark); /* Adaptado a color-dark */
 }
 
 .left {
@@ -141,9 +275,9 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: space-between;
-  color: #878895;
-  border-radius: 5px;
-  background-color: #fff;
+  color: var(--color-gray-600); /* Adaptado a color-gray-600 */
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
+  background-color: var(--color-white); /* Adaptado a color-white */
 }
 
 /* set after behind the main element */
@@ -155,15 +289,15 @@ body {
   left: 100%;
   width: 12px;
   height: 97%;
-  border-radius: 0 5px 5px 0;
-  background-color: #d3d4d6d7;
+  border-radius: 0 var(--radius-default) var(--radius-default) 0; /* Adaptado a radius-default */
+  background-color: var(--color-gray-200); /* Adaptado a color-gray-200 */
   transform: translateY(-50%);
 }
 
 .calendar::before {
   height: 94%;
   left: calc(100% + 12px);
-  background-color: rgb(153, 153, 153);
+  background-color: var(--color-gray-400); /* Adaptado a color-gray-400 */
 }
 
 .calendar .month {
@@ -226,39 +360,39 @@ body {
   justify-content: center;
   cursor: pointer;
   color: var(--primary-clr);
-  border: 1px solid #f5f5f5;
+  border: 1px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .calendar .days .day:nth-child(7n + 1) {
-  border-left: 2px solid #f5f5f5;
+  border-left: 2px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .calendar .days .day:nth-child(7n) {
-  border-right: 2px solid #f5f5f5;
+  border-right: 2px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .calendar .days .day:nth-child(-n + 7) {
-  border-top: 2px solid #f5f5f5;
+  border-top: 2px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .calendar .days .day:nth-child(n + 29) {
-  border-bottom: 2px solid #f5f5f5;
+  border-bottom: 2px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .calendar .days .day:not(.prev-date, .next-date):hover {
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
   background-color: var(--primary-clr);
 }
 
 .calendar .days .prev-date,
 .calendar .days .next-date {
-  color: #b3b3b3;
+  color: var(--color-gray-400); /* Adaptado a color-gray-400 */
 }
 
 .calendar .days .active {
   position: relative;
   font-size: 2rem;
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
   background-color: var(--primary-clr);
 }
 
@@ -293,17 +427,17 @@ body {
 
 /* Barra verde (solo cobros) */
 .calendar .days .event.event-income::after {
-  background: #27ae60;
+  background: var(--color-green-600); /* Adaptado a color-green-600 */
 }
 
 /* Barra roja (solo gastos) */
 .calendar .days .event.event-expense::after {
-  background: #e74c3c;
+  background: var(--color-red-600); /* Adaptado a color-red-600 */
 }
 
 /* Barra gradiente (ambos tipos) */
 .calendar .days .event.event-mixed::after {
-  background: linear-gradient(90deg, #27ae60 0%, #e74c3c 100%);
+  background: linear-gradient(90deg, var(--color-green-600) 0%, var(--color-red-600) 100%); /* Adaptado a green-600 y red-600 */
 }
 
 .calendar .days .active.event {
@@ -325,7 +459,7 @@ body {
 .calendar .goto-today .goto {
   display: flex;
   align-items: center;
-  border-radius: 5px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
   overflow: hidden;
   border: 1px solid var(--primary-clr);
 }
@@ -335,23 +469,23 @@ body {
   height: 30px;
   outline: none;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
   padding: 0 20px;
   color: var(--primary-clr);
-  border-radius: 5px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
 }
 
 .calendar .goto-today button {
   padding: 5px 10px;
   border: 1px solid var(--primary-clr);
-  border-radius: 5px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
   background-color: transparent;
   cursor: pointer;
   color: var(--primary-clr);
 }
 
 .calendar .goto-today button:hover {
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
   background-color: var(--primary-clr);
 }
 
@@ -391,7 +525,7 @@ body {
 .right .today-date .event-date {
   font-size: 1rem;
   font-weight: 400;
-  color: #878895;
+  color: var(--color-gray-600); /* Adaptado a color-gray-600 */
 }
 
 .events {
@@ -408,15 +542,15 @@ body {
 .events .event {
   position: relative;
   width: 95%;
-  min-height: px;
+  min-height: px; /* This should be a value, e.g., 60px */
   display: flex;
   justify-content: center;
   flex-direction: column;
   gap: 5px;
   padding: 0 20px;
   padding-left: 50px;
-  color: #fff;
-  background: linear-gradient(90deg, #3f4458, transparent);
+  color: var(--color-white); /* Adaptado a color-white */
+  background: linear-gradient(90deg, var(--color-dark), transparent); /* Adaptado a color-dark */
   cursor: pointer;
 }
 
@@ -447,19 +581,19 @@ body {
 }
 
 .events .event:hover i {
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
 }
 
 .events .event .event-time {
   font-size: 0.8rem;
   font-weight: 400;
-  color: #878895;
+  color: var(--color-gray-600); /* Adaptado a color-gray-600 */
   margin-left: 15px;
   pointer-events: none;
 }
 
 .events .event:hover .event-time {
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
 }
 
 /* add tick in event after */
@@ -492,8 +626,8 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  color: #878895;
-  border: 2px solid #878895;
+  color: var(--color-gray-600); /* Adaptado a color-gray-600 */
+  border: 2px solid var(--color-gray-600); /* Adaptado a color-gray-600 */
   opacity: 0.5;
   border-radius: 50%;
   background-color: transparent;
@@ -516,7 +650,7 @@ body {
   justify-content: center;
   font-size: 1.5rem;
   font-weight: 500;
-  color: #878895;
+  color: var(--color-gray-600); /* Adaptado a color-gray-600 */
 }
 
 .add-event-wrapper {
@@ -526,10 +660,10 @@ body {
   width: 90%;
   max-height: 0;
   overflow: hidden;
-  border-radius: 5px;
-  background-color: #fff;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
+  background-color: var(--color-white); /* Adaptado a color-white */
   transform: translateX(-50%);
-  transition: max-height 0.5s ease;
+  transition: max-height var(--transition-medium); /* Adaptado a transition-medium */
 }
 
 .add-event-wrapper.active {
@@ -543,8 +677,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  color: #373c4f;
-  border-bottom: 1px solid #f5f5f5;
+  color: var(--color-dark); /* Adaptado a color-dark */
+  border-bottom: 1px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
 }
 
 .add-event-header .close {
@@ -584,15 +718,15 @@ body {
   height: 100%;
   outline: none;
   border: none;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--color-gray-100); /* Adaptado a color-gray-100 */
   padding: 0 10px;
   font-size: 1rem;
   font-weight: 400;
-  color: #373c4f;
+  color: var(--color-dark); /* Adaptado a color-dark */
 }
 
 .add-event-body .add-event-input input::placeholder {
-  color: #a5a5a5;
+  color: var(--color-gray-400); /* Adaptado a color-gray-400 */
 }
 
 .add-event-body .add-event-input input:focus {
@@ -616,9 +750,9 @@ body {
   font-weight: 500;
   outline: none;
   border: none;
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
   background-color: var(--primary-clr);
-  border-radius: 5px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
   cursor: pointer;
   padding: 5px 10px;
   border: 1px solid var(--primary-clr);
@@ -638,7 +772,6 @@ body {
   }
 
   .container {
-
     flex-direction: column;
     border-radius: 0;
   }
@@ -661,7 +794,7 @@ body {
     left: 50%;
     width: 97%;
     height: 12px;
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 var(--radius-default) var(--radius-default); /* Adaptado a radius-default */
     transform: translateX(-50%);
   }
 
@@ -711,12 +844,12 @@ body {
   text-align: center;
   padding: 10px;
   font-size: 12px;
-  color: #fff;
-  background-color: #b38add;
+  color: var(--color-white); /* Adaptado a color-white */
+  background-color: var(--color-accent); /* Adaptado a color-accent */
 }
 
 .credits a {
-  color: #fff;
+  color: var(--color-white); /* Adaptado a color-white */
   text-decoration: none;
   font-weight: 600;
 }
@@ -725,13 +858,11 @@ body {
   text-decoration: underline;
 }
 
-
 /* Estilos para el body del formulario */
-
 .add-event-container {
-  background: white;
+  background: var(--color-white); /* Adaptado a color-white */
   padding: 25px;
-  border-radius: 12px;
+  border-radius: var(--radius-card); /* Adaptado a radius-card */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   margin: auto;
@@ -757,8 +888,8 @@ body {
 .add-event-textarea {
   width: 100%;
   padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
+  border: 1px solid var(--color-gray-300); /* Adaptado a color-gray-300 */
   box-sizing: border-box;
   font-size: 14px;
 }
@@ -789,24 +920,26 @@ body {
 .add-event-button {
   padding: 10px 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-default); /* Adaptado a radius-default */
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
 }
 
 .add-event-cancel {
-  background-color: #e74c3c;
-  color: white;
+  background-color: var(--color-red-600); /* Adaptado a color-red-600 */
+  color: var(--color-white); /* Adaptado a color-white */
 }
 
 .add-event-save {
-  background-color: #27ae60;
-  color: white;
+  background-color: var(--color-green-600); /* Adaptado a color-green-600 */
+  color: var(--color-white); /* Adaptado a color-white */
 }
+
+/* Footer styles (already adapted to style.css vars in your provided code) */
 .footer {
-  background-color: #1f2937; /* bg-gray-800 */
-  color: white;
+  background-color: var(--color-dark); /* bg-gray-800 */
+  color: var(--color-white);
   padding: 2rem 0; /* py-8 */
 }
 
@@ -826,12 +959,12 @@ body {
   font-size: 1.125rem; /* text-lg */
   font-weight: 600; /* font-semibold */
   margin-bottom: 0.5rem; /* mb-2 */
-  color: #818cf8; /* text-indigo-300 */
+  color: var(--color-blue-100); /* text-indigo-300 - approximated with blue-100 */
 }
 
 .contact-section p {
   margin-bottom: 1rem; /* mb-4 */
-  color: #d1d5db; /* text-gray-300 */
+  color: var(--color-gray-300); /* text-gray-300 */
 }
 
 .contact-list {
@@ -846,18 +979,126 @@ body {
 .contact-item {
   display: flex;
   align-items: center;
-  color: #d1d5db; /* text-gray-300 */
+  color: var(--color-gray-300); /* text-gray-300 */
 }
 
 .contact-item i {
   margin-right: 0.5rem; /* mr-2 */
-  color: #a5b4fc; /* text-indigo-400 */
+  color: var(--color-secondary); /* text-indigo-400 - approximated with color-secondary */
 }
 
 .copyright {
-  border-top: 1px solid #374151; /* border-t border-gray-700 */
+  border-top: 1px solid var(--color-gray-700); /* border-t border-gray-700 */
   padding-top: 1rem; /* pt-4 */
   text-align: center;
-  color: #9ca3af; /* text-gray-400 */
+  color: var(--color-gray-400); /* text-gray-400 */
   font-size: 0.875rem; /* text-sm */
+}
+
+/* -----------------------------
+   Footer
+   ----------------------------- */
+.footer {
+  background-color: var(--color-dark);
+  color: var(--color-gray-100);
+  padding: 2.5rem 0; /* 40px 0 */
+  margin-top: 3rem; /* 48px */
+}
+
+.footer__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* 32px */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .footer__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.footer__seccion {
+  /* Espaciado interno ya dado por el grid */
+}
+
+.footer__titulo {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 1rem; /* 16px */
+}
+
+.footer__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 8px */
+}
+
+.footer__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+}
+
+.footer__icono {
+  font-size: 1rem; /* 16px */
+  color: var(--color-primary);
+}
+
+.footer__bottom {
+  border-top: 1px solid var(--color-gray-700); /* gris oscuro */
+  margin-top: 2rem; /* 32px */
+  padding-top: 1.5rem; /* 24px */
+  text-align: center;
+  font-size: 0.875rem; /* 14px */
+  color: var(--color-gray-100);
+}
+
+/* Aplica el fondo blanco al header general */
+.header-container {
+  background-color: var(--color-white); /* Fondo blanco para el header */
+  /* Asegúrate de que no haya gradientes de fondo que lo anulen si no los quieres */
+  /* Si el header tiene un elemento padre que le da color, también deberías ajustarlo */
+}
+
+/* Color del texto del logo en negro */
+.logo-text {
+  color: var(--color-dark); /* O var(--color-gray-800); para texto negro */
+}
+
+/* Para el estado normal de los enlaces (no activos) */
+.nav-link {
+  color: var(--color-gray-800); /* Color de texto oscuro para los enlaces no activos */
+  background-color: transparent; /* Asegúrate de que no tengan fondo por defecto */
+  padding: 0.75rem 1.25rem; /* Dale el mismo padding para que tengan un tamaño consistente */
+  border-radius: var(--radius-default); /* Mismos bordes redondeados */
+  transition: background-color var(--transition-medium), box-shadow var(--transition-medium); /* Añade transición para la sombra */
+}
+
+.nav-link:hover {
+  background-color: var(--color-gray-100); /* Fondo ligeramente gris al pasar el ratón */
+  color: var(--color-dark); /* Texto negro al pasar el ratón */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra suave al pasar el ratón */
+}
+
+
+
+/* Si tienes iconos en la navegación */
+.nav__icono {
+  color: var(--color-dark); /* Iconos en negro */
+}
+
+.nav__icono--activo {
+  color: var(--color-dark); /* Icono activo en negro */
+}
+
+/* Ajusta el fondo general del body si no lo quieres con un color degradado */
+body {
+  background-color: var(--color-white); /* Fondo general de la página en blanco */
+  color: var(--color-gray-800); /* Color de texto base en gris oscuro */
+  /* ... */
 }

@@ -16,7 +16,8 @@
   
 </head>
 
-<body> <header class="main-header">
+<body> 
+  <header class="main-header">
     <div class="container header-container">
       <!-- Sección del logo -->
       <section class="header-logo">
@@ -34,6 +35,17 @@
     </div>
   </header>
   
+  <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="hero__container">
+        <h2 class="hero__titulo">Calendario</h2>
+        <p class="hero__texto">
+          Nuestra calculadora avanzada te permite estimar tus impuestos en
+          hipotecas, préstamos y criptomonedas de forma simple y rápida.
+        </p>
+      </div>
+    </section>
+
   <div class="container">
     <div class="left">
       <div class="calendar">
@@ -120,32 +132,49 @@
       </button>
     </div>
   </div> <!-- Cierre del div.container -->
-  <footer class="footer">
-      <div class="container2">
-        <!-- Sección de información de contacto -->
-        <section class="contact-section">
-          <h3>Contacto</h3>
-          <p>Para contactar a InpoSmart, puedes utilizar la siguiente información:</p>
-          <ul class="contact-list">
-            <li class="contact-item">
-              <i class="fas fa-phone"></i>
-              Teléfono: 123-456-7890
+
+   <!-- Pie de página -->
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__seccion">
+          <h3 class="footer__titulo">Contacto</h3>
+          <ul class="footer__lista">
+            <li class="footer__item">
+              <i class="fas fa-phone footer__icono"></i>
+              <span>911 123 123</span>
             </li>
-            <li class="contact-item">
-              <i class="fas fa-envelope"></i>
-              Email: info@inposmart.com
+            <li class="footer__item">
+              <i class="fas fa-envelope footer__icono"></i>
+              <span>informacion@imposmart.com</span>
             </li>
-            <li class="contact-item">
-              <i class="fas fa-map-marker-alt"></i>
-              Dirección: Calle Financiera, 123, Ciudad Digital
+            <li class="footer__item">
+              <i class="fas fa-map-marker-alt footer__icono"></i>
+              <span>Plaza de España, 123, Madrid</span>
             </li>
           </ul>
-        </section>
-        
-        <!-- Sección de copyright -->
-        <section class="copyright">
-          <p>© 2025 InpoSmart - Todos los derechos reservados.</p>
-        </section>
+        </div>
+
+        <div class="footer__seccion">
+          <h3 class="footer__titulo">Nuestros Servicios</h3>
+          <ul class="footer__lista">
+            <li class="footer__item">
+              <i class="fas fa-calculator footer__icono"></i>
+              <span>Cálculo de impuestos</span>
+            </li>
+            <li class="footer__item">
+              <i class="fas fa-file-invoice-dollar footer__icono"></i>
+              <span>Asesoramiento fiscal</span>
+            </li>
+            <li class="footer__item">
+              <i class="fas fa-chart-line footer__icono"></i>
+              <span>Planificación financiera</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2025 ChinChonChun S.A - Todos los derechos reservados.</p>
       </div>
     </footer>
   
