@@ -9,12 +9,37 @@ body, html {
   height: 100%;
   overflow: hidden; /* Evita barras de desplazamiento si el contenido se desborda */
 }
+/*Diseño página del recuperar contraseña*/
+#registroCuadro {
+  background-color: #ffffff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
 /*body*/
 body {
   /* Fondo general del body, como en la imagen de referencia */
-  background: url(/Pagina/imagenes/fondoPantallaSencillo.jpg);
-  background-size: 400% 400%; /* Para animar el gradiente */
+  background: url(/../Pagina%20web/imagens/fondoPantallaLogin.jpg);
   animation: gradientAnimation 15s ease infinite; /* Animación de gradiente */
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
