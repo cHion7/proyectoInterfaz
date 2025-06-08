@@ -435,7 +435,7 @@ async function guardarEvento() {
   const nuevoEvento = {
     titulo,
     descripcion,
-    dinero: dinero + "€",
+    dinero: dinero,
     cobroOGasto: tipo,
     categoria,
     fechaMillis: new Date(year, month, activeDay).getTime()
