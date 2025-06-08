@@ -64,7 +64,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 50;
-  background-color: var(--color-gray-300); /* Fondo blanco para el header */
+
 }
 
 .header-container {
@@ -153,13 +153,7 @@ body {
 .nav__icono--activo {
   color: var(--color-dark); /* Icono activo en negro */
 }
-@media (max-width: 1000px) {
-    .header-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-    }
-}
+
 
 /* --------------------------
    Sección Hero (Banner)
