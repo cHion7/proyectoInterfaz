@@ -12,19 +12,23 @@
 <body>
 
     <!-- Encabezado principal de la web -->
-    <header>
-        <section id="headerSection">
-            <a id="logoLink" href="index.html">
-                <img id="logo" src="../IMG/logo.svg" alt="Logo de pixar">
-            </a>
-        </section>
-        <section class="section-nav">
-            <a href="Inicio.html" class="nav-link textoNav">Calendario</a>
-            <a href="Calculadora.html" class="nav-link textoNav">Calculadora</a>
-            <a href="afinarPerfil.html#ejecutar" class="nav-link textoNav">Perfil</a>
-        </section>
-        </section>
-    </header>
+<header class="main-header">
+    <div class="container header-container">
+      <!-- Sección del logo -->
+      <section class="header-logo">
+        <a class="logo-link">
+          <img src="../Pagina web/imagens/logo3.png" alt="Logo de la empresa" class="logo-image">
+        </a>
+      </section>
+      
+      <!-- Navegación principal -->
+      <nav class="main-nav">
+        <a href="calendarioHTML.html" class="nav-link">Calendario</a>
+        <a href="Calculadora.html" class="nav-link">Calculadora</a>
+        <a href="afinarPerfil.html" class="nav-link">Perfil</a>
+      </nav>
+    </div>
+  </header>
 
 
 
@@ -249,7 +253,7 @@
                 </section>
             </section>
 
-            
+
         </section>
         <section id="botones">
             <button id="reiniciarForm" class="boton" type="button" onclick="reiniciarCuestionario()">Reiniciar
