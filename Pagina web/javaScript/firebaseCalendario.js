@@ -32,7 +32,7 @@ async function subirEvento(eventsArr) {
     console.warn("Autenticación no está lista al intentar guardar");
     return false;
   }
-  
+
   try {
     if (!currentUser || !currentUser.email) {
       console.warn("No hay usuario autenticado. No se pueden guardar eventos.");
@@ -42,7 +42,7 @@ async function subirEvento(eventsArr) {
     const uid = currentUser.email.replace(/[@.]/g, "_");
     const eventosRef = ref(db, "Usuarios/" + uid + "/eventos");
 
-    // Primero obtener eventos existentes
+    // Obtener eventos existentes
     const snapshot = await get(eventosRef);
     const eventosExistentes = snapshot.exists() ? Object.keys(snapshot.val()) : [];
 
@@ -52,19 +52,25 @@ async function subirEvento(eventsArr) {
       await set(eventRef, null);
     }
 
-    // Guardar nuevos eventos
+    // Guardar nuevos eventos (ajustando fechaMillis +1 día)
     for (const entry of eventsArr) {
       if (Array.isArray(entry.events)) {
         for (const event of entry.events) {
           const newEventRef = push(eventosRef);
+
+          // Aumentar en 1 día la fecha
+          const fecha = new Date(event.fechaMillis);
+          fecha.setDate(fecha.getDate() + 1);
+
           await set(newEventRef, {
             ...event,
+            fechaMillis: fecha.getTime(), // 🔁 Aquí la fecha ya tiene 1 día más
             key: newEventRef.key
           });
         }
       }
     }
-    
+
     console.log("Eventos guardados correctamente en Firebase");
     return true;
   } catch (error) {
@@ -72,6 +78,7 @@ async function subirEvento(eventsArr) {
     return false;
   }
 }
+
 
 async function recibirTodasFechas() {
   if (!isAuthReady) {
