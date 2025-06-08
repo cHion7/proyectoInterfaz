@@ -29,7 +29,6 @@ main {
   width: 150px;
   height: 150px;
   cursor: pointer;
-  border: 2px dashed #94a3b8;
   padding: 5px;
   border-radius: 50%;
   object-fit: cover;
@@ -37,7 +36,7 @@ main {
 }
 
 #preview:hover {
-  border-color: #60a5fa;
+
 }
 
 #textos {
@@ -92,7 +91,7 @@ main {
 
 br {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 2px solid #000000;
+
 }
 
 p {
@@ -111,20 +110,19 @@ p {
   flex-direction: column;
   align-items: center;
   display: none;
-  /* Por defecto, oculto */
-  border: 1px solid #e75106;
+
 }
 
 .ajustes-cuadro.activo {
   padding: auto;
   display: flex;
-  border: 1px solid #0f0f10;
+
   margin-left: 1.25rem;
 }
 
 .primeraVista {
   display: flex;
-  border: 1px solid #0000ff;
+
   margin-right: 1.25rem;
 }
 
