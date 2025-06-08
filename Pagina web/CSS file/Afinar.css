@@ -97,7 +97,7 @@ br {
 
 p {
   font-size: 1.2rem;
-  color: #0f0f10;
+
   margin-top: 1.5rem;
 }
 
@@ -283,4 +283,126 @@ form {
   #reiniciarForm {
     margin-left: 20%;
   }
+}
+
+/* Footer styles (already adapted to style.css vars in your provided code) */
+.footer {
+  background-color: var(--color-dark); /* bg-gray-800 */
+  color: var(--color-white);
+  padding: 2rem 0; /* py-8 */
+}
+
+.container2 {
+  max-width: 1280px; /* mx-auto */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem;
+}
+
+.contact-section {
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.contact-section h3 {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 0.5rem; /* mb-2 */
+  color: var(--color-blue-100); /* text-indigo-300 - approximated with blue-100 */
+}
+
+.contact-section p {
+  margin-bottom: 1rem; /* mb-4 */
+  color: var(--color-gray-300); /* text-gray-300 */
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* space-y-2 */
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  color: var(--color-gray-300); /* text-gray-300 */
+}
+
+.contact-item i {
+  margin-right: 0.5rem; /* mr-2 */
+  color: var(--color-secondary); /* text-indigo-400 - approximated with color-secondary */
+}
+
+.copyright {
+  border-top: 1px solid var(--color-gray-700); /* border-t border-gray-700 */
+  padding-top: 1rem; /* pt-4 */
+  text-align: center;
+  color: var(--color-gray-400); /* text-gray-400 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* -----------------------------
+   Footer
+   ----------------------------- */
+.footer {
+  background-color: var(--color-dark);
+  color: var(--color-gray-100);
+  padding: 2.5rem 0; /* 40px 0 */
+  margin-top: 3rem; /* 48px */
+}
+
+.footer__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem; /* 32px */
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .footer__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.footer__seccion {
+  /* Espaciado interno ya dado por el grid */
+}
+
+.footer__titulo {
+  font-size: 1.25rem; /* 20px */
+  font-weight: 600;
+  color: var(--color-white);
+  margin-bottom: 1rem; /* 16px */
+}
+
+.footer__lista {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 8px */
+}
+
+.footer__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* 12px */
+}
+
+.footer__icono {
+  font-size: 1rem; /* 16px */
+  color: var(--color-primary);
+}
+
+.footer__bottom {
+  border-top: 1px solid var(--color-gray-700); /* gris oscuro */
+  margin-top: 2rem; /* 32px */
+  padding-top: 1.5rem; /* 24px */
+  text-align: center;
+  font-size: 0.875rem; /* 14px */
+  color: var(--color-gray-100);
 }
