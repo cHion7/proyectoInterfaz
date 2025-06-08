@@ -12,7 +12,7 @@ body, html {
 /*body*/
 body {
   /* Fondo general del body, como en la imagen de referencia */
-  background: url(/Pagina/imagenes/fondoPantallaSencillo.jpg) no-repeat center center fixed;
+  background: url(/Pagina/imagenes/fondoPantallaSencillo.jpg);
   background-size: 400% 400%; /* Para animar el gradiente */
   animation: gradientAnimation 15s ease infinite; /* Animación de gradiente */
   display: flex;
@@ -30,11 +30,11 @@ body {
 .container {
   display: flex;
   width: 90%; /* Ajusta el ancho total del contenedor */
-  max-width: 1000px; /* Máximo ancho para pantallas grandes */
+  max-width: 1000px; 
   height: 80vh; /* Ajusta la altura del contenedor principal */
-  max-height: 600px; /* Máxima altura */
-  border-radius: 20px; /* Bordes redondeados para el contenedor principal */
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+  max-height: 600px; 
+  border-radius: 20px; 
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2); 
   overflow: hidden; /* Asegura que los paneles internos respeten el border-radius */
 }
 
@@ -91,8 +91,8 @@ body {
 }
 
 .logo {
-  width: 200px; /* Increased from 80px */
-  height: 100px; /* Increased from 80px */
+  width: 200px; 
+  height: 100px; 
   object-fit: contain;
   margin-bottom: 0.5rem;
 }
