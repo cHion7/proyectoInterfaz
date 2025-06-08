@@ -13,9 +13,27 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="../Pagina web/CSS file/calendarioStyle.css" />
   <title>Calendario Financiero</title>
+  
 </head>
 
-<body>
+<body> <header class="main-header">
+    <div class="container header-container">
+      <!-- Sección del logo -->
+      <section class="header-logo">
+        <a href="index.html" class="logo-link">
+          <img src="../Pagina web/imagens/logo3.png" alt="Logo de la empresa" class="logo-image">
+        </a>
+      </section>
+      
+      <!-- Navegación principal -->
+      <nav class="main-nav">
+        <a href="Inicio.html" class="nav-link">Calendario</a>
+        <a href="Calculadora.html" class="nav-link">Calculadora</a>
+        <a href="afinarPerfil.html" class="nav-link">Perfil</a>
+      </nav>
+    </div>
+  </header>
+  
   <div class="container">
     <div class="left">
       <div class="calendar">
@@ -93,7 +111,7 @@
           </div>
           <div class="add-event-footer">
             <!-- CORRECCIÓN: Eliminado onclick y agregado id -->
-            <button id="save-event-btn" class="add-event-btn">Guardar</button>
+            <button id="save-event-btn" class="add-event-btn" type="button">Guardar</button>
           </div>
         </div>
       </div>
@@ -102,6 +120,34 @@
       </button>
     </div>
   </div> <!-- Cierre del div.container -->
+  <footer class="footer">
+      <div class="container">
+        <!-- Sección de información de contacto -->
+        <section class="contact-section">
+          <h3>Contacto</h3>
+          <p>Para contactar a InpoSmart, puedes utilizar la siguiente información:</p>
+          <ul class="contact-list">
+            <li class="contact-item">
+              <i class="fas fa-phone"></i>
+              Teléfono: 123-456-7890
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-envelope"></i>
+              Email: info@inposmart.com
+            </li>
+            <li class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              Dirección: Calle Financiera, 123, Ciudad Digital
+            </li>
+          </ul>
+        </section>
+        
+        <!-- Sección de copyright -->
+        <section class="copyright">
+          <p>© 2025 InpoSmart - Todos los derechos reservados.</p>
+        </section>
+      </div>
+    </footer>
   
   <script src="../Pagina web/javaScript/calendarioJS.js"></script>
   <script type="module" src="../Pagina web/javaScript/firebaseCalendario.js"></script>

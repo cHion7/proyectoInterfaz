@@ -136,6 +136,7 @@ function rellenarDatosUsuario(datosPerfilar) {
     if (typeof datosEspecificos.vehiculo === "boolean") {
       radiovehiculoTrueAutonomo.checked = datosEspecificos.vehiculo === true;
       radiovehiculoFalseAutonomo.checked = datosEspecificos.vehiculo === false;
+      
     }
   } else if (tipo === "Asalariado") {
     console.log("Rellenando campos de Asalariado");
@@ -198,7 +199,7 @@ function enviarCuestionario() {
     ingresoBruto: lineIngresoBasic.value,
     edad: lineEdadBasic.value,
     personasACargo: lineAcargoBasic.value,
-    vivienda: radioViviendaTrueBasic.value
+    vivienda: radioViviendaTrueBasic.checked ? true : false
   });
 
   if (eleccion === "Autonomo") {
@@ -349,7 +350,7 @@ const radioFamiliaFalseAsalariado = document.querySelector('#familiaNumerosaNo')
 const lineArrayEdadesAsalariado = document.querySelector('#edadesHijos');
 const lineGastosAsalariado = document.querySelector('#gastosEscolares');
 
-// Preguntas Estudiante
+// Preguntas Estudiantehaz
 const comboEstudiosEstudiante = document.querySelector('#tipoEstudios');
 const radioTrabajoTrueEstudiante = document.querySelector('#trabajoSi');
 const radioTrabajoFalseEstudiante = document.querySelector('#trabajoNo');
