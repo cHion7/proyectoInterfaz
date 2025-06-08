@@ -42,29 +42,25 @@ async function subirEvento(eventsArr) {
     const uid = currentUser.email.replace(/[@.]/g, "_");
     const eventosRef = ref(db, "Usuarios/" + uid + "/eventos");
 
-    // Obtener eventos existentes
     const snapshot = await get(eventosRef);
     const eventosExistentes = snapshot.exists() ? Object.keys(snapshot.val()) : [];
 
-    // Eliminar eventos existentes
+  
     for (const key of eventosExistentes) {
       const eventRef = ref(db, `Usuarios/${uid}/eventos/${key}`);
       await set(eventRef, null);
     }
 
-    // Guardar nuevos eventos (ajustando fechaMillis +1 día)
+    
     for (const entry of eventsArr) {
       if (Array.isArray(entry.events)) {
         for (const event of entry.events) {
           const newEventRef = push(eventosRef);
-
-          // Aumentar en 1 día la fecha
-          const fecha = new Date(event.fechaMillis);
-          fecha.setDate(fecha.getDate() + 1);
-
+          
+          
           await set(newEventRef, {
             ...event,
-            fechaMillis: fecha.getTime(), // 🔁 Aquí la fecha ya tiene 1 día más
+            fechaMillis: event.fechaMillis, 
             key: newEventRef.key
           });
         }
@@ -78,7 +74,6 @@ async function subirEvento(eventsArr) {
     return false;
   }
 }
-
 
 async function recibirTodasFechas() {
   if (!isAuthReady) {
@@ -99,7 +94,15 @@ async function recibirTodasFechas() {
     if (!snapshot.exists()) return [];
 
     const eventosObj = snapshot.val();
-    return Object.values(eventosObj).filter(evento => evento && evento.fechaMillis);
+    if (!eventosObj) return [];
+    // Restar 2 días a cada fechaMillis
+      return Object.values(eventosObj)
+    .filter(evento => evento && evento.fechaMillis)
+    .map(evento => ({
+      ...evento,
+    
+      fechaMillis: evento.fechaMillis
+    }));
   } catch (error) {
     console.error("Error en recibirTodasFechas:", error);
     return [];
@@ -109,10 +112,9 @@ async function recibirTodasFechas() {
 window.firebaseCalendario = {
     recibirTodasFechas,
     subirEvento,
-    isAuthReady: false // Se actualizará mediante el listener
+    isAuthReady: false 
 };
 
-// Actualizar el estado en el objeto global
 setInterval(() => {
   window.firebaseCalendario.isAuthReady = isAuthReady;
 }, 500);

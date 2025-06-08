@@ -82,7 +82,6 @@ async function getEvents() {
 
     const grouped = raw.reduce((acc, ev) => {
       const d = new Date(ev.fechaMillis);
-      d.setDate(d.getDate() - 1);
       const day = d.getDate();
       const month = d.getMonth() + 1;
       const year = d.getFullYear();
@@ -110,7 +109,7 @@ function initCalendar() {
   const prevLastDay = new Date(year, month, 0);
   const prevDays = prevLastDay.getDate();
   const lastDate = lastDay.getDate();
-  const day = (firstDay.getDay() + 6) % 7;
+  const day = firstDay.getDay();
   const nextDays = 7 - lastDay.getDay() - 1;
 
   date.innerHTML = months[month] + " " + year;
@@ -432,8 +431,7 @@ async function guardarEvento() {
     alert("Por favor complete todos los campos");
     return;
   }
-  const fechaReal = new Date(year, month, activeDay);
-  fechaReal.setDate(fechaReal.getDate() + 1);
+
   const nuevoEvento = {
     titulo,
     descripcion,
