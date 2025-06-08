@@ -19,32 +19,29 @@
   </head>
   <body>
     <!-- Encabezado -->
-    <header class="header">
-      <div class="header__container">
-        <div class="header__logo-seccion">
-          <div class="header__logo-circulo">
-            <i class="fas fa-calculator header__logo-icono"></i>
-          </div>
-          <h1 class="header__titulo">Calculadora</h1>
-        </div>
-        <nav class="nav">
-          <a href="calendarioHTML.html" class="nav__enlace">
-            <i class="far fa-calendar-alt nav__icono"></i>
-            <span class="nav__texto">Calendario</span>
+      <header class="main-header">
+      <div class="container header-container">
+        <!-- Sección del logo -->
+        <section class="header-logo">
+          <a class="logo-link">
+            <img
+              src="../Pagina web/imagens/logo3.png"
+              alt="Logo de la empresa"
+              class="logo-image"
+            />
           </a>
-          <a
-            href="calculadoraPruebaMejora.html"
-            class="nav__enlace nav__enlace--activo"
+        </section>
+
+        <!-- Navegación principal -->
+        <nav class="main-nav">
+          <a href="calendarioHTML.html" class="nav-link">Calendario</a>
+          <a href="calculadoraPruebaMejora.html" class="nav-link"
+            >Calculadora</a
           >
-            <i class="fas fa-calculator nav__icono nav__icono--activo"></i>
-            <span class="nav__texto nav__texto--activo">Calculadora</span>
-          </a>
-          <a href="afinarPerfil.html" class="nav__enlace">
-            <i class="far fa-user nav__icono"></i>
-            <span class="nav__texto">Perfil</span>
-          </a>
+          <a href="afinarPerfil.html" class="nav-link">Perfil</a>
         </nav>
       </div>
+    </header>
     </header>
 
     <!-- Hero -->

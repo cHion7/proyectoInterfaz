@@ -85,18 +85,18 @@
 
 /* Si tu sección .hero (el banner grande debajo del header) también quieres que sea blanco y con texto negro */
 .hero {
-  background: var(--color-white); 
+ background: linear-gradient(to right, var(--color-primary), var(--color-accent));
   color: var(--color-dark); 
   
 }
 
 .hero__titulo {
-  color: var(--color-dark); 
+  color: white;
 
 }
 
 .hero__texto {
-  color: var(--color-gray-700); 
+  color: white;
 }
 .btn-primary {
   background-color: var(--color-white);
@@ -148,18 +148,13 @@
 }
 
 .header-container {
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  /* flex-col */
-  align-items: center;
-  /* items-center */
-  justify-content: space-between;
-  /* justify-between */
-  padding: 1rem;
-  border: 1px solid var(--color-gray-300); /* Borde gris alrededor del contenedor */
-  border-radius: var(--radius-default);
+    display: flex
+;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+ 
 }
 
 @media (min-width: 768px) {
@@ -188,8 +183,8 @@
 }
 
 .logo-image {
-  height: 2.5rem;
-  /* h-10 */
+     height: 3rem;
+    width: auto;
 }
 
 .logo-text {
@@ -204,7 +199,7 @@
 
 .main-nav {
   display: flex;
-  gap: 1.5rem;
+
   /* space-x-6 */
   background-color: var(--color-white);
 }
@@ -1061,8 +1056,12 @@ body {
 /* Aplica el fondo blanco al header general */
 .header-container {
   background-color: var(--color-white); /* Fondo blanco para el header */
-  /* Asegúrate de que no haya gradientes de fondo que lo anulen si no los quieres */
-  /* Si el header tiene un elemento padre que le da color, también deberías ajustarlo */
+     display: flex
+;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
 }
 
 /* Color del texto del logo en negro */

@@ -1,10 +1,4 @@
-/* =======================================
-   style.css (versión revisada y corregida)
-   ======================================= */
 
-/* ---------------------
-   Variables de color
-   --------------------- */
 :root {
   --color-primary: #1d4ed8;
   --color-secondary: #3b82f6;
@@ -63,92 +57,108 @@ body {
 
 /* --------------------------
    Estilos de Header y Nav
-   -------------------------- */
-.header {
-  background-color: var(--color-white);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+*/
+.main-header {
+  background-color: var(--color-white); /* Fondo blanco para el header */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Mantener sombra o ajustarla si es necesario */
   position: sticky;
   top: 0;
   z-index: 50;
+  background-color: var(--color-gray-300); /* Fondo blanco para el header */
 }
 
-.header__container {
+.header-container {
+  background-color: var(--color-white); /* Fondo blanco para el header */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 }
 
-.header__logo-seccion {
+@media (min-width: 768px) {
+  .header-container {
+    flex-direction: row;
+    /* md:flex-row */
+  }
+}
+
+.header-logo {
+  margin-bottom: 1rem;
+  /* mb-4 */
+}
+
+@media (min-width: 768px) {
+  .header-logo {
+    margin-bottom: 0;
+    /* md:mb-0 */
+  }
+}
+
+.logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* 12px */
-}
-
-.header__logo-circulo {
-  width: 2.5rem;  /* 40px */
-  height: 2.5rem; /* 40px */
-  border-radius: 50%;
-  background-color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header__logo-icono {
-  color: var(--color-white);
-  font-size: 1.25rem; /* 20px */
-}
-
-.header__titulo {
-  font-size: 1.5rem;   /* 24px */
-  font-weight: 700;
-  background: linear-gradient(to right, var(--color-primary), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.nav {
-  display: flex;
-  gap: 0.25rem; /* 4px */
-  background-color: var(--color-gray-100);
-  padding: 0.25rem; /* 4px */
-  border-radius: var(--radius-default);
-}
-
-.nav__enlace {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* 8px */
-  padding: 0.5rem 1rem; /* 8px 16px */
-  border-radius: var(--radius-default);
-  color: var(--color-gray-800);
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem; /* 16px */
 }
 
-.nav__enlace:hover {
+.logo-image {
+  height: 3rem;
+  width: auto;
+}
+
+.logo-text {
+  margin-left: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-dark); /* O var(--color-gray-800); para texto negro */
+}
+
+.main-nav {
+  display: flex;
   background-color: var(--color-white);
+}
+
+.nav-link {
+  color: var(--color-gray-800); /* Color de texto oscuro para los enlaces no activos */
+  background-color: transparent; /* Asegúrate de que no tengan fondo por defecto */
+  padding: 0.75rem 1.25rem; /* Dale el mismo padding para que tengan un tamaño consistente */
+  border-radius: var(--radius-default); /* Mismos bordes redondeados */
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--transition-medium), box-shadow var(--transition-medium); /* Añade transición para la sombra */
+  margin-top: 15px;
+}
+
+.nav-link:hover {
+  background-color: var(--color-gray-100); /* Fondo ligeramente gris al pasar el ratón */
+  color: var(--color-dark); /* Texto negro al pasar el ratón */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Sombra suave al pasar el ratón */
 }
 
 .nav__enlace--activo {
-  background-color: var(--color-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-white); /* Fondo blanco */
+  color: var(--color-primary); /* Color del texto y el icono azul */
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-default);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .nav__icono {
-  font-size: 1rem; /* 16px */
-  color: var(--color-gray-800);
+  color: var(--color-dark); /* Iconos en negro */
 }
 
 .nav__icono--activo {
-  color: var(--color-primary);
+  color: var(--color-dark); /* Icono activo en negro */
 }
-
-.nav__texto--activo {
-  color: var(--color-primary);
+@media (max-width: 1000px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
 }
 
 /* --------------------------
