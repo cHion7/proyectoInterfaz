@@ -20,8 +20,6 @@ async function cargarDatosUsuario() {
 window.onload = cargarDatosUsuario;
 
 
-
-
 function mostrarCuadro(idCuadroActivo) {
   const cuadros = document.querySelectorAll(".ajustes-cuadro");
   cuadros.forEach(cuadro => {
@@ -295,7 +293,6 @@ function deshabilitarCampos() {
 
 
 function reiniciarCuestionario() {
-
   const campos = document.querySelectorAll("input, select");
   campos.forEach(campo => {
     campo.disabled = false;
@@ -319,10 +316,10 @@ function reiniciarCuestionario() {
   mostrarToast("Cuestionario reiniciado", "success");
 }
 
-
-
-
-
+//Cerrar sesión
+function cerrarSesion() {
+  window.location.href = 'inicioSesion.html';
+}
 
 const enviar = document.querySelector('.boton');
 const toasts = document.getElementById('toasts');
